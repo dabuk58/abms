@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 import { GoogleLoginButtonComponent } from './google-login-button/google-login-button.component';
 import { MicrosoftLoginButtonComponent } from './microsoft-login-button/microsoft-login-button.component';
 
@@ -9,4 +10,10 @@ import { MicrosoftLoginButtonComponent } from './microsoft-login-button/microsof
   templateUrl: './login-modal.component.html',
   styleUrl: './login-modal.component.scss',
 })
-export class LoginModalComponent {}
+export class LoginModalComponent {
+  constructor(private authService: AuthService) {}
+
+  loginMicrosoft(): void {
+    this.authService.loginMicrosoft();
+  }
+}

@@ -34,7 +34,5 @@ export class HeaderComponent {
       width: '400px',
       focusOnShow: false,
     });
-
-    this.loginDialogRef.onClose.subscribe((close) => console.log(close));
   }
 }
