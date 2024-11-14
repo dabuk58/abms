@@ -1,1 +1,9 @@
 @import "./reset";
+@import "primeicons/primeicons.css";
+@import "./p-override";
+
+body,
+body .p-component {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}

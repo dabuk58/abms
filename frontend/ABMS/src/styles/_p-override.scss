@@ -1,0 +1,26 @@
+.p-dialog {
+  gap: 15px;
+
+  & .p-dialog-header {
+    padding: 14px 14px 0 14px;
+  }
+
+  & .p-dialog-content {
+    padding: 0 14px 14px 14px;
+  }
+
+  & .p-dialog-title {
+    font-weight: 600;
+  }
+}
+
+.p-button {
+  display: flex;
+  gap: 8px;
+  height: 33px;
+  padding: 6px 14px;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
