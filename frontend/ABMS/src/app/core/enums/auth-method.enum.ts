@@ -1,4 +1,4 @@
-export enum AuthMethod {
+export enum AuthMethodEnum {
   GOOGLE,
   MICROSOFT,
 }

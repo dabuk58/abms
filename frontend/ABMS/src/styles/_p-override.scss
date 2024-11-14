@@ -1,3 +1,5 @@
+@import "./../styles//variables.scss";
+
 .p-dialog {
   gap: 15px;
 
@@ -42,4 +44,9 @@
 .p-menuitem-separator {
   border-top: 1px solid #e2e8f0;
   margin: 2px 0;
+}
+
+.p-progress-spinner-circle {
+  stroke: $primary;
+  animation: p-progress-spinner-dash 1.5s ease-in-out infinite;
 }

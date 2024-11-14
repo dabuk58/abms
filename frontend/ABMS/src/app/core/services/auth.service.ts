@@ -6,18 +6,22 @@ import {
 } from '@azure/msal-angular';
 import { AuthenticationResult, PopupRequest } from '@azure/msal-browser';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { finalize } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { AuthMethod } from '../enums/auth-method.enum';
+import { AuthMethodEnum } from '../enums/auth-method.enum';
+import { LoaderEnum } from '../enums/loader.enum';
+import { LoaderService } from './loader.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private authMethod: AuthMethod | undefined;
+  private authMethod: AuthMethodEnum | undefined;
 
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
-    private msalAuthService: MsalService
+    private msalAuthService: MsalService,
+    private loaderService: LoaderService
   ) {}
 
   get isLoggedIn(): boolean {
@@ -26,31 +30,26 @@ export class AuthService {
   }
 
   logout(): void {
-    if (this.authMethod === AuthMethod.MICROSOFT) {
-      this.logoutMicrosoft();
+    this.logoutMicrosoft();
+    if (this.authMethod === AuthMethodEnum.MICROSOFT) {
+      // this.logoutMicrosoft();
     } else {
       //todo google logout
     }
   }
 
   loginMicrosoft(dialogRef: DynamicDialogRef): void {
-    if (this.msalGuardConfig.authRequest) {
-      this.msalAuthService
-        .loginPopup({ ...this.msalGuardConfig.authRequest } as PopupRequest)
-        .subscribe((response: AuthenticationResult) => {
-          this.msalAuthService.instance.setActiveAccount(response.account);
-          this.authMethod = AuthMethod.MICROSOFT;
-          dialogRef.close();
-        });
-    } else {
-      this.msalAuthService
-        .loginPopup()
-        .subscribe((response: AuthenticationResult) => {
-          this.msalAuthService.instance.setActiveAccount(response.account);
-          this.authMethod = AuthMethod.MICROSOFT;
-          dialogRef.close();
-        });
-    }
+    const authRequest = this.msalGuardConfig.authRequest
+      ? { ...this.msalGuardConfig.authRequest }
+      : {};
+    this.msalAuthService
+      .loginPopup(authRequest as PopupRequest)
+      .pipe(finalize(() => this.loaderService.setInactive(LoaderEnum.LOGIN)))
+      .subscribe((response: AuthenticationResult) => {
+        this.msalAuthService.instance.setActiveAccount(response.account);
+        this.authMethod = AuthMethodEnum.MICROSOFT;
+        dialogRef.close();
+      });
   }
 
   private logoutMicrosoft(): void {

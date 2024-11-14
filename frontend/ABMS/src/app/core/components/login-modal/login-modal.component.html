@@ -6,3 +6,6 @@
   ></app-microsoft-login-button>
   <app-google-login-button></app-google-login-button>
 </div>
+@if(isLoading$ | async){
+<app-overlay-loader></app-overlay-loader>
+}
