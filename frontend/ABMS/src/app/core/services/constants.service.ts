@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
+import { ROUTES } from '../constants/routes-constants';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConstantsService {
-  constructor(private translateService: TranslateService) {}
+  constructor(
+    private translateService: TranslateService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   get headerButtonConfig(): MenuItem[] {
     return [
@@ -17,10 +24,14 @@ export class ConstantsService {
           {
             label: this.translateService.instant('active'),
             icon: 'pi pi-fw pi-check',
+            command: () =>
+              this.router.navigate([ROUTES.USER, ROUTES.ACTIVE_RESERVATIONS]),
           },
           {
             label: this.translateService.instant('completed'),
             icon: 'pi pi-fw pi-history',
+            command: () =>
+              this.router.navigate([ROUTES.USER, ROUTES.RESERVATIONS_HISTORY]),
           },
         ],
       },
@@ -30,6 +41,7 @@ export class ConstantsService {
       {
         label: this.translateService.instant('logout'),
         icon: 'pi pi-fw pi-sign-out',
+        command: () => this.authService.logout(),
       },
     ];
   }
