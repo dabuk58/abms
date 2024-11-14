@@ -21,6 +21,15 @@ export class AuthService {
     private msalAuthService: MsalService
   ) {}
 
+  get isLoggedIn(): boolean {
+    const activeAccount = this.msalAuthService.instance.getActiveAccount();
+    return !!activeAccount;
+  }
+
+  logout(): void {
+    this.logoutMicrosoft();
+  }
+
   loginMicrosoft() {
     if (this.msalGuardConfig.authRequest) {
       this.msalAuthService

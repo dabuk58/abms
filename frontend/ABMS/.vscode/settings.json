@@ -4,6 +4,7 @@
     "msal",
     "primeflex",
     "primeicons",
-    "primeng"
+    "primeng",
+    "splitbutton"
   ]
 }

@@ -6,11 +6,19 @@
     BedFind
   </p>
   <div class="card flex justify-content-center gap-3">
+    @if(!isLoggedIn()){
     <p-button
       icon="pi pi-sign-in"
       iconPos="right"
       [label]="'login' | translate"
-      (click)="onLogin()"
+      (onClick)="onLogin()"
     />
+    } @else {
+    <p-splitButton
+      [label]="'profile' | translate"
+      [model]="splitButtonConfig"
+      (onClick)="onProfile()"
+    />
+    }
   </div>
 </div>

@@ -24,3 +24,22 @@
     box-shadow: none;
   }
 }
+
+.p-menuitem-link {
+  padding: 0.5rem 0.75rem;
+}
+
+.p-tieredmenu,
+.p-submenu-list {
+  border: 1px solid #e2e8f0;
+  padding: 0.25rem;
+}
+
+.p-menuitem-text {
+  margin-left: 0.5rem;
+}
+
+.p-menuitem-separator {
+  border-top: 1px solid #e2e8f0;
+  margin: 2px 0;
+}

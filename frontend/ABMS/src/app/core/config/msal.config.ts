@@ -23,7 +23,7 @@ import { environment } from './../../environments/environment';
 export const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 
 export function loggerCallback(logLevel: LogLevel, message: string) {
-  console.log(message);
+  // console.log(message);
 }
 
 export function MSALInstanceFactory(): IPublicClientApplication {

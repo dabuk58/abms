@@ -2,5 +2,14 @@
   "login": "Zaloguj",
   "choose_option": "Wybierz opcję",
   "sign_in_with_google": "Zaloguj się z Google",
-  "sign_in_with_microsoft": "Zaloguj się z Microsoft"
+  "sign_in_with_microsoft": "Zaloguj się z Microsoft",
+  "logout": "Wyloguj",
+  "profile": "Profil",
+  "reservations": "Rezerwacje",
+  "active": "Aktywne",
+  "completed": "Zakończone",
+  "": "",
+  "": "",
+  "": "",
+  "": ""
 }
