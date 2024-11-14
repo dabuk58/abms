@@ -48,6 +48,9 @@ export class HeaderComponent {
       header: this.translateService.instant('choose_option'),
       width: '400px',
       focusOnShow: false,
+      data: {
+        dialogRef: this.loginDialogRef,
+      },
     });
   }
 
