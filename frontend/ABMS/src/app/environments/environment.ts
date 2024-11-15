@@ -7,6 +7,11 @@ export const environment = {
         'https://login.microsoftonline.com/cfbde96d-e669-42b4-ac96-c1529e36d3df',
     },
   },
+  googleConfig: {
+    clientId:
+      '308042429941-ipe7qiarhledf35ude4onkd1u8msjk68.apps.googleusercontent.com',
+    signInScriptUrl: 'https://accounts.google.com/gsi/client',
+  },
   apiConfig: {
     scopes: ['user.read'],
     uri: 'http://localhost:4200',

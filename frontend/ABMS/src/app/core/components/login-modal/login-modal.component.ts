@@ -26,8 +26,8 @@ export class LoginModalComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private dialogRef: DynamicDialogRef,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    protected dialogRef: DynamicDialogRef
   ) {}
 
   ngOnInit(): void {

@@ -1,4 +1,4 @@
 export enum AuthMethodEnum {
-  GOOGLE,
-  MICROSOFT,
+  GOOGLE = 'G',
+  MICROSOFT = 'M',
 }

@@ -21,7 +21,6 @@ export const routes: Routes = [
       import(
         './features/profile/pages/profile-page/profile-page.component'
       ).then((c) => c.ProfilePageComponent),
-    canActivate: [MsalGuard],
   },
   {
     path: '**',

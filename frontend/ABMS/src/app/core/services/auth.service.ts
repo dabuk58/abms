@@ -22,19 +22,26 @@ export class AuthService {
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
     private msalAuthService: MsalService,
     private loaderService: LoaderService
-  ) {}
+  ) {
+    const savedAuthMethod = sessionStorage.getItem('authMethod');
+    this.authMethod = savedAuthMethod
+      ? (savedAuthMethod as AuthMethodEnum)
+      : undefined;
+  }
 
   get isLoggedIn(): boolean {
-    const activeAccount = this.msalAuthService.instance.getActiveAccount();
-    return !!activeAccount;
+    const activeMsalAccount = this.msalAuthService.instance.getActiveAccount();
+    const googleUser = sessionStorage.getItem('loggedinUser');
+
+    return !!activeMsalAccount || !!googleUser;
   }
 
   logout(): void {
-    this.logoutMicrosoft();
     if (this.authMethod === AuthMethodEnum.MICROSOFT) {
-      // this.logoutMicrosoft();
+      this.logoutMicrosoft();
     } else {
-      //todo google logout
+      this.logoutGoogle();
+      window.location.reload();
     }
   }
 
@@ -47,7 +54,7 @@ export class AuthService {
       .pipe(finalize(() => this.loaderService.setInactive(LoaderEnum.LOGIN)))
       .subscribe((response: AuthenticationResult) => {
         this.msalAuthService.instance.setActiveAccount(response.account);
-        this.authMethod = AuthMethodEnum.MICROSOFT;
+        this.setAuthMethod(AuthMethodEnum.MICROSOFT);
         dialogRef.close();
       });
   }
@@ -56,5 +63,17 @@ export class AuthService {
     this.msalAuthService.logoutPopup({
       mainWindowRedirectUri: environment.homePath,
     });
+  }
+
+  private logoutGoogle(): void {
+    sessionStorage.removeItem('loggedinUser');
+    if (window.google) {
+      window.google.accounts.id.disableAutoSelect();
+    }
+  }
+
+  setAuthMethod(method: AuthMethodEnum): void {
+    this.authMethod = method;
+    sessionStorage.setItem('authMethod', method);
   }
 }

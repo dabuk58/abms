@@ -1,10 +1,10 @@
 <div
   class="flex flex-column justify-content-center align-items-center py-3 gap-3"
 >
+  <app-google-login-button [dialogRef]="dialogRef"></app-google-login-button>
   <app-microsoft-login-button
     (click)="loginMicrosoft()"
   ></app-microsoft-login-button>
-  <app-google-login-button></app-google-login-button>
 </div>
 @if(isLoading$ | async){
 <app-overlay-loader></app-overlay-loader>
