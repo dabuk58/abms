@@ -1,22 +1,28 @@
-﻿using Domain.Property;
+﻿using Application.Common.Interfaces;
+using Domain.Accommodation;
+using Infrastructure.Persistence.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace Infrastructure.Persistence;
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext(
+    DbContextOptions options,
+    EntitySaveChangesInterceptor saveChangesInterceptor
+    ) : DbContext(options), IApplicationDbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-     : base(options)
-    {
-    }
-
-    public DbSet<Property> Properties => Set<Property>();
+    public DbSet<Accommodation> Accommodations => Set<Accommodation>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Property>(entity => entity.ToTable("property"));
+        modelBuilder.Entity<Accommodation>(entity => entity.ToTable("accommodations"));
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+        optionsBuilder.AddInterceptors(saveChangesInterceptor);
     }
 }

@@ -1,7 +1,6 @@
 using Application;
 using Infrastructure;
-using Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
+using QualityManagement.WebApi.Features;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,12 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options => options.AddPolicy("AllowAngularApp",
+    builder => builder.WithOrigins("http://localhost::4200")
+    .AllowAnyHeader()
+    .AllowAnyOrigin()));
+
 builder.Services
     .AddApplication()
-    .AddInfrastructure();
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    .AddInfrastructure(builder.Configuration);
 
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
@@ -28,8 +29,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowAngularApp");
+
 app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
+
+app.MapAccommodationEndpoints();
 
 app.Run();
