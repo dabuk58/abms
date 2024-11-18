@@ -35,6 +35,7 @@ app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
-app.MapAccommodationEndpoints();
+app.MapAccommodationsEndpoints();
+app.MapUsersEndpoints();
 
 app.Run();

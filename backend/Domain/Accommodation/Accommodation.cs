@@ -1,5 +1,7 @@
-﻿namespace Domain.Accommodation;
-public class Accommodation
+﻿using Domain.Common.Base;
+
+namespace Domain.Accommodation;
+public class Accommodation : AuditableEntity
 {
     public int Id { get; set; }
     public required string Name { get; set; }
@@ -11,5 +13,4 @@ public class Accommodation
     public required decimal Latitude { get; set; }
     public required decimal Longitude { get; set; }
     public required decimal PricePerNight { get; set; }
-    public required DateTime CreatedAt { get; set; }
 }

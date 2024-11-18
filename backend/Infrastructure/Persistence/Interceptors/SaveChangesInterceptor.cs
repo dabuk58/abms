@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Infrastructure.Persistence.Interceptors;
-public class EntitySaveChangesInterceptor : SaveChangesInterceptor
+public class EntitySaveChangesInterceptor(TimeProvider timeProvider) : SaveChangesInterceptor
 {
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
@@ -17,7 +17,7 @@ public class EntitySaveChangesInterceptor : SaveChangesInterceptor
             {
                 if (entry.Entity is IAuditableEntity auditableEntity)
                 {
-                    auditableEntity.CreatedAt = DateTime.UtcNow;
+                    auditableEntity.CreatedAt = timeProvider.GetUtcNow();
                 }
             }
 
@@ -25,7 +25,7 @@ public class EntitySaveChangesInterceptor : SaveChangesInterceptor
             {
                 if (entry.Entity is IAuditableEntity auditableEntity)
                 {
-                    auditableEntity.UpdatedAt = DateTime.UtcNow;
+                    auditableEntity.UpdatedAt = timeProvider.GetUtcNow();
                 }
             }
         }

@@ -11,7 +11,8 @@ public class AccommodationConfiguration : IEntityTypeConfiguration<Accommodation
 
         builder.Property(x => x.Id)
             .HasColumnName("accommodation_id")
-            .IsRequired();
+            .IsRequired()
+            .ValueGeneratedOnAdd();
 
         builder.Property(x => x.Name)
             .HasColumnName("name")
@@ -60,5 +61,10 @@ public class AccommodationConfiguration : IEntityTypeConfiguration<Accommodation
         builder.Property(x => x.CreatedAt)
             .HasColumnName("created_at")
             .IsRequired();
+
+        builder.Property(x => x.UpdatedAt)
+            .HasColumnName("updated_at")
+            .IsRequired(false);
+
     }
 }

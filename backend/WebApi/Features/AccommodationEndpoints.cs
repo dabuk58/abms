@@ -5,9 +5,9 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace QualityManagement.WebApi.Features
 {
-    public static class AccommodationEndpoints
+    public static class AccommodationsEndpoints
     {
-        public static void MapAccommodationEndpoints(this WebApplication app)
+        public static void MapAccommodationsEndpoints(this WebApplication app)
         {
             var group = app
                 .MapGroup("accommodations")

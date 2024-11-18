@@ -11,6 +11,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton(TimeProvider.System);
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         services.AddScoped<EntitySaveChangesInterceptor>();
         services.AddDbContext<ApplicationDbContext>(options =>
