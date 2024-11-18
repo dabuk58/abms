@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import {
   MSAL_GUARD_CONFIG,
@@ -6,8 +7,9 @@ import {
 } from '@azure/msal-angular';
 import { AuthenticationResult, PopupRequest } from '@azure/msal-browser';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { finalize } from 'rxjs';
+import { finalize, switchMap, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { GRAPH_ENDPOINT } from '../config/msal.config';
 import { AuthMethodEnum } from '../enums/auth-method.enum';
 import { LoaderEnum } from '../enums/loader.enum';
 import { LoaderService } from './loader.service';
@@ -21,19 +23,26 @@ export class AuthService {
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
     private msalAuthService: MsalService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private http: HttpClient
   ) {
-    const savedAuthMethod = sessionStorage.getItem('authMethod');
-    this.authMethod = savedAuthMethod
-      ? (savedAuthMethod as AuthMethodEnum)
-      : undefined;
+    if (this.isLoggedIn) {
+      this.setAuthMethod();
+    }
   }
 
   get isLoggedIn(): boolean {
     const activeMsalAccount = this.msalAuthService.instance.getActiveAccount();
     const googleUser = sessionStorage.getItem('loggedinUser');
-
     return !!activeMsalAccount || !!googleUser;
+  }
+
+  setAuthMethod(): void {
+    if (this.msalAuthService.instance.getActiveAccount()) {
+      this.authMethod = AuthMethodEnum.MICROSOFT;
+    } else if (sessionStorage.getItem('loggedInUser')) {
+      this.authMethod = AuthMethodEnum.GOOGLE;
+    }
   }
 
   logout(): void {
@@ -51,10 +60,16 @@ export class AuthService {
       : {};
     this.msalAuthService
       .loginPopup(authRequest as PopupRequest)
-      .pipe(finalize(() => this.loaderService.setInactive(LoaderEnum.LOGIN)))
-      .subscribe((response: AuthenticationResult) => {
-        this.msalAuthService.instance.setActiveAccount(response.account);
-        this.setAuthMethod(AuthMethodEnum.MICROSOFT);
+      .pipe(
+        tap((response: AuthenticationResult) => {
+          this.msalAuthService.instance.setActiveAccount(response.account);
+          this.setAuthMethod();
+        }),
+        switchMap(() => this.http.get(GRAPH_ENDPOINT)),
+        tap((x) => console.log(x)),
+        finalize(() => this.loaderService.setInactive(LoaderEnum.LOGIN))
+      )
+      .subscribe(() => {
         dialogRef.close();
       });
   }
@@ -70,10 +85,5 @@ export class AuthService {
     if (window.google) {
       window.google.accounts.id.disableAutoSelect();
     }
-  }
-
-  setAuthMethod(method: AuthMethodEnum): void {
-    this.authMethod = method;
-    sessionStorage.setItem('authMethod', method);
   }
 }

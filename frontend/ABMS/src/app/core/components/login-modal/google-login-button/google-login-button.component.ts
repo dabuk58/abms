@@ -60,10 +60,10 @@ export class GoogleLoginButtonComponent implements AfterViewInit {
 
   handleOauthResponse(response: any): void {
     this.loaderService.setInactive(LoaderEnum.LOGIN);
-    this.authService.setAuthMethod(AuthMethodEnum.GOOGLE);
     const responsePayload = jwtDecode(response.credential);
     sessionStorage.setItem('loggedinUser', JSON.stringify(responsePayload));
     this.dialogRef.close();
+    this.authService.setAuthMethod();
 
     console.log(responsePayload);
   }

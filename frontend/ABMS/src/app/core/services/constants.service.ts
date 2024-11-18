@@ -18,6 +18,11 @@ export class ConstantsService {
   get headerButtonConfig(): MenuItem[] {
     return [
       {
+        label: this.translateService.instant('profile'),
+        icon: 'pi pi-fw pi-user',
+        command: () => this.router.navigate([ROUTES.PROFILE]),
+      },
+      {
         label: this.translateService.instant('reservations'),
         icon: 'pi pi-fw pi-calendar',
         items: [
