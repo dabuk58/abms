@@ -112,6 +112,32 @@
           }
         }
       }
+    },
+    "/users/checkOrAddUser": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "checkOrAddUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckOrAddUserCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -168,6 +194,24 @@
           "pricePerNight": {
             "type": "number",
             "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CheckOrAddUserCommand": {
+        "type": "object",
+        "properties": {
+          "authProviderUserId": {
+            "type": "string",
+            "nullable": true
+          },
+          "authProvider": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

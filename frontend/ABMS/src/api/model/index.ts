@@ -4,3 +4,4 @@
 
 export * from './accommodationDto';
 export * from './accommodationsParams';
+export * from './checkOrAddUserCommand';
