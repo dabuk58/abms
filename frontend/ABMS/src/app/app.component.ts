@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { InteractionStatus } from '@azure/msal-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { ToastModule } from 'primeng/toast';
 import { filter } from 'rxjs';
 import translationsPL from './../../public/i18n/pl.json';
 import { HeaderComponent } from './core/components/header/header.component';
@@ -10,7 +11,7 @@ import { HeaderComponent } from './core/components/header/header.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet, HeaderComponent, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import {
   MSAL_GUARD_CONFIG,
@@ -6,10 +5,23 @@ import {
   MsalService,
 } from '@azure/msal-angular';
 import { AuthenticationResult, PopupRequest } from '@azure/msal-browser';
+import { jwtDecode } from 'jwt-decode';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { finalize, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  finalize,
+  Observable,
+  of,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
+import {
+  CheckOrAddUserClientResult,
+  CheckOrAddUserCommand,
+  UsersApiService,
+} from '../../../api';
 import { environment } from '../../environments/environment';
-import { GRAPH_ENDPOINT } from '../config/msal.config';
 import { AuthMethodEnum } from '../enums/auth-method.enum';
 import { LoaderEnum } from '../enums/loader.enum';
 import { LoaderService } from './loader.service';
@@ -24,7 +36,7 @@ export class AuthService {
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
     private msalAuthService: MsalService,
     private loaderService: LoaderService,
-    private http: HttpClient
+    private usersApiService: UsersApiService
   ) {
     if (this.isLoggedIn) {
       this.setAuthMethod();
@@ -61,17 +73,46 @@ export class AuthService {
     this.msalAuthService
       .loginPopup(authRequest as PopupRequest)
       .pipe(
+        catchError(() => throwError(() => new Error())),
         tap((response: AuthenticationResult) => {
           this.msalAuthService.instance.setActiveAccount(response.account);
           this.setAuthMethod();
         }),
-        switchMap(() => this.http.get(GRAPH_ENDPOINT)),
-        tap((x) => console.log(x)),
+        switchMap((response: AuthenticationResult) => {
+          return this.checkMsalUserExistence$(response.accessToken);
+        }),
         finalize(() => this.loaderService.setInactive(LoaderEnum.LOGIN))
       )
-      .subscribe(() => {
-        dialogRef.close();
+      .subscribe({
+        next: (userName) => {
+          dialogRef.close(userName);
+        },
+        error: () => {
+          this.logout();
+          dialogRef.close(null);
+        },
       });
+  }
+
+  checkMsalUserExistence$(token: any): Observable<CheckOrAddUserClientResult> {
+    const decodedToken = jwtDecode<any>(token);
+    const userEmail = decodedToken?.email || '';
+    const msalUserId = decodedToken?.oid || '';
+    const userName = decodedToken?.given_name || '';
+
+    if (!userEmail || !msalUserId) {
+      return throwError(() => new Error());
+    }
+
+    const params: CheckOrAddUserCommand = {
+      authProviderUserId: msalUserId,
+      authProvider: 2,
+      email: userEmail,
+    };
+
+    return this.usersApiService
+      .checkOrAddUser(params)
+      .pipe(switchMap(() => of(userName)));
   }
 
   private logoutMicrosoft(): void {

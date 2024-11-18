@@ -10,5 +10,9 @@
   "completed": "Zakończone",
   "your_journey_starts_here": "Twoja przygoda zaczyna się tutaj.",
   "my_account": "Moje konto",
+  "hi_user_nice_to_see_you": "Cześć{0}, miło Cię widzieć!",
+  "logged_in_successfully": "Zalogowano pomyślnie",
+  "error_during_login": "Wystąpił błąd podczas logowania",
+  "try_again_later": "Spróbuj ponownie później",
   "": ""
 }

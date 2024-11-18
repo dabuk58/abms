@@ -9,6 +9,7 @@ import {
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { MessageService } from 'primeng/api';
 import { routes } from './app.routes';
 import { msalProviders } from './core/config/msal.config';
 import { urlInterceptor } from './core/interceptors/url.interceptor';
@@ -27,5 +28,6 @@ export const appConfig: ApplicationConfig = {
       defaultLanguage: 'pl',
     }),
     msalProviders,
+    MessageService,
   ],
 };

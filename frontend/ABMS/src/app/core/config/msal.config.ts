@@ -20,7 +20,7 @@ import {
 } from '@azure/msal-browser';
 import { environment } from './../../environments/environment';
 
-export const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
+// export const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 
 export function loggerCallback(logLevel: LogLevel, message: string) {
   // console.log(message);
@@ -31,8 +31,8 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     auth: {
       clientId: environment.msalConfig.auth.clientId,
       authority: environment.msalConfig.auth.authority,
-      redirectUri: 'http://localhost:4200',
-      postLogoutRedirectUri: 'http://localhost:4200',
+      redirectUri: environment.homePath,
+      postLogoutRedirectUri: environment.homePath,
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage,

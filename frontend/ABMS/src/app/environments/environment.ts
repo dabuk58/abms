@@ -14,7 +14,7 @@ export const environment = {
   },
   apiConfig: {
     scopes: ['user.read'],
-    uri: 'http://localhost:4200',
+    uri: 'https://localhost:7163',
   },
   homePath: 'http://localhost:4200',
 };
