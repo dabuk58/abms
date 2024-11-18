@@ -1,6 +1,9 @@
-<div class="flex justify-content-between align-items-center p-3 px-6">
+<div
+  [ngClass]="{ 'abms-header--collapsed': headerCollapsed }"
+  class="abms-header flex justify-content-between align-items-center"
+>
   <p
-    class="font-semibold cursor-pointer select-none"
+    class="abms-logo font-semibold cursor-pointer select-none"
     [routerLink]="[ROUTES.HOME]"
   >
     BedFind
@@ -16,7 +19,7 @@
     } @else {
     <p-splitButton
       text
-      [label]="'profile' | translate"
+      [label]="'my_account' | translate"
       [model]="splitButtonConfig"
       (onClick)="onProfile()"
     />
