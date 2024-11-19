@@ -18,7 +18,11 @@ public record GetAccommodationsQuery(
     decimal? MinLongitude,
     decimal? MaxLongitude,
     int? MinPricePerNight,
-    int? MaxPricePerNight
+    int? MaxPricePerNight,
+    string? SortBy,
+    string? SortDirection,
+    int Offset = 0,
+    int RecordNo = 10
     ) : IRequest<IEnumerable<AccommodationDto>>;
 
 public class GetAccommodationsQueryHandler(IMapper mapper, IApplicationDbContext dbContext) : IRequestHandler<GetAccommodationsQuery, IEnumerable<AccommodationDto>>
@@ -34,7 +38,11 @@ public class GetAccommodationsQueryHandler(IMapper mapper, IApplicationDbContext
             request.MinLongitude,
             request.MaxLongitude,
             request.MinPricePerNight,
-            request.MaxPricePerNight
+            request.MaxPricePerNight,
+            request.SortBy,
+            request.SortDirection,
+            request.Offset,
+            request.RecordNo
             );
 
         var accommodations = await dbContext.Accommodations

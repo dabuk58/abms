@@ -16,29 +16,16 @@ namespace QualityManagement.WebApi.Features
                 .WithOpenApi();
 
             group.MapPost("checkOrAddUser",
-                [SwaggerOperation(summary: "Check if a user exists or add his if he does not exist.")]
+                [SwaggerOperation(summary: "Check if user exists or add his if he does not exist.")]
             [SwaggerResponse(200, "User already exists.")]
-            [SwaggerResponse(201, "User successfully created.")]
             async (
                     ISender sender,
                     [FromBody] CheckOrAddUserCommand command,
                     CancellationToken cancellationToken) =>
-                {
-
-                    var result = await sender.Send(command, cancellationToken);
-
-                    if (result.DidExist)
-                    {
-                        return Results.Ok(result);
-                    }
-
-                    return Results.Created($"/users/{result.UserId}", result);
-
-                }
+                        await sender.Send(command, cancellationToken)
                 )
                 .WithName("checkOrAddUser")
-                .Produces<CheckOrAddUserResponse>(StatusCodes.Status200OK)
-                .Produces<CheckOrAddUserResponse>(StatusCodes.Status201Created);
+                .Produces<CheckOrAddUserResponse>(StatusCodes.Status200OK);
         }
     }
 }

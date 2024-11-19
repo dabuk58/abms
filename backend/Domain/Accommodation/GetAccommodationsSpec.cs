@@ -1,4 +1,5 @@
 ﻿using Ardalis.Specification;
+using Domain.Common.Extensions;
 
 namespace Domain.Accommodation;
 public class GetAccommodationsSpec : Specification<Accommodation>
@@ -12,7 +13,11 @@ public class GetAccommodationsSpec : Specification<Accommodation>
         decimal? MinLongitude,
         decimal? MaxLongitude,
         int? MinPricePerNight,
-        int? MaxPricePerNight);
+        int? MaxPricePerNight,
+        string? SortBy,
+        string? SortDirection,
+        int Offset,
+        int RecordNo);
 
     public GetAccommodationsSpec(GetAccommodationsSpecQueryParams queryParams)
     {
@@ -27,5 +32,9 @@ public class GetAccommodationsSpec : Specification<Accommodation>
             && (queryParams.MinPricePerNight == null || a.PricePerNight >= queryParams.MinPricePerNight)
             && (queryParams.MaxPricePerNight == null || a.PricePerNight >= queryParams.MaxPricePerNight)
           );
+
+        Query.ApplySorting(queryParams.SortBy, queryParams.SortDirection);
+
+        Query.ApplyPagination(queryParams.Offset, queryParams.RecordNo);
     }
 }

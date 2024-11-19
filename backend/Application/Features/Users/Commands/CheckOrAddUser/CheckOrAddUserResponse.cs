@@ -1,12 +1,12 @@
 ﻿namespace Application.Features.Users.Commands.CheckOrAddUser;
 public class CheckOrAddUserResponse
 {
-    public int UserId { get; set; }
+    public UserDto User { get; set; }
     public bool DidExist { get; set; }
 
-    public CheckOrAddUserResponse(int id, bool didExist)
+    public CheckOrAddUserResponse(UserDto user, bool didExist)
     {
-        UserId = id;
+        User = user;
         DidExist = didExist;
     }
 }

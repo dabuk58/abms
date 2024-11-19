@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using AutoMapper;
 using Domain.Common.Enums;
 using Domain.Users;
 using MediatR;
@@ -10,7 +11,7 @@ public record CheckOrAddUserCommand(
     int AuthProvider,
     string Email) : IRequest<CheckOrAddUserResponse>;
 
-public class CheckOrAddUserCommandHandler(IApplicationDbContext _dbContext) : IRequestHandler<CheckOrAddUserCommand, CheckOrAddUserResponse>
+public class CheckOrAddUserCommandHandler(IApplicationDbContext _dbContext, IMapper _mapper) : IRequestHandler<CheckOrAddUserCommand, CheckOrAddUserResponse>
 {
     public async Task<CheckOrAddUserResponse> Handle(CheckOrAddUserCommand command, CancellationToken cancellationToken)
     {
@@ -21,7 +22,8 @@ public class CheckOrAddUserCommandHandler(IApplicationDbContext _dbContext) : IR
                         cancellationToken);
         if (user != null)
         {
-            return new CheckOrAddUserResponse(user.Id, true);
+            var userDto = _mapper.Map<UserDto>(user);
+            return new CheckOrAddUserResponse(userDto, true);
         }
         else
         {
@@ -34,7 +36,10 @@ public class CheckOrAddUserCommandHandler(IApplicationDbContext _dbContext) : IR
 
             _dbContext.Users.Add(newUser);
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return new CheckOrAddUserResponse(newUser.Id, false);
+
+            var userDto = _mapper.Map<UserDto>(newUser);
+
+            return new CheckOrAddUserResponse(userDto, false);
         }
 
     }
