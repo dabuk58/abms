@@ -6,4 +6,6 @@ export * from './accommodationDto';
 export * from './accommodationsParams';
 export * from './checkOrAddUserCommand';
 export * from './checkOrAddUserResponse';
+export * from './suggestionDto';
+export * from './suggestionsParams';
 export * from './userDto';

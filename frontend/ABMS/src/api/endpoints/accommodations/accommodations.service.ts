@@ -19,7 +19,9 @@ import {
 } from 'rxjs'
 import type {
   AccommodationDto,
-  AccommodationsParams
+  AccommodationsParams,
+  SuggestionDto,
+  SuggestionsParams
 } from '../../model'
 
 
@@ -60,6 +62,24 @@ export class AccommodationsApiService {
         params: {...params, ...options?.params},}
     );
   }
+ suggestions<TData = SuggestionDto[]>(
+    params: SuggestionsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    suggestions<TData = SuggestionDto[]>(
+    params: SuggestionsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    suggestions<TData = SuggestionDto[]>(
+    params: SuggestionsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;suggestions<TData = SuggestionDto[]>(
+    params: SuggestionsParams, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `/accommodations/suggestions`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
 };
 
 export type AccommodationsClientResult = NonNullable<AccommodationDto[]>
+export type SuggestionsClientResult = NonNullable<SuggestionDto[]>

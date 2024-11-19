@@ -3,6 +3,7 @@
  */
 
 export type AccommodationsParams = {
+Query?: string;
 Name?: string;
 ZipCode?: string;
 City?: string;
