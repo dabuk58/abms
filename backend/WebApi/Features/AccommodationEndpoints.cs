@@ -1,4 +1,6 @@
 ﻿using Application.Features.Accommodations.Queries.GetAccommodations;
+using Application.Features.Accommodations.Queries.GetSuggestions;
+using Application.Features.Suggestions.Queries.GetSuggestions;
 using FluentValidation;
 using MediatR;
 using Swashbuckle.AspNetCore.Annotations;
@@ -25,6 +27,18 @@ namespace QualityManagement.WebApi.Features
                 )
                 .WithName("accommodations")
                 .Produces<IEnumerable<AccommodationDto>>(StatusCodes.Status200OK);
+
+            group.MapGet("suggestions",
+                [SwaggerOperation(summary: "Get accommodation suggestions based on search query.")]
+            [SwaggerResponse(200, "success")]
+            async (
+                    ISender sender,
+                    [AsParameters] GetSuggestionsQuery request,
+                    CancellationToken cancellationToken) =>
+                        await sender.Send(request, cancellationToken)
+                )
+                .WithName("suggestions")
+                .Produces<IEnumerable<SuggestionDto>>(StatusCodes.Status200OK);
         }
     }
 }

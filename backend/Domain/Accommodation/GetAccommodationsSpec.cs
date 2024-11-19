@@ -5,6 +5,7 @@ namespace Domain.Accommodation;
 public class GetAccommodationsSpec : Specification<Accommodation>
 {
     public record GetAccommodationsSpecQueryParams(
+        string? Query,
         string? City,
         string? Region,
         string? Country,
@@ -22,7 +23,13 @@ public class GetAccommodationsSpec : Specification<Accommodation>
     public GetAccommodationsSpec(GetAccommodationsSpecQueryParams queryParams)
     {
         Query.Where(
-            a => (queryParams.City == null || a.City == queryParams.City)
+            a => (queryParams.Query == null ||
+                  a.Region.ToLower().Contains(queryParams.Query.ToLower()) ||
+                  a.Country.ToLower().Contains(queryParams.Query.ToLower()) ||
+                  a.Name.ToLower().Contains(queryParams.Query.ToLower()) ||
+                  a.City.ToLower().Contains(queryParams.Query.ToLower()) ||
+                  a.ZipCode.ToLower().Contains(queryParams.Query.ToLower()))
+            && (queryParams.City == null || a.City == queryParams.City)
             && (queryParams.Region == null || a.Region == queryParams.Region)
             && (queryParams.Country == null || a.Country == queryParams.Country)
             && (queryParams.MinLatitude == null || a.Latitude >= queryParams.MinLatitude)

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Accommodations.Queries.GetAccommodations;
 public record GetAccommodationsQuery(
+    string? Query,
     string? Name,
     string? ZipCode,
     string? City,
@@ -30,6 +31,7 @@ public class GetAccommodationsQueryHandler(IMapper mapper, IApplicationDbContext
     public async Task<IEnumerable<AccommodationDto>> Handle(GetAccommodationsQuery request, CancellationToken cancellationToken)
     {
         var queryParameters = new GetAccommodationsSpec.GetAccommodationsSpecQueryParams(
+            request.Query,
             request.City,
             request.Region,
             request.Country,
