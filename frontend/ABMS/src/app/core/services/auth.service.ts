@@ -16,7 +16,7 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { CheckOrAddUserCommand, User, UsersApiService } from '../../../api';
+import { CheckOrAddUserCommand, UserDto, UsersApiService } from '../../../api';
 import { environment } from '../../environments/environment';
 import { mapUser } from '../../shared/mappers/user-mapper';
 import { AuthProviderEnum } from '../enums/auth-provider.enum';
@@ -137,7 +137,7 @@ export class AuthService {
     );
   }
 
-  setActiveUser(user?: User): void {
+  setActiveUser(user?: UserDto): void {
     this.userService.activeUser = user ? mapUser(user) : undefined;
   }
 

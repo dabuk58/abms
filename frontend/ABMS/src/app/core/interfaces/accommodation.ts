@@ -1,12 +1,13 @@
 export interface Accommodation {
+  id: number;
   name: string;
-  description: string;
+  description?: string;
   zipCode: string;
-  state: string;
+  region: string;
   city: string;
   country: string;
   latitude: number;
   longitude: number;
   unavailableDates: Date[];
-  price_per_night: number;
+  pricePerNight: number;
 }

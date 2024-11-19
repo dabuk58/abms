@@ -1,1 +1,21 @@
-<p-carousel></p-carousel>
+@if(accommodationProposals$ | async; as proposals){
+<p-carousel
+  [value]="proposals"
+  [numVisible]="2"
+  [numScroll]="1"
+  [responsiveOptions]="responsiveOptions"
+  [circular]="true"
+  [autoplayInterval]="3000"
+>
+  <ng-template pTemplate="header">
+    <p>{{ "proposed" | translate }}</p>
+  </ng-template>
+  <ng-template pTemplate="item" let-proposal>
+    <div class="border-1 surface-border border-round m-2 p-3">
+      {{ proposal.name }}
+    </div>
+  </ng-template>
+</p-carousel>
+}@else {
+<app-loader></app-loader>
+}

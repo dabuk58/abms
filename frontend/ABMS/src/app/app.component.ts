@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { InteractionStatus } from '@azure/msal-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { PrimeNGConfig } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { filter } from 'rxjs';
 import translationsPL from './../../public/i18n/pl.json';
@@ -17,6 +18,7 @@ import { HeaderComponent } from './core/components/header/header.component';
 })
 export class AppComponent implements OnInit {
   constructor(
+    private config: PrimeNGConfig,
     private translate: TranslateService,
     private msalAuthService: MsalService,
     private msalBroadcastService: MsalBroadcastService
@@ -25,6 +27,9 @@ export class AppComponent implements OnInit {
     this.translate.setTranslation('pl', translationsPL);
     this.translate.setDefaultLang('pl');
     this.translate.use('pl');
+    this.translate
+      .get('primeng')
+      .subscribe((res) => this.config.setTranslation(res));
   }
 
   ngOnInit(): void {

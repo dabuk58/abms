@@ -1,46 +1,46 @@
 {
   "primeng": {
     "dayNames": [
-      "Niedziela",
-      "Poniedziałek",
-      "Wtorek",
-      "Środa",
-      "Czwartek",
-      "Piątek",
-      "Sobota"
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
     ],
-    "dayNamesShort": ["Nie", "Pon", "Wto", "Śro", "Czw", "Pią", "Sob"],
-    "dayNamesMin": ["N", "P", "W", "Ś", "C", "P", "S"],
+    "dayNamesShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "dayNamesMin": ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
     "monthNames": [
-      "Styczeń",
-      "Luty",
-      "Marzec",
-      "Kwiecień",
-      "Maj",
-      "Czerwiec",
-      "Lipiec",
-      "Sierpień",
-      "Wrzesień",
-      "Październik",
-      "Listopad",
-      "Grudzień"
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
     ],
     "monthNamesShort": [
-      "Sty",
-      "Lut",
+      "Jan",
+      "Feb",
       "Mar",
-      "Kwi",
-      "Maj",
-      "Cze",
-      "Lip",
-      "Sie",
-      "Wrz",
-      "Paź",
-      "Lis",
-      "Gru"
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
     ],
-    "today": "Dzisiaj",
-    "weekHeader": "Tydz"
+    "today": "Today",
+    "weekHeader": "Wk"
   },
   "login": "Zaloguj",
   "choose_option": "Wybierz opcję",
@@ -68,8 +68,5 @@
   "italy": "Włochy",
   "san_francisco": "San Francisco",
   "type_destination": "Wpisz miejsce...",
-  "choose_dates": "Wybierz daty...",
-  "choose_people_amount": "Wybierz ilość osób...",
-  "search": "Szukaj",
-  "proposed": "Proponowane"
+  "choose_dates": "Wybierz daty..."
 }
