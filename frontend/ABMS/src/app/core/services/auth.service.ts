@@ -16,27 +16,26 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import {
-  CheckOrAddUserClientResult,
-  CheckOrAddUserCommand,
-  UsersApiService,
-} from '../../../api';
+import { CheckOrAddUserCommand, User, UsersApiService } from '../../../api';
 import { environment } from '../../environments/environment';
-import { AuthMethodEnum } from '../enums/auth-method.enum';
+import { mapUser } from '../../shared/mappers/user-mapper';
+import { AuthProviderEnum } from '../enums/auth-provider.enum';
 import { LoaderEnum } from '../enums/loader.enum';
 import { LoaderService } from './loader.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private authMethod: AuthMethodEnum | undefined;
+  private authProvider: AuthProviderEnum | undefined;
 
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
     private msalAuthService: MsalService,
     private loaderService: LoaderService,
-    private usersApiService: UsersApiService
+    private usersApiService: UsersApiService,
+    private userService: UserService
   ) {
     if (this.isLoggedIn) {
       this.setAuthMethod();
@@ -51,14 +50,14 @@ export class AuthService {
 
   setAuthMethod(): void {
     if (this.msalAuthService.instance.getActiveAccount()) {
-      this.authMethod = AuthMethodEnum.MICROSOFT;
+      this.authProvider = AuthProviderEnum.MICROSOFT;
     } else if (sessionStorage.getItem('loggedInUser')) {
-      this.authMethod = AuthMethodEnum.GOOGLE;
+      this.authProvider = AuthProviderEnum.GOOGLE;
     }
   }
 
   logout(): void {
-    if (this.authMethod === AuthMethodEnum.MICROSOFT) {
+    if (this.authProvider === AuthProviderEnum.MICROSOFT) {
       this.logoutMicrosoft();
     } else {
       this.logoutGoogle();
@@ -110,9 +109,10 @@ export class AuthService {
       email: userEmail,
     };
 
-    return this.usersApiService
-      .checkOrAddUser(params)
-      .pipe(switchMap(() => of(userName)));
+    return this.usersApiService.checkOrAddUser(params).pipe(
+      tap((response) => this.setActiveUser(response.user)),
+      switchMap(() => of(userName))
+    );
   }
 
   checkGoogleUserExistence$(token: any): Observable<string> {
@@ -122,7 +122,7 @@ export class AuthService {
     const userName = decodedToken?.given_name || '';
 
     if (!userEmail || !googleUserId) {
-      return throwError(() => new Error("No user id or email defined!"));
+      return throwError(() => new Error('No user id or email defined!'));
     }
 
     const params: CheckOrAddUserCommand = {
@@ -131,9 +131,14 @@ export class AuthService {
       email: userEmail,
     };
 
-    return this.usersApiService
-      .checkOrAddUser(params)
-      .pipe(switchMap(() => of(userName)));
+    return this.usersApiService.checkOrAddUser(params).pipe(
+      tap((response) => this.setActiveUser(response.user)),
+      switchMap(() => of(userName))
+    );
+  }
+
+  setActiveUser(user?: User): void {
+    this.userService.activeUser = user ? mapUser(user) : undefined;
   }
 
   private logoutMicrosoft(): void {
