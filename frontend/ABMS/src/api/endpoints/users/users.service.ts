@@ -18,7 +18,8 @@ import {
   Observable
 } from 'rxjs'
 import type {
-  CheckOrAddUserCommand
+  CheckOrAddUserCommand,
+  CheckOrAddUserResponse
 } from '../../model'
 
 
@@ -42,15 +43,15 @@ type HttpClientOptions = {
 export class UsersApiService {
   constructor(
     private http: HttpClient,
-  ) {} checkOrAddUser<TData = void>(
+  ) {} checkOrAddUser<TData = CheckOrAddUserResponse>(
     checkOrAddUserCommand: CheckOrAddUserCommand, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    checkOrAddUser<TData = void>(
+    checkOrAddUser<TData = CheckOrAddUserResponse>(
     checkOrAddUserCommand: CheckOrAddUserCommand, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    checkOrAddUser<TData = void>(
+    checkOrAddUser<TData = CheckOrAddUserResponse>(
     checkOrAddUserCommand: CheckOrAddUserCommand, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;checkOrAddUser<TData = void>(
+  ): Observable<HttpEvent<TData>>;checkOrAddUser<TData = CheckOrAddUserResponse>(
     checkOrAddUserCommand: CheckOrAddUserCommand, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.post<TData>(
@@ -60,4 +61,4 @@ export class UsersApiService {
   }
 };
 
-export type CheckOrAddUserClientResult = NonNullable<void>
+export type CheckOrAddUserClientResult = NonNullable<CheckOrAddUserResponse>

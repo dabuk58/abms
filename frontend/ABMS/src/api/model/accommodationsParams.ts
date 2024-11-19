@@ -14,4 +14,8 @@ MinLongitude?: number;
 MaxLongitude?: number;
 MinPricePerNight?: number;
 MaxPricePerNight?: number;
+SortBy?: string;
+SortDirection?: string;
+Offset?: number;
+RecordNo?: number;
 };
