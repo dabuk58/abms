@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { catchError, Observable, Subject, takeUntil, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { AuthMethodEnum } from '../../../enums/auth-method.enum';
 import { LoaderEnum } from '../../../enums/loader.enum';
 import { AuthService } from '../../../services/auth.service';
 import { LoaderService } from '../../../services/loader.service';
@@ -24,6 +24,8 @@ export class GoogleLoginButtonComponent implements AfterViewInit {
   @Input() dialogRef!: DynamicDialogRef;
   redirectUrl!: string;
   scriptId = 'google-signin-script';
+
+  private readonly _destroying$ = new Subject<void>();
 
   constructor(
     private loaderService: LoaderService,
@@ -59,12 +61,31 @@ export class GoogleLoginButtonComponent implements AfterViewInit {
   }
 
   handleOauthResponse(response: any): void {
-    this.loaderService.setInactive(LoaderEnum.LOGIN);
-    const responsePayload = jwtDecode(response.credential);
-    sessionStorage.setItem('loggedinUser', JSON.stringify(responsePayload));
-    this.dialogRef.close();
-    this.authService.setAuthMethod();
+    this.loaderService.setActive(LoaderEnum.LOGIN);
+    const responsePayload = jwtDecode<any>(response.credential);
 
-    console.log(responsePayload);
+    this.checkUserExistence$(response.credential)
+      .pipe(
+        catchError((e) => {
+          console.error(e);
+          return throwError(() => new Error());
+        }),
+        takeUntil(this._destroying$)
+      )
+      .subscribe(() => {
+        sessionStorage.setItem('loggedinUser', JSON.stringify(responsePayload));
+        this.dialogRef.close(responsePayload?.given_name);
+        this.authService.setAuthMethod();
+        this.loaderService.setInactive(LoaderEnum.LOGIN);
+      });
+  }
+
+  checkUserExistence$(token: any): Observable<string> {
+    return this.authService.checkGoogleUserExistence$(token);
+  }
+
+  ngOnDestroy(): void {
+    this._destroying$.next(undefined);
+    this._destroying$.complete();
   }
 }

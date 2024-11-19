@@ -94,7 +94,7 @@ export class AuthService {
       });
   }
 
-  checkMsalUserExistence$(token: any): Observable<CheckOrAddUserClientResult> {
+  checkMsalUserExistence$(token: any): Observable<string> {
     const decodedToken = jwtDecode<any>(token);
     const userEmail = decodedToken?.email || '';
     const msalUserId = decodedToken?.oid || '';
@@ -106,6 +106,27 @@ export class AuthService {
 
     const params: CheckOrAddUserCommand = {
       authProviderUserId: msalUserId,
+      authProvider: 2,
+      email: userEmail,
+    };
+
+    return this.usersApiService
+      .checkOrAddUser(params)
+      .pipe(switchMap(() => of(userName)));
+  }
+
+  checkGoogleUserExistence$(token: any): Observable<string> {
+    const decodedToken = jwtDecode<any>(token);
+    const userEmail = decodedToken?.email || '';
+    const googleUserId = decodedToken?.sub || '';
+    const userName = decodedToken?.given_name || '';
+
+    if (!userEmail || !googleUserId) {
+      return throwError(() => new Error("No user id or email defined!"));
+    }
+
+    const params: CheckOrAddUserCommand = {
+      authProviderUserId: googleUserId,
       authProvider: 2,
       email: userEmail,
     };
