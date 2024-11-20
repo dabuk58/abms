@@ -16,5 +16,8 @@ export const environment = {
     scopes: ['user.read'],
     uri: 'https://localhost:7163',
   },
+  azureBlobStorageConfig: {
+    sas: 'sp=r&st=2024-11-20T14:03:49Z&se=2025-02-28T22:03:49Z&sv=2022-11-02&sr=c&sig=w9f2iouymjqrBZgKIdlNUECy4Dl%2BJIvrzPLjKnq%2F%2FC8%3D',
+  },
   homePath: 'http://localhost:4200',
 };

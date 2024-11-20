@@ -10,4 +10,5 @@ export interface Accommodation {
   longitude: number;
   unavailableDates: Date[];
   pricePerNight: number;
+  image?: string;
 }
