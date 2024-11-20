@@ -76,5 +76,10 @@
   "place": "Miejsce",
   "date": "Data",
   "amount_of_people": "Ilość osób",
-  "from": "od"
+  "from": "od",
+  "about_us": "O nas",
+  "contact": "Kontakt",
+  "about_us_description": "BedFind to platforma pośrednicząca w wynajmie hoteli, apartamentów i innych obiektów noclegowych. Twoje idealne miejsce na pobyt – na wyciągnięcie ręki!",
+  "hotline": "Infolinia 24/7",
+  "email": "Email"
 }

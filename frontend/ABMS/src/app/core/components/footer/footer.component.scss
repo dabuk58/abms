@@ -1,0 +1,19 @@
+@import "./../../../../styles/variables.scss";
+
+.abms-footer {
+  background-color: $primary;
+  color: $white;
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 70%;
+
+    &--about-us,
+    &--contact-us {
+      max-width: 70%;
+      text-align: center;
+      text-wrap: balance;
+    }
+  }
+}
