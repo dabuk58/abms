@@ -13,4 +13,5 @@ public class Accommodation : AuditableEntity
     public required decimal Latitude { get; set; }
     public required decimal Longitude { get; set; }
     public required decimal PricePerNight { get; set; }
+    public string? Image { get; set; }
 }

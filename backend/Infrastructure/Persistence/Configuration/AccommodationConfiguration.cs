@@ -58,6 +58,10 @@ public class AccommodationConfiguration : IEntityTypeConfiguration<Accommodation
             .HasColumnType("decimal(10,2)")
             .IsRequired();
 
+        builder.Property(x => x.Image)
+            .HasColumnName("image")
+            .IsRequired(false);
+
         builder.Property(x => x.CreatedAt)
             .HasColumnName("created_at")
             .IsRequired();
