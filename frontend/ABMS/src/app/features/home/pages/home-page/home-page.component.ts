@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { PanelModule } from 'primeng/panel';
 import { ProposalsCarouselComponent } from '../../components/proposals-carousel/proposals-carousel.component';
 
 @Component({
@@ -18,6 +19,7 @@ import { ProposalsCarouselComponent } from '../../components/proposals-carousel/
     ReactiveFormsModule,
     InputNumberModule,
     ProposalsCarouselComponent,
+    PanelModule,
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
@@ -97,7 +99,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   onInput(event: any): void {
     if (!this.didUserInteract) {
-      this.currentPlaceholder = this.translation.instant('type_destination');
+      this.currentPlaceholder =
+        this.translation.instant('type_destination') + '...';
       clearInterval(this.typingInterval);
     }
     console.log(event.target.value);

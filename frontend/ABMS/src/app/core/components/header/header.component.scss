@@ -1,17 +1,12 @@
 @import "./../../../../styles/variables.scss";
 
 .abms-header {
-  background-color: $white;
+  background-color: $primary;
   transition: background-color 0.3s ease, color 0.3s ease, padding 0.3s ease;
   padding: 16px 48px;
+  color: $white;
 
   &--collapsed {
-    background-color: $primary;
     padding: 6px 48px;
-
-    & .abms-logo {
-      color: $white;
-      transition: color 0.3s;
-    }
   }
 }

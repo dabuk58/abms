@@ -1,8 +1,15 @@
 .abms-home {
+  width: 55%;
+
   &__icon {
     transform: translate(0, -50%);
     right: 10px;
     font-size: 18px;
+  }
+
+  &__label {
+    position: absolute;
+    top: -22px;
   }
 }
 

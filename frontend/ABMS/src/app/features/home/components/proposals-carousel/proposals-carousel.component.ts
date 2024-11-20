@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
+import { ButtonModule } from 'primeng/button';
 import { CarouselModule } from 'primeng/carousel';
 import { Observable } from 'rxjs';
 import { LoaderComponent } from '../../../../core/components/loader/loader.component';
@@ -9,7 +10,7 @@ import { ProposalsService } from '../../services/proposals.service';
 @Component({
   selector: 'app-proposals-carousel',
   standalone: true,
-  imports: [CarouselModule, TranslatePipe, LoaderComponent],
+  imports: [CarouselModule, TranslatePipe, LoaderComponent, ButtonModule],
   templateUrl: './proposals-carousel.component.html',
   styleUrl: './proposals-carousel.component.scss',
 })
@@ -17,10 +18,7 @@ export class ProposalsCarouselComponent implements OnInit {
   responsiveOptions: any[] | undefined;
   accommodationProposals$!: Observable<Accommodation[]>;
 
-  constructor(
-    private translation: TranslateService,
-    private proposalsService: ProposalsService
-  ) {}
+  constructor(private proposalsService: ProposalsService) {}
 
   ngOnInit() {
     this.setResponsiveOptions();

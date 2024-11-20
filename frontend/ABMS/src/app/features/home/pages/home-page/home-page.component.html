@@ -1,50 +1,68 @@
 <div
   class="abms-home flex flex-column gap-5 justify-content-center align-items-center gap-5"
 >
-  <h1 class="text-5xl font-bold pt-7">
+  <h1 class="text-6xl font-bold pt-7">
     {{ "your_journey_starts_here" | translate }}
   </h1>
-  <form [formGroup]="form" class="flex flex-column gap-5 align-items-center">
-    <span class="relative w-18rem">
-      <input
-        type="text"
-        pInputText
-        (input)="onInput($event)"
-        (click)="onInput($event)"
-        [placeholder]="currentPlaceholder"
-        formControlName="query"
-      />
-      <i class="abms-home__icon pi pi-globe absolute top-50"></i>
-    </span>
-    <span class="relative w-18rem">
-      <p-calendar
-        formControlName="dates"
-        selectionMode="range"
-        [readonlyInput]="true"
-        [minDate]="minDate"
-        [maxDate]="maxDate"
-        [placeholder]="translation.instant('choose_dates')"
-      />
-      <i class="abms-home__icon pi pi-calendar absolute top-50"></i>
-    </span>
-    <span class="relative w-18rem">
-      <p-inputNumber
-        inputId="integeronly"
-        formControlName="guests"
-        [showButtons]="true"
-        [min]="1"
-        [max]="20"
-        [placeholder]="translation.instant('choose_people_amount')"
-      />
-      <i class="abms-home__icon pi pi-users absolute top-50"></i>
-    </span>
+  <h2 class="text-2xl pt-2">
+    {{ "start_desired_search" | translate }}
+  </h2>
+  <p-panel class="flex flex-column gap-5 p-3">
+    <form [formGroup]="form" class="flex flex-row gap-5 align-items-center">
+      <span class="relative w-18rem">
+        <label class="abms-home__label" for="place">
+          {{ "place" | translate }}
+        </label>
+        <input
+          id="place"
+          type="text"
+          pInputText
+          (input)="onInput($event)"
+          (click)="onInput($event)"
+          [placeholder]="currentPlaceholder"
+          formControlName="query"
+        />
+        <i class="abms-home__icon pi pi-globe absolute top-50"></i>
+      </span>
+      <span class="relative w-18rem">
+        <label class="abms-home__label" for="dates">{{
+          "date" | translate
+        }}</label>
+        <p-calendar
+          inputId="dates"
+          formControlName="dates"
+          selectionMode="range"
+          [readonlyInput]="true"
+          [minDate]="minDate"
+          [maxDate]="maxDate"
+          [placeholder]="translation.instant('choose_dates') + '...'"
+        />
+        <i class="abms-home__icon pi pi-calendar absolute top-50"></i>
+      </span>
+      <span class="relative w-18rem">
+        <label class="abms-home__label" for="people">{{
+          "amount_of_people" | translate
+        }}</label>
+        <p-inputNumber
+          inputId="people"
+          inputId="integeronly"
+          formControlName="guests"
+          [showButtons]="true"
+          [min]="1"
+          [max]="20"
+          [placeholder]="translation.instant('choose_people_amount') + '...'"
+        />
+        <i class="abms-home__icon pi pi-users absolute top-50"></i>
+      </span>
+    </form>
     <p-button
+      class="abms-home__search-button"
       [label]="translation.instant('search')"
       icon="pi pi-arrow-right"
       iconPos="right"
       type="submit"
       (onClick)="onSearch()"
     />
-  </form>
-  <app-proposals-carousel></app-proposals-carousel>
+  </p-panel>
+  <app-proposals-carousel class="w-full"></app-proposals-carousel>
 </div>

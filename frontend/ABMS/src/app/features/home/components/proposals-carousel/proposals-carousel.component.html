@@ -1,21 +1,42 @@
 @if(accommodationProposals$ | async; as proposals){
 <p-carousel
+  class="abms-proposals-carousel"
   [value]="proposals"
-  [numVisible]="2"
+  [numVisible]="3"
   [numScroll]="1"
   [responsiveOptions]="responsiveOptions"
-  [circular]="true"
   [autoplayInterval]="3000"
 >
   <ng-template pTemplate="header">
-    <p>{{ "proposed" | translate }}</p>
+    <p class="abms-proposals-carousel__header font-bold">
+      {{ "proposed" | translate }}
+    </p>
   </ng-template>
   <ng-template pTemplate="item" let-proposal>
     <div class="border-1 surface-border border-round m-2 p-3">
-      {{ proposal.name }}
+      <div class="mb-3">
+        <div class="relative mx-auto">
+          <img
+            [src]="proposal.image"
+            [alt]="proposal.name"
+            class="abms-proposals-carousel__image w-full border-round"
+          />
+        </div>
+      </div>
+      <div class="mb-3 font-medium">
+        {{ proposal.name }}
+      </div>
+      <div class="flex justify-content-between align-items-center">
+        <div class="mt-0 font-semibold text-xl">
+          {{ "from" | translate }} {{ proposal.pricePerNight + "zł" }}
+        </div>
+        <span>
+          <p-button icon="pi pi-angle-right" />
+        </span>
+      </div>
     </div>
   </ng-template>
 </p-carousel>
-}@else {
+} @else {
 <app-loader></app-loader>
 }

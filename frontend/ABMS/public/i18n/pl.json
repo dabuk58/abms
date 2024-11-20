@@ -51,7 +51,8 @@
   "reservations": "Rezerwacje",
   "active": "Aktywne",
   "completed": "Zakończone",
-  "your_journey_starts_here": "Twoja przygoda zaczyna się tutaj.",
+  "your_journey_starts_here": "Twoja przygoda zaczyna się tutaj",
+  "start_desired_search": "Rozpocznij wyszukiwanie swoich wymarzonych wakacji",
   "my_account": "Moje konto",
   "hi_user_nice_to_see_you": "Cześć{0}, miło Cię widzieć!",
   "logged_in_successfully": "Zalogowano pomyślnie",
@@ -67,9 +68,13 @@
   "chile": "Chile",
   "italy": "Włochy",
   "san_francisco": "San Francisco",
-  "type_destination": "Wpisz miejsce...",
-  "choose_dates": "Wybierz daty...",
-  "choose_people_amount": "Wybierz ilość osób...",
+  "type_destination": "Wpisz miejsce",
+  "choose_dates": "Wybierz daty",
+  "choose_people_amount": "Wybierz ilość osób",
   "search": "Szukaj",
-  "proposed": "Proponowane"
+  "proposed": "Proponowane",
+  "place": "Miejsce",
+  "date": "Data",
+  "amount_of_people": "Ilość osób",
+  "from": "od"
 }

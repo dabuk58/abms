@@ -50,3 +50,7 @@
   stroke: $primary;
   animation: p-progress-spinner-dash 1.5s ease-in-out infinite;
 }
+
+.p-button-icon-only:after {
+  content: none;
+}
