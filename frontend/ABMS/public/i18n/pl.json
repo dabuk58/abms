@@ -10,7 +10,7 @@
       "Sobota"
     ],
     "dayNamesShort": ["Nie", "Pon", "Wto", "Śro", "Czw", "Pią", "Sob"],
-    "dayNamesMin": ["N", "P", "W", "Ś", "C", "P", "S"],
+    "dayNamesMin": ["Nie", "Pon", "Wto", "Śro", "Czw", "Pią", "Sob"],
     "monthNames": [
       "Styczeń",
       "Luty",

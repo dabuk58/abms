@@ -54,3 +54,17 @@
 .p-button-icon-only:after {
   content: none;
 }
+
+.p-datepicker {
+  &-calendar {
+    font-size: 15px;
+  }
+
+  &-title {
+    .p-datepicker-month,
+    .p-datepicker-year {
+      font-family: "Poppins", serif;
+      font-size: 15px;
+    }
+  }
+}
