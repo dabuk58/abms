@@ -270,6 +270,10 @@
           "pricePerNight": {
             "type": "number",
             "format": "double"
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

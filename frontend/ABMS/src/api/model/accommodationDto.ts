@@ -10,6 +10,8 @@ export interface AccommodationDto {
   /** @nullable */
   description?: string;
   id?: number;
+  /** @nullable */
+  image?: string;
   latitude: number;
   longitude: number;
   /** @nullable */
