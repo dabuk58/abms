@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241121202602_AddAmenitiesAndAccommodationChange")]
+    partial class AddAmenitiesAndAccommodationChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,25 +70,11 @@ namespace Infrastructure.Migrations
                         .HasColumnType("decimal(10,2)")
                         .HasColumnName("price_per_night");
 
-                    b.Property<int?>("Rating")
-                        .HasColumnType("integer")
-                        .HasColumnName("rating");
-
                     b.Property<string>("Region")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)")
                         .HasColumnName("region");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("street");
-
-                    b.Property<int>("StreetNumber")
-                        .HasColumnType("integer")
-                        .HasColumnName("street_number");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -102,24 +91,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("accommodations", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.AccommodationAmenity.AccommodationAmenity", b =>
-                {
-                    b.Property<int>("AccommodationId")
-                        .HasColumnType("integer")
-                        .HasColumnName("accommodation_id");
-
-                    b.Property<int>("AmenityId")
-                        .HasColumnType("integer")
-                        .HasColumnName("amenity_id");
-
-                    b.HasKey("AccommodationId", "AmenityId");
-
-                    b.HasIndex("AmenityId");
-
-                    b.ToTable("accommodation_amenities", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.Amenity.Amenity", b =>
+            modelBuilder.Entity("Domain.Accommodation.Amenity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -183,37 +155,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("users", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.AccommodationAmenity.AccommodationAmenity", b =>
-                {
-                    b.HasOne("Domain.Accommodation.Accommodation", "Accommodation")
-                        .WithMany("AccommodationAmenities")
-                        .HasForeignKey("AccommodationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_accommodation_amenity_to_accommodation");
-
-                    b.HasOne("Domain.Amenity.Amenity", "Amenity")
-                        .WithMany("AmenityAccommodations")
-                        .HasForeignKey("AmenityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_accommodation_amenity_to_amenity");
-
-                    b.Navigation("Accommodation");
-
-                    b.Navigation("Amenity");
-                });
-
-            modelBuilder.Entity("Domain.Accommodation.Accommodation", b =>
-                {
-                    b.Navigation("AccommodationAmenities");
-                });
-
-            modelBuilder.Entity("Domain.Amenity.Amenity", b =>
-                {
-                    b.Navigation("AmenityAccommodations");
                 });
 #pragma warning restore 612, 618
         }

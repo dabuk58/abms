@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241121204645_AddAccommodationAmenities")]
+    partial class AddAccommodationAmenities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,25 +70,11 @@ namespace Infrastructure.Migrations
                         .HasColumnType("decimal(10,2)")
                         .HasColumnName("price_per_night");
 
-                    b.Property<int?>("Rating")
-                        .HasColumnType("integer")
-                        .HasColumnName("rating");
-
                     b.Property<string>("Region")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)")
                         .HasColumnName("region");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("street");
-
-                    b.Property<int>("StreetNumber")
-                        .HasColumnType("integer")
-                        .HasColumnName("street_number");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -105,12 +94,10 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.AccommodationAmenity.AccommodationAmenity", b =>
                 {
                     b.Property<int>("AccommodationId")
-                        .HasColumnType("integer")
-                        .HasColumnName("accommodation_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("AmenityId")
-                        .HasColumnType("integer")
-                        .HasColumnName("amenity_id");
+                        .HasColumnType("integer");
 
                     b.HasKey("AccommodationId", "AmenityId");
 
@@ -188,14 +175,14 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.AccommodationAmenity.AccommodationAmenity", b =>
                 {
                     b.HasOne("Domain.Accommodation.Accommodation", "Accommodation")
-                        .WithMany("AccommodationAmenities")
+                        .WithMany()
                         .HasForeignKey("AccommodationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_accommodation_amenity_to_accommodation");
 
                     b.HasOne("Domain.Amenity.Amenity", "Amenity")
-                        .WithMany("AmenityAccommodations")
+                        .WithMany()
                         .HasForeignKey("AmenityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -204,16 +191,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Accommodation");
 
                     b.Navigation("Amenity");
-                });
-
-            modelBuilder.Entity("Domain.Accommodation.Accommodation", b =>
-                {
-                    b.Navigation("AccommodationAmenities");
-                });
-
-            modelBuilder.Entity("Domain.Amenity.Amenity", b =>
-                {
-                    b.Navigation("AmenityAccommodations");
                 });
 #pragma warning restore 612, 618
         }

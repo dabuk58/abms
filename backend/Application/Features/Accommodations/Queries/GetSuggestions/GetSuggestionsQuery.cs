@@ -26,11 +26,9 @@ public class GetSuggestionsQueryHandler(IMapper mapper, IApplicationDbContext db
             {
                 Type = accommodation.City.Contains(request.query) ? SuggestionType.City :
                        accommodation.Region.Contains(request.query) ? SuggestionType.Region :
-                       accommodation.Country.Contains(request.query) ? SuggestionType.Country :
                        SuggestionType.Accommodation,
                 Name = accommodation.City.Contains(request.query) ? accommodation.City :
                        accommodation.Region.Contains(request.query) ? accommodation.Region :
-                       accommodation.Country.Contains(request.query) ? accommodation.Country :
                        accommodation.Name,
             })
             .ProjectTo<SuggestionDto>(mapper.ConfigurationProvider)

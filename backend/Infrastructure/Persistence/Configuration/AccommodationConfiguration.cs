@@ -23,23 +23,31 @@ public class AccommodationConfiguration : IEntityTypeConfiguration<Accommodation
             .HasColumnName("description")
             .IsRequired(false);
 
+        builder.Property(x => x.Rating)
+            .HasColumnName("rating")
+            .IsRequired(false);
+
+        builder.Property(x => x.Street)
+            .HasColumnName("street")
+            .HasMaxLength(100)
+            .IsRequired();
+
+        builder.Property(x => x.StreetNumber)
+            .HasColumnName("street_number")
+            .IsRequired();
+
         builder.Property(x => x.ZipCode)
             .HasColumnName("zip_code")
             .HasMaxLength(10)
             .IsRequired();
 
-        builder.Property(x => x.Region)
-            .HasColumnName("region")
-            .HasMaxLength(100)
-            .IsRequired();
-
-        builder.Property(x => x.Country)
-            .HasColumnName("country")
-            .HasMaxLength(100)
-            .IsRequired();
-
         builder.Property(x => x.City)
             .HasColumnName("city")
+            .HasMaxLength(100)
+            .IsRequired();
+
+        builder.Property(x => x.Region)
+            .HasColumnName("region")
             .HasMaxLength(100)
             .IsRequired();
 
@@ -62,6 +70,11 @@ public class AccommodationConfiguration : IEntityTypeConfiguration<Accommodation
             .HasColumnName("image")
             .IsRequired(false);
 
+        builder.HasMany(a => a.AccommodationAmenities)
+            .WithOne(aa => aa.Accommodation)
+            .HasForeignKey(aa => aa.AccommodationId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         builder.Property(x => x.CreatedAt)
             .HasColumnName("created_at")
             .IsRequired();
@@ -69,6 +82,5 @@ public class AccommodationConfiguration : IEntityTypeConfiguration<Accommodation
         builder.Property(x => x.UpdatedAt)
             .HasColumnName("updated_at")
             .IsRequired(false);
-
     }
 }

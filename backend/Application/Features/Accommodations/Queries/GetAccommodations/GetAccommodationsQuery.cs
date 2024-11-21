@@ -9,17 +9,15 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Features.Accommodations.Queries.GetAccommodations;
 public record GetAccommodationsQuery(
     string? Query,
-    string? Name,
-    string? ZipCode,
     string? City,
     string? Region,
-    string? Country,
-    decimal? MinLatitude,
-    decimal? MaxLatitude,
-    decimal? MinLongitude,
-    decimal? MaxLongitude,
+    string? DateFrom,
+    string? DateTo,
+    int? Guests,
     int? MinPricePerNight,
     int? MaxPricePerNight,
+    string? Amenities,
+    int? MinRating,
     string? SortBy,
     string? SortDirection,
     int Offset = 0,
@@ -30,17 +28,19 @@ public class GetAccommodationsQueryHandler(IMapper mapper, IApplicationDbContext
 {
     public async Task<IEnumerable<AccommodationDto>> Handle(GetAccommodationsQuery request, CancellationToken cancellationToken)
     {
+        var amenities = request.Amenities?.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
         var queryParameters = new GetAccommodationsSpec.GetAccommodationsSpecQueryParams(
             request.Query,
             request.City,
             request.Region,
-            request.Country,
-            request.MinLatitude,
-            request.MaxLatitude,
-            request.MinLongitude,
-            request.MaxLongitude,
+            request.DateFrom,
+            request.DateTo,
+            request.Guests,
             request.MinPricePerNight,
             request.MaxPricePerNight,
+            amenities,
+            request.MinRating,
             request.SortBy,
             request.SortDirection,
             request.Offset,
@@ -48,6 +48,7 @@ public class GetAccommodationsQueryHandler(IMapper mapper, IApplicationDbContext
             );
 
         var accommodations = await dbContext.Accommodations
+            .Include(aa => aa.AccommodationAmenities)
             .WithSpecification(new GetAccommodationsSpec(queryParameters))
             .ProjectTo<AccommodationDto>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
