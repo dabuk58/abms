@@ -20,20 +20,6 @@
             }
           },
           {
-            "name": "Name",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "ZipCode",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "City",
             "in": "query",
             "schema": {
@@ -48,42 +34,25 @@
             }
           },
           {
-            "name": "Country",
+            "name": "DateFrom",
             "in": "query",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "MinLatitude",
+            "name": "DateTo",
             "in": "query",
             "schema": {
-              "type": "number",
-              "format": "double"
+              "type": "string"
             }
           },
           {
-            "name": "MaxLatitude",
+            "name": "Guests",
             "in": "query",
             "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "MinLongitude",
-            "in": "query",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "MaxLongitude",
-            "in": "query",
-            "schema": {
-              "type": "number",
-              "format": "double"
+              "type": "integer",
+              "format": "int32"
             }
           },
           {
@@ -96,6 +65,21 @@
           },
           {
             "name": "MaxPricePerNight",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Amenities",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "MinRating",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -221,12 +205,13 @@
       "AccommodationDto": {
         "required": [
           "city",
-          "country",
           "latitude",
           "longitude",
           "name",
           "pricePerNight",
           "region",
+          "street",
+          "streetNumber",
           "zipCode"
         ],
         "type": "object",
@@ -243,6 +228,19 @@
             "type": "string",
             "nullable": true
           },
+          "rating": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "street": {
+            "type": "string",
+            "nullable": true
+          },
+          "streetNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
           "zipCode": {
             "type": "string",
             "nullable": true
@@ -252,10 +250,6 @@
             "nullable": true
           },
           "region": {
-            "type": "string",
-            "nullable": true
-          },
-          "country": {
             "type": "string",
             "nullable": true
           },

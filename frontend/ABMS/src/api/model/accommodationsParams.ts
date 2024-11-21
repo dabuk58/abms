@@ -4,17 +4,15 @@
 
 export type AccommodationsParams = {
 Query?: string;
-Name?: string;
-ZipCode?: string;
 City?: string;
 Region?: string;
-Country?: string;
-MinLatitude?: number;
-MaxLatitude?: number;
-MinLongitude?: number;
-MaxLongitude?: number;
+DateFrom?: string;
+DateTo?: string;
+Guests?: number;
 MinPricePerNight?: number;
 MaxPricePerNight?: number;
+Amenities?: string;
+MinRating?: number;
 SortBy?: string;
 SortDirection?: string;
 Offset?: number;

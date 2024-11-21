@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { RatingModule } from 'primeng/rating';
 import { SliderChangeEvent, SliderModule } from 'primeng/slider';
+import { AdvancedFilters } from '../../../../core/interfaces/advanced-filters';
 import { ConstantsService } from '../../../../core/services/constants.service';
 
 @Component({
@@ -28,6 +29,8 @@ import { ConstantsService } from '../../../../core/services/constants.service';
   styleUrl: './accommodations-advanced-filters.component.scss',
 })
 export class AccommodationsAdvancedFiltersComponent {
+  @Output() onFilter = new EventEmitter<AdvancedFilters>();
+
   form!: FormGroup;
   amenities: string[] = [];
   selectedAmenities: string[] = [];
@@ -38,10 +41,10 @@ export class AccommodationsAdvancedFiltersComponent {
     protected translation: TranslateService
   ) {
     this.form = this.fb.group({
-      priceMin: [0],
-      priceMax: [5000],
+      minPrice: [0],
+      maxPrice: [5000],
       priceRange: [[0, 5000]],
-      amenities: [[]],
+      amenities: [null],
       rating: [null],
     });
 
@@ -53,23 +56,23 @@ export class AccommodationsAdvancedFiltersComponent {
     const rangeEnd = event.values![1];
 
     if (rangeStart > rangeEnd) {
-      this.form.get('priceMin')?.patchValue(rangeEnd);
-      this.form.get('priceMax')?.patchValue(rangeStart);
+      this.form.get('minPrice')?.patchValue(rangeEnd);
+      this.form.get('maxPrice')?.patchValue(rangeStart);
     }
     if (rangeStart < rangeEnd) {
-      this.form.get('priceMin')?.patchValue(rangeStart);
-      this.form.get('priceMax')?.patchValue(rangeEnd);
+      this.form.get('minPrice')?.patchValue(rangeStart);
+      this.form.get('maxPrice')?.patchValue(rangeEnd);
     }
     if (rangeEnd === rangeStart) {
-      this.form.get('priceMin')?.patchValue(rangeStart);
-      this.form.get('priceMax')?.patchValue(rangeEnd);
+      this.form.get('minPrice')?.patchValue(rangeStart);
+      this.form.get('maxPrice')?.patchValue(rangeEnd);
     }
   }
 
   clearFilters(): void {
     this.form.patchValue({
-      priceMin: 0,
-      priceMax: 5000,
+      minPrice: 0,
+      maxPrice: 5000,
       priceRange: [0, 5000],
       amenities: [],
       rating: null,
@@ -77,6 +80,13 @@ export class AccommodationsAdvancedFiltersComponent {
   }
 
   onSearch(): void {
-    console.log(this.form.value);
+    const advancedFilters: AdvancedFilters = {
+      minPrice: this.form.get('minPrice')?.value,
+      maxPrice: this.form.get('maxPrice')?.value,
+      amenities: this.form.get('amenities')?.value,
+      rating: this.form.get('rating')?.value,
+    };
+
+    this.onFilter.emit(advancedFilters);
   }
 }

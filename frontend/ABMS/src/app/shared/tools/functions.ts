@@ -3,7 +3,15 @@ export function fillString(template: string, ...args: string[]): string {
 }
 
 export function removeEmptyParams(obj: any): any {
-  const cleanedObj: any = {};
+  if (typeof obj !== 'object' || obj === null) {
+    if (obj !== undefined && obj !== null && obj !== '') {
+      return obj;
+    } else {
+      return undefined;
+    }
+  }
+
+  const cleanedObj: any = Array.isArray(obj) ? [] : {};
 
   Object.keys(obj).forEach((key) => {
     const value = removeEmptyParams(obj[key]);

@@ -6,8 +6,6 @@ export interface AccommodationDto {
   /** @nullable */
   city: string;
   /** @nullable */
-  country: string;
-  /** @nullable */
   description?: string;
   id?: number;
   /** @nullable */
@@ -18,7 +16,12 @@ export interface AccommodationDto {
   name: string;
   pricePerNight: number;
   /** @nullable */
+  rating?: number;
+  /** @nullable */
   region: string;
+  /** @nullable */
+  street: string;
+  streetNumber: number;
   /** @nullable */
   zipCode: string;
 }
