@@ -1,1 +1,90 @@
-<p>accommodations-filters-advanced works!</p>
+<p-panel class="abms-advanced-filters">
+  <ng-template pTemplate="header">
+    <p class="font-bold">
+      {{ "filters" | translate }}
+    </p>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <form [formGroup]="form" class="flex flex-column gap-4">
+      <div class="flex flex-column gap-3">
+        <p class="abms-advanced-filters__single-filter_title">
+          {{ "price_per_night" | translate }}
+        </p>
+        <div class="abms-advanced-filters__price-inputs">
+          <p-inputNumber
+            formControlName="priceMin"
+            mode="currency"
+            currency="PLN"
+            locale="pl-PL"
+            inputId="integeronly"
+            [maxFractionDigits]="0"
+            [readonly]="true"
+          ></p-inputNumber>
+          <p>-</p>
+          <p-inputNumber
+            formControlName="priceMax"
+            mode="currency"
+            currency="PLN"
+            locale="pl-PL"
+            inputId="integeronly"
+            [maxFractionDigits]="0"
+            [readonly]="true"
+          ></p-inputNumber>
+        </div>
+        <p-slider
+          class="ml-2 mt-2"
+          [min]="1"
+          [max]="5000"
+          formControlName="priceRange"
+          [range]="true"
+          [animate]="true"
+          (onChange)="updatePriceInputs($event)"
+        ></p-slider>
+      </div>
+      <div class="flex flex-column gap-3">
+        <p class="abms-advanced-filters__single-filter_title">
+          {{ "rating_stars_amount" | translate }}
+        </p>
+        <p-rating
+          [stars]="10"
+          [cancel]="false"
+          formControlName="rating"
+          class="align-self-center"
+        ></p-rating>
+      </div>
+      <div class="flex flex-column gap-3">
+        <p class="abms-advanced-filters__single-filter_title">
+          {{ "amenitites" | translate }}
+        </p>
+        @for(amenity of amenities; track amenity){
+        <p-checkbox
+          formControlName="amenities"
+          [value]="amenity"
+          [label]="translation.instant(amenity)"
+        ></p-checkbox>
+        }
+      </div>
+      <div class="flex justify-content-between">
+        <p-button
+          class="abms-advanced-filters__clear-button"
+          [label]="translation.instant('clear')"
+          icon="pi pi-times"
+          iconPos="right"
+          type="submit"
+          size="small"
+          [outlined]="true"
+          (onClick)="clearFilters()"
+        />
+        <p-button
+          class="abms-advanced-filters__search-button"
+          [label]="translation.instant('search')"
+          icon="pi pi-search"
+          iconPos="right"
+          type="submit"
+          size="small"
+          (onClick)="onSearch()"
+        />
+      </div>
+    </form>
+  </ng-template>
+</p-panel>

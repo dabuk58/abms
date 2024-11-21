@@ -50,4 +50,19 @@ export class ConstantsService {
       },
     ];
   }
+
+  getAmenitiesOptions(): string[] {
+    return [
+      'free_wifi',
+      'parking',
+      'tv',
+      'pool',
+      'gym',
+      'free_breakfast',
+      'free_meals',
+      'kitchen',
+      'balcony',
+      'private_bathroom',
+    ];
+  }
 }

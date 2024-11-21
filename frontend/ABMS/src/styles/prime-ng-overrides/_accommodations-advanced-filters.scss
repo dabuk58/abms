@@ -1,0 +1,28 @@
+.abms-advanced-filters {
+  &__price-inputs {
+    & .p-inputnumber-input {
+      width: 83px;
+      text-align: center;
+    }
+  }
+
+  .p-inputtext {
+    height: 30px;
+  }
+
+  .p-checkbox-label {
+    font-size: 14px;
+  }
+
+  &__clear-button,
+  &__search-button {
+    .p-button {
+      width: 108px;
+      gap: 0;
+    }
+
+    .p-button-label {
+      font-size: 13px;
+    }
+  }
+}

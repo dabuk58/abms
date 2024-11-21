@@ -1,0 +1,12 @@
+.abms-advanced-filters {
+  &__single-filter_title {
+    font-size: 15px;
+  }
+
+  &__price-inputs {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 10px;
+    place-items: center;
+  }
+}

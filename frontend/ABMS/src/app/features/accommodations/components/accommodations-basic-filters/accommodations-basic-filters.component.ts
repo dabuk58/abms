@@ -58,8 +58,6 @@ export class AccommodationsBasicFiltersComponent implements OnInit {
 
     const { query, dateFrom, dateTo, guests } = this.filtersToPatch;
 
-    console.log(dateFrom);
-
     query && this.form.get('query')?.setValue(query);
 
     if (dateFrom) {
