@@ -29,7 +29,9 @@ import { incrementDateByOneDay } from '../../../../shared/tools/functions';
 export class AccommodationsBasicFiltersComponent implements OnInit {
   @Input() filtersToPatch!: BasicFilters | null;
 
-  minDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
+  minDate: Date = new Date(
+    new Date(new Date().setDate(new Date().getDate() + 1)).setHours(0, 0, 0, 0)
+  );
   maxDate: Date = new Date(
     new Date().setFullYear(new Date().getFullYear() + 2)
   );
@@ -56,6 +58,8 @@ export class AccommodationsBasicFiltersComponent implements OnInit {
 
     const { query, dateFrom, dateTo, guests } = this.filtersToPatch;
 
+    console.log(dateFrom);
+
     query && this.form.get('query')?.setValue(query);
 
     if (dateFrom) {
@@ -66,6 +70,8 @@ export class AccommodationsBasicFiltersComponent implements OnInit {
     }
 
     guests && this.form.get('guests')?.setValue(guests);
+
+    this.checkAndEnhanceDates();
   }
 
   onInput(): void {
@@ -74,23 +80,38 @@ export class AccommodationsBasicFiltersComponent implements OnInit {
 
   onSearch(): void {
     this.checkAndEnhanceDates();
-    console.log(this.form.value);
   }
 
   checkAndEnhanceDates(): void {
-    const datesControl = this.form.get('dates');
-    const datePipeTransform = (date: any) =>
-      this.datePipe.transform(date, 'dd.MM.yyyy');
+    let dateFrom, dateTo;
+    const dates = this.form.get('dates')?.value;
 
-    const [dateFromRaw, dateToRaw] = datesControl?.value || [];
-    const dateFrom = datePipeTransform(dateFromRaw);
-    const dateTo = datePipeTransform(dateToRaw);
+    if (!dates) return;
+
+    if (Array.isArray(dates)) {
+      dateFrom = this.form.get('dates')?.value[0];
+      dateTo = this.form.get('dates')?.value[1];
+    } else {
+      dateFrom = dates.split(' - ')[0];
+      dateTo = dates.split(' - ')[1];
+    }
 
     if (!dateFrom && !dateTo) return;
 
+    if (!/^\d{2}\.\d{2}\.\d{4}$/.test(dateFrom)) {
+      dateFrom = this.datePipe.transform(
+        this.form.get('dates')?.value[0],
+        'dd.MM.yyyy'
+      );
+      dateTo = this.datePipe.transform(
+        this.form.get('dates')?.value[1],
+        'dd.MM.yyyy'
+      );
+    }
+
     if (dateFrom && (!dateTo || dateFrom === dateTo)) {
       const enhancedDateTo = incrementDateByOneDay(dateFrom);
-      datesControl?.patchValue(`${dateFrom} - ${enhancedDateTo}`);
+      this.form.get('dates')?.patchValue(`${dateFrom} - ${enhancedDateTo}`);
     }
   }
 }

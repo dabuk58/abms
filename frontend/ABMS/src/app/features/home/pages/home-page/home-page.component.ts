@@ -37,7 +37,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
   typingInterval: any;
   caretInterval: any;
   didUserInteract = false;
-  minDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
+  minDate: Date = new Date(
+    new Date(new Date().setDate(new Date().getDate() + 1)).setHours(0, 0, 0, 0)
+  );
   maxDate: Date = new Date(
     new Date().setFullYear(new Date().getFullYear() + 2)
   );
