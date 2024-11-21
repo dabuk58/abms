@@ -1,15 +1,15 @@
 import { AccommodationDto } from '../../../../api';
 import { Accommodation } from '../../../core/interfaces/accommodation';
 
-export function mapAccommodationsProposal(
+export function mapAccommodations(
   accommodations: AccommodationDto[]
 ): Accommodation[] {
   return accommodations.map((accommodation) =>
-    mapAccommodationProposal(accommodation)
+    mapAccommodation(accommodation)
   );
 }
 
-export function mapAccommodationProposal(
+export function mapAccommodation(
   accommodation: AccommodationDto
 ): Accommodation {
   return {

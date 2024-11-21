@@ -1,1 +1,21 @@
-<p-panel><p>accommodations-search-results works!</p> </p-panel>
+<div class="abms-search-results flex flex-column gap-3">
+  @if(accommodations$ | async; as accommodations){ @for(accommodation of
+  accommodations; track accommodation){
+  <p-panel>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center justify-content-between">
+        <h2 class="text-lg font-semibold">{{ accommodation.name }}</h2>
+        <i class="pi pi-heart" (click)="onFavorite(accommodation.id)"></i>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <img
+        class="border-round w-15rem"
+        src="https://static.leonardo-hotels.com/image/leonardohotelbucharestcitycenter_room_comfortdouble2_2022_4000x2600_7e18f254bc75491965d36cc312e8111f_1200x780_mobile_3.jpeg"
+      />
+    </ng-template>
+  </p-panel>
+  } } @else {
+  <app-loader class="align-self-center"></app-loader>
+  }
+</div>

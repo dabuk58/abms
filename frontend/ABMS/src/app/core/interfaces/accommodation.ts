@@ -5,7 +5,6 @@ export interface Accommodation {
   zipCode: string;
   region: string;
   city: string;
-  country: string;
   latitude: number;
   longitude: number;
   unavailableDates: Date[];

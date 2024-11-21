@@ -34,7 +34,7 @@ export class AccommodationsSearchPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.extractQueryParamsData();
-    console.log(this.basicFilters);
+    this.search();
   }
 
   extractQueryParamsData(): void {
@@ -64,6 +64,7 @@ export class AccommodationsSearchPageComponent implements OnInit, OnDestroy {
 
   onAdvancedSearch(event: AdvancedFilters): void {
     this.advancedFilters = event;
+    console.log('advsearch');
     this.search();
   }
 
@@ -73,7 +74,7 @@ export class AccommodationsSearchPageComponent implements OnInit, OnDestroy {
       this.advancedFilters
     );
 
-    this.accommodationsService.getAccommodations$(params).subscribe();
+    this.accommodationsService.searchAccommodations(params);
   }
 
   ngOnDestroy(): void {
