@@ -1,0 +1,23 @@
+.abms-basic-filters {
+  & .p-calendar,
+  & .p-inputnumber {
+    .p-inputtext {
+      width: 18rem;
+    }
+  }
+
+  .p-inputnumber.p-inputnumber-buttons-stacked .p-inputnumber-button-group {
+    right: 35px;
+
+    & .p-inputnumber-button {
+      gap: 0;
+      border-radius: 0;
+    }
+  }
+
+  &__search-button {
+    .p-button {
+      height: 41px;
+    }
+  }
+}

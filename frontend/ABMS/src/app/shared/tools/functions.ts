@@ -14,3 +14,15 @@ export function removeEmptyParams(obj: any): any {
 
   return cleanedObj;
 }
+
+export function incrementDateByOneDay(dateString: string): string {
+  const [day, month, year] = dateString.split('.').map(Number);
+  const date = new Date(year, month - 1, day);
+  date.setDate(date.getDate() + 1);
+
+  const newDay = date.getDate().toString().padStart(2, '0');
+  const newMonth = (date.getMonth() + 1).toString().padStart(2, '0');
+  const newYear = date.getFullYear();
+
+  return `${newDay}.${newMonth}.${newYear}`;
+}

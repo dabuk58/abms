@@ -1,0 +1,8 @@
+.abms-search-page {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+
+  &__basic-filters {
+    grid-column: 1 / 3;
+  }
+}

@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { MsalGuard } from '@azure/msal-angular';
 import { ROUTES } from './core/constants/routes-constants';
 
 export const routes: Routes = [
@@ -21,6 +20,13 @@ export const routes: Routes = [
       import(
         './features/profile/pages/profile-page/profile-page.component'
       ).then((c) => c.ProfilePageComponent),
+  },
+  {
+    path: ROUTES.ACCOMMODATIONS,
+    loadChildren: () =>
+      import('./features/accommodations/accommodations.routes').then(
+        (c) => c.routes
+      ),
   },
   {
     path: '**',

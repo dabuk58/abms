@@ -1,11 +1,14 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
+import { ROUTES } from '../../../../core/constants/routes-constants';
 import { ProposalsCarouselComponent } from '../../components/proposals-carousel/proposals-carousel.component';
 
 @Component({
@@ -21,6 +24,7 @@ import { ProposalsCarouselComponent } from '../../components/proposals-carousel/
     ProposalsCarouselComponent,
     PanelModule,
   ],
+  providers: [DatePipe],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })
@@ -43,7 +47,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   constructor(
     protected translation: TranslateService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router,
+    private datePipe: DatePipe
   ) {
     this.placeholders = [
       this.translation.instant('new_york'),
@@ -61,7 +67,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.currentPlaceholder = this.placeholders[0];
 
     this.form = this.fb.group({
-      query: [''],
+      query: [null],
       dates: [null],
       guests: [null],
     });
@@ -97,17 +103,36 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }, 110);
   }
 
-  onInput(event: any): void {
+  onInput(): void {
+    //TODO suggestions search
     if (!this.didUserInteract) {
       this.currentPlaceholder =
         this.translation.instant('type_destination') + '...';
       clearInterval(this.typingInterval);
     }
-    console.log(event.target.value);
   }
 
   onSearch(): void {
-    console.log(this.form.value);
+    this.router.navigate([ROUTES.ACCOMMODATIONS], {
+      queryParams: {
+        query: this.form.get('query')?.value,
+        dateFrom:
+          this.form.get('dates')?.value && this.form.get('dates')?.value[0]
+            ? this.datePipe.transform(
+                this.form.get('dates')?.value[0],
+                'dd.MM.yyyy'
+              )
+            : null,
+        dateTo:
+          this.form.get('dates')?.value && this.form.get('dates')?.value[1]
+            ? this.datePipe.transform(
+                this.form.get('dates')?.value[1],
+                'dd.MM.yyyy'
+              )
+            : null,
+        guests: this.form.get('guests')?.value,
+      },
+    });
   }
 
   ngOnDestroy(): void {

@@ -4,4 +4,5 @@ export const ROUTES = {
   USER: 'user',
   ACTIVE_RESERVATIONS: 'active-reservations',
   RESERVATIONS_HISTORY: 'reservations-history',
+  ACCOMMODATIONS: 'accommodations',
 };

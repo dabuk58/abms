@@ -23,12 +23,16 @@
           />
         </div>
       </div>
-      <div class="mb-3 font-medium">
-        {{ proposal.name }}
+      <div class="mb-1 font-medium flex flex-column justify-content-between">
+        <p>{{ proposal.name }}</p>
+        <p class="abms-proposals-carousel__address font-normal text-xs">
+          {{ proposal.city }}, {{ proposal.country }}
+        </p>
       </div>
       <div class="flex justify-content-between align-items-center">
         <div class="mt-0 font-semibold text-xl">
-          {{ "from" | translate }} {{ proposal.pricePerNight + "zł" }}
+          {{ proposal.pricePerNight + "zł" }}
+          <span class="text-sm">{{ "per_night" | translate }}</span>
         </div>
         <span>
           <p-button icon="pi pi-angle-right" />
@@ -38,5 +42,7 @@
   </ng-template>
 </p-carousel>
 } @else {
-<app-loader></app-loader>
+<div class="abms-proposals-carousel__loader-container">
+  <app-loader></app-loader>
+</div>
 }

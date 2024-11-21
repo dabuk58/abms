@@ -1,3 +1,5 @@
+@import "./../../../../../styles/variables.scss";
+
 .abms-proposals-carousel {
   &__header {
     margin-left: 52px;
@@ -7,5 +9,15 @@
     object-fit: contain;
     height: 290px;
     height: 180px;
+  }
+
+  &__loader-container {
+    height: 375px;
+    display: grid;
+    place-items: center;
+  }
+
+  &__address {
+    color: $gray;
   }
 }
