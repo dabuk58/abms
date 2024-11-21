@@ -30,7 +30,7 @@ public class GetAccommodationsSpec : Specification<Accommodation>
             && (queryParams.City == null || a.City == queryParams.City)
             && (queryParams.Region == null || a.Region == queryParams.Region)
             && (queryParams.MinPricePerNight == null || a.PricePerNight >= queryParams.MinPricePerNight)
-            && (queryParams.MaxPricePerNight == null || a.PricePerNight >= queryParams.MaxPricePerNight)
+            && (queryParams.MaxPricePerNight == null || a.PricePerNight <= queryParams.MaxPricePerNight)
             && (queryParams.MinRating == null || a.Rating >= queryParams.MinRating)
             && (queryParams.Amenities == null || queryParams.Amenities.All(amenity =>
                 a.AccommodationAmenities.Any(aa => aa.Amenity.Name == amenity)))
