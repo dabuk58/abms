@@ -1,0 +1,57 @@
+<p-panel class="abms-basic-filters">
+  <form [formGroup]="form" class="flex flex-row gap-5 align-items-center">
+    <span class="relative w-18rem">
+      <label class="abms-basic-filters__label" for="place">
+        {{ "place" | translate }}
+      </label>
+      <input
+        id="place"
+        type="text"
+        pInputText
+        (input)="onInput()"
+        [placeholder]="translation.instant('type_destination') + '...'"
+        formControlName="query"
+      />
+      <i class="abms-basic-filters__icon pi pi-globe absolute top-50"></i>
+    </span>
+    <span class="relative w-18rem">
+      <label class="abms-basic-filters__label" for="dates">
+        {{ "date" | translate }}
+      </label>
+      <p-calendar
+        inputId="dates"
+        formControlName="dates"
+        selectionMode="range"
+        dateFormat="dd.mm.yy"
+        [readonlyInput]="true"
+        [minDate]="minDate"
+        [maxDate]="maxDate"
+        [placeholder]="translation.instant('choose_dates') + '...'"
+      />
+      <i class="abms-basic-filters__icon pi pi-calendar absolute top-50"></i>
+    </span>
+    <span class="relative w-18rem">
+      <label class="abms-basic-filters__label" for="people">
+        {{ "amount_of_people" | translate }}
+      </label>
+      <p-inputNumber
+        inputId="people"
+        inputId="integeronly"
+        formControlName="guests"
+        [showButtons]="true"
+        [min]="1"
+        [max]="20"
+        [placeholder]="translation.instant('choose_people_amount') + '...'"
+      />
+      <i class="abms-basic-filters__icon pi pi-users absolute top-50"></i>
+    </span>
+    <p-button
+      class="abms-basic-filters__search-button"
+      [label]="translation.instant('search')"
+      icon="pi pi-arrow-right"
+      iconPos="right"
+      type="submit"
+      (onClick)="onSearch()"
+    />
+  </form>
+</p-panel>
