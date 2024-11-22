@@ -10,4 +10,6 @@ export interface Accommodation {
   unavailableDates: Date[];
   pricePerNight: number;
   image?: string;
+  isFavorite: boolean;
+  rating?: number;
 }

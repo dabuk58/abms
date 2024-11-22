@@ -4,10 +4,18 @@
       <h3 class="font-bold">{{ "about_us" | translate }}</h3>
       <p>{{ "about_us_description" | translate }}</p>
     </div>
-    <div class="abms-footer__content--contact-us flex flex-column gap-2">
-      <h3 class="font-bold">{{ "contact" | translate }}</h3>
-      <p>{{ "email" | translate }}: bedfind&#64;example.com</p>
-      <p>{{ "hotline" | translate }}: +48 123 456 789</p>
+    <div class="abms-footer__contact-container flex flex-column gap-2">
+      <h3 class="font-bold">{{ "problem_or_questions" | translate }}</h3>
+      <div class="abms-footer__contact">
+        <p class="abms-footer__contact--left-side">
+          {{ "email" | translate }}:
+        </p>
+        <p class="abms-footer__contact--right-side">bedfind&#64;example.com</p>
+        <p class="abms-footer__contact--left-side">
+          {{ "hotline" | translate }}:
+        </p>
+        <p class="abms-footer__contact--right-side">+48 123 456 789</p>
+      </div>
     </div>
   </div>
   <p-divider class="w-full mt-auto"></p-divider>

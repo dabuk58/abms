@@ -8,5 +8,21 @@
     (onFilter)="onAdvancedSearch($event)"
     class="abms-search-page__advanced-filters"
   ></app-accommodations-advanced-filters>
-  <app-accommodations-search-results></app-accommodations-search-results>
+  @if(accommodations$ | async; as accommodations){ @if(!accommodations.length){
+  <div
+    class="abms-search-page__no-results flex flex-column gap-3 align-items-center pt-5"
+  >
+    <p class="font-semibold text-xl">
+      {{ "no_search_results" | translate }}
+    </p>
+    <p class="abms-search-page__change-filters">
+      {{ "change_filters" | translate }}
+    </p>
+  </div>
+  } @else {<app-accommodations-search-results
+    [accommodations]="accommodations"
+  ></app-accommodations-search-results
+  >} } @else{
+  <app-loader class="abms-search-page__loader pt-5"></app-loader>
+  }
 </div>

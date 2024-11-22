@@ -72,3 +72,18 @@
 .p-rating .p-rating-item.p-rating-item-active .p-rating-icon {
   color: $rating-star;
 }
+
+.p-panel {
+  & .p-panel {
+    &-content,
+    &-header {
+      color: $primary;
+    }
+  }
+}
+
+.p-tooltip .p-tooltip-text {
+  font-size: 14px;
+  background-color: $primary;
+  text-align: center;
+}

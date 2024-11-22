@@ -9,11 +9,29 @@
     grid-template-columns: repeat(2, 1fr);
     width: 70%;
 
-    &--about-us,
-    &--contact-us {
+    &--about-us {
       max-width: 70%;
       text-align: center;
       text-wrap: balance;
+    }
+  }
+
+  &__contact-container {
+    min-width: 70%;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  &__contact {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px 10px;
+
+    &--left-side {
+      justify-self: end;
+    }
+    &--right-side {
+      justify-self: start;
     }
   }
 }

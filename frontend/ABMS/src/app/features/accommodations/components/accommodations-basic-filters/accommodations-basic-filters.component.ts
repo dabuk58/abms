@@ -84,12 +84,14 @@ export class AccommodationsBasicFiltersComponent implements OnInit {
     let dateTo: string | null = null;
     const dateControl = this.form.get('calendarControl')?.value;
 
-    if (Array.isArray(dateControl)) {
-      dateFrom = this.datePipe.transform(dateControl[0], 'dd.MM.yyyy');
-      dateTo = this.datePipe.transform(dateControl[1], 'dd.MM.yyyy');
-    } else {
-      dateFrom = dateControl.split(' - ')[0];
-      dateTo = dateControl.split(' - ')[1];
+    if (dateControl) {
+      if (Array.isArray(dateControl)) {
+        dateFrom = this.datePipe.transform(dateControl[0], 'dd.MM.yyyy');
+        dateTo = this.datePipe.transform(dateControl[1], 'dd.MM.yyyy');
+      } else {
+        dateFrom = dateControl.split(' - ')[0];
+        dateTo = dateControl.split(' - ')[1];
+      }
     }
 
     const basicFilters: BasicFilters = {

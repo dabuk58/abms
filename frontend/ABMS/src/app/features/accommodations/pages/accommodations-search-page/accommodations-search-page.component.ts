@@ -1,6 +1,10 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { TranslatePipe } from '@ngx-translate/core';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { LoaderComponent } from '../../../../core/components/loader/loader.component';
+import { Accommodation } from '../../../../core/interfaces/accommodation';
 import { AdvancedFilters } from '../../../../core/interfaces/advanced-filters';
 import { BasicFilters } from '../../../../core/interfaces/basic-filters';
 import { AccommodationsAdvancedFiltersComponent } from '../../components/accommodations-advanced-filters/accommodations-advanced-filters.component';
@@ -16,6 +20,9 @@ import { AccommodationsService } from '../../services/accommodations.service';
     AccommodationsBasicFiltersComponent,
     AccommodationsAdvancedFiltersComponent,
     AccommodationsSearchResultsComponent,
+    TranslatePipe,
+    LoaderComponent,
+    AsyncPipe,
   ],
   templateUrl: './accommodations-search-page.component.html',
   styleUrl: './accommodations-search-page.component.scss',
@@ -24,6 +31,8 @@ export class AccommodationsSearchPageComponent implements OnInit, OnDestroy {
   basicFiltersToPatch: BasicFilters | null = null;
   private basicFilters: BasicFilters = {} as BasicFilters;
   private advancedFilters: AdvancedFilters = {} as AdvancedFilters;
+
+  accommodations$!: Observable<Accommodation[]>;
 
   private readonly _destroying$ = new Subject<void>();
 
@@ -64,7 +73,6 @@ export class AccommodationsSearchPageComponent implements OnInit, OnDestroy {
 
   onAdvancedSearch(event: AdvancedFilters): void {
     this.advancedFilters = event;
-    console.log('advsearch');
     this.search();
   }
 
@@ -74,7 +82,8 @@ export class AccommodationsSearchPageComponent implements OnInit, OnDestroy {
       this.advancedFilters
     );
 
-    this.accommodationsService.searchAccommodations(params);
+    this.accommodations$ =
+      this.accommodationsService.getAccommodations$(params);
   }
 
   ngOnDestroy(): void {

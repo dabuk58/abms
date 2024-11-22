@@ -78,7 +78,7 @@
   "amount_of_people": "Ilość osób",
   "from": "od",
   "about_us": "O nas",
-  "contact": "Kontakt",
+  "problem_or_questions": "Napotkałeś problem lub masz pytania? Skontaktuj się z nami",
   "about_us_description": "BedFind to platforma pośrednicząca w wynajmie hoteli, apartamentów i innych obiektów noclegowych. Twoje idealne miejsce na pobyt – na wyciągnięcie ręki!",
   "hotline": "Infolinia 24/7",
   "email": "Email",
@@ -100,5 +100,11 @@
   "free_meals": "Darmowe wyżywienie",
   "amenitites": "Udogodnienia",
   "rating_stars_amount": "Ilość gwiazdek",
-  "clear": "Wyczyść"
+  "clear": "Wyczyść",
+  "no_search_results": "Brak wyników wyszukiwania",
+  "change_filters": "Zmień filtry lub wybierz inny termin",
+  "login_to_like": "Zaloguj się, aby dodać do ulubionych",
+  "average_rating": "Średnia ocena",
+  "no_reviews": "Brak opinii",
+  "details": "Szczegóły"
 }

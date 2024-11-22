@@ -1,21 +1,71 @@
 <div class="abms-search-results flex flex-column gap-3">
-  @if(accommodations$ | async; as accommodations){ @for(accommodation of
-  accommodations; track accommodation){
+  @for(accommodation of accommodations; track accommodation){
   <p-panel>
     <ng-template pTemplate="header">
       <div class="flex align-items-center justify-content-between">
         <h2 class="text-lg font-semibold">{{ accommodation.name }}</h2>
-        <i class="pi pi-heart" (click)="onFavorite(accommodation.id)"></i>
+        <app-heart-icon
+          class="abms-search-results__favorite-icon"
+          [ngClass]="{
+            'abms-search-results__favorite-icon--checked':
+              accommodation.isFavorite,
+          }"
+          [pTooltip]="translation.instant('login_to_like')"
+          tooltipPosition="top"
+          showDelay="150"
+          [tooltipDisabled]="isLoggedIn"
+          [filled]="accommodation.isFavorite"
+          (click)="onFavorite(accommodation)"
+        ></app-heart-icon>
       </div>
     </ng-template>
     <ng-template pTemplate="content">
-      <img
-        class="border-round w-15rem"
-        src="https://static.leonardo-hotels.com/image/leonardohotelbucharestcitycenter_room_comfortdouble2_2022_4000x2600_7e18f254bc75491965d36cc312e8111f_1200x780_mobile_3.jpeg"
-      />
+      <div class="abms-search-results__result-content gap-3">
+        <img
+          class="border-round w-full"
+          src="https://static.leonardo-hotels.com/image/leonardohotelbucharestcitycenter_room_comfortdouble2_2022_4000x2600_7e18f254bc75491965d36cc312e8111f_1200x780_mobile_3.jpeg"
+        />
+        <div class="flex flex-column justify-content-between">
+          <div class="flex flex-column gap-1">
+            <p class="text-lg font-medium">
+              {{ accommodation.city }}
+            </p>
+            <p class="abms-search-results__region text-xs">
+              {{ accommodation.region }}
+            </p>
+          </div>
+          <p>{{ accommodation.description }}</p>
+          <div class="abms-search-results__price mt-0 font-semibold">
+            {{ accommodation.pricePerNight + "zł" }}
+            <span class="text-base">{{ "per_night" | translate }}</span>
+          </div>
+        </div>
+        <div class="flex flex-column justify-content-between">
+          <div class="flex flex-column gap-1 align-items-center">
+            @if(accommodation.rating){
+            <p>{{ "average_rating" | translate }}</p>
+            <div class="flex gap-2 align-items-center">
+              <p>{{ accommodation.rating }} / 10</p>
+              <i
+                class="abms-search-results__rating-star text-xl bi bi-star-fill"
+              ></i>
+            </div>
+            } @else {
+            <p>{{ "no_reviews" | translate }}</p>
+            }
+          </div>
+          <p-button
+            class="abms-advanced-filters__search-button"
+            [label]="translation.instant('details')"
+            icon="pi pi-angle-right"
+            iconPos="right"
+            type="submit"
+            size="small"
+            (onClick)="onDetails(accommodation.id)"
+          />
+        </div>
+      </div>
     </ng-template>
   </p-panel>
-  } } @else {
-  <app-loader class="align-self-center"></app-loader>
   }
 </div>

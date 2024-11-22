@@ -4,9 +4,7 @@ import { Accommodation } from '../../../core/interfaces/accommodation';
 export function mapAccommodations(
   accommodations: AccommodationDto[]
 ): Accommodation[] {
-  return accommodations.map((accommodation) =>
-    mapAccommodation(accommodation)
-  );
+  return accommodations.map((accommodation) => mapAccommodation(accommodation));
 }
 
 export function mapAccommodation(
@@ -16,5 +14,6 @@ export function mapAccommodation(
     ...accommodation,
     id: accommodation.id!,
     unavailableDates: [],
+    isFavorite: false,
   };
 }

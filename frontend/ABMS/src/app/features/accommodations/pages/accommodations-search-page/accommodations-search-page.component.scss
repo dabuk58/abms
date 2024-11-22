@@ -6,4 +6,12 @@
   &__basic-filters {
     grid-column: 1 / 3;
   }
+
+  &__loader {
+    justify-self: center;
+  }
+
+  &__no-results {
+    justify-self: center;
+  }
 }

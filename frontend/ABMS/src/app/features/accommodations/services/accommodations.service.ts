@@ -12,16 +12,10 @@ import { mapAccommodations } from '../../home/mappers/accommodations-mapper';
   providedIn: 'root',
 })
 export class AccommodationsService {
-  private _accommodations$ = new Observable<Accommodation[]>();
-
   constructor(private accommodationsApiService: AccommodationsApiService) {}
 
-  get accommodations$(): Observable<Accommodation[]> {
-    return this._accommodations$;
-  }
-
-  searchAccommodations(params: AccommodationsParams): void {
-    this._accommodations$ = this.accommodationsApiService
+  getAccommodations$(params: AccommodationsParams): Observable<Accommodation[]> {
+    return this.accommodationsApiService
       .accommodations(removeEmptyParams(params))
       .pipe(map((accommodations) => mapAccommodations(accommodations)));
   }

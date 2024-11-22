@@ -10,6 +10,13 @@ export const routes: Routes = [
       ).then((c) => c.AccommodationsSearchPageComponent),
   },
   {
+    path: ':id',
+    loadComponent: () =>
+      import(
+        './pages/accommodation-details-page/accommodation-details-page.component'
+      ).then((c) => c.AccommodationDetailsPageComponent),
+  },
+  {
     path: '**',
     redirectTo: ROUTES.HOME,
   },
