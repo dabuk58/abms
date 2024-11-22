@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { AccommodationsApiService } from '../../../../api';
 import { Accommodation } from '../../../core/interfaces/accommodation';
-import { mapAccommodations } from '../mappers/accommodations-mapper';
+import { mapAccommodationsProposals } from '../mappers/accommodations-mapper';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +13,8 @@ export class ProposalsService {
   getAccommodationProposals$(): Observable<Accommodation[]> {
     return this.accommodationApiService
       .accommodations()
-      .pipe(map((accommodations) => mapAccommodations(accommodations)));
+      .pipe(
+        map((response) => mapAccommodationsProposals(response.accommodations))
+      );
   }
 }

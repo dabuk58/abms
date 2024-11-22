@@ -125,10 +125,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/AccommodationDto"
-                  }
+                  "$ref": "#/components/schemas/GetAccommodationsResponse"
                 }
               }
             }
@@ -298,6 +295,27 @@
           },
           "didExist": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetAccommodationsResponse": {
+        "required": [
+          "accommodations",
+          "totalRecords"
+        ],
+        "type": "object",
+        "properties": {
+          "totalRecords": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accommodations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccommodationDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

@@ -14,4 +14,9 @@
   &__no-results {
     justify-self: center;
   }
+
+  &__paginator,
+  &__skeleton {
+    grid-column: 2;
+  }
 }

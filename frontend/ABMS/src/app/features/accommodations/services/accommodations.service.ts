@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { delay, map, Observable } from 'rxjs';
 import {
   AccommodationsApiService,
   AccommodationsParams,
 } from '../../../../api';
-import { Accommodation } from '../../../core/interfaces/accommodation';
+import { AccommodationsResponse } from '../../../core/interfaces/accommodations-response';
 import { removeEmptyParams } from '../../../shared/tools/functions';
 import { mapAccommodations } from '../../home/mappers/accommodations-mapper';
 
@@ -14,9 +14,14 @@ import { mapAccommodations } from '../../home/mappers/accommodations-mapper';
 export class AccommodationsService {
   constructor(private accommodationsApiService: AccommodationsApiService) {}
 
-  getAccommodations$(params: AccommodationsParams): Observable<Accommodation[]> {
+  getAccommodations$(
+    params: AccommodationsParams
+  ): Observable<AccommodationsResponse> {
     return this.accommodationsApiService
       .accommodations(removeEmptyParams(params))
-      .pipe(map((accommodations) => mapAccommodations(accommodations)));
+      .pipe(
+        delay(1500),
+        map((response) => mapAccommodations(response))
+      );
   }
 }

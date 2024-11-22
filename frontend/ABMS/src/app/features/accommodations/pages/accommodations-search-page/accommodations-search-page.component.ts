@@ -2,13 +2,14 @@ import { AsyncPipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { LoaderComponent } from '../../../../core/components/loader/loader.component';
-import { Accommodation } from '../../../../core/interfaces/accommodation';
+import { AccommodationsResponse } from '../../../../core/interfaces/accommodations-response';
 import { AdvancedFilters } from '../../../../core/interfaces/advanced-filters';
 import { BasicFilters } from '../../../../core/interfaces/basic-filters';
 import { AccommodationsAdvancedFiltersComponent } from '../../components/accommodations-advanced-filters/accommodations-advanced-filters.component';
 import { AccommodationsBasicFiltersComponent } from '../../components/accommodations-basic-filters/accommodations-basic-filters.component';
+import { AccommodationsSearchPageLoaderComponent } from '../../components/accommodations-search-page-loader/accommodations-search-page-loader.component';
 import { AccommodationsSearchResultsComponent } from '../../components/accommodations-search-results/accommodations-search-results.component';
 import { mapFiltersToAccommodationsParams } from '../../mappers/accommodations-mapper';
 import { AccommodationsService } from '../../services/accommodations.service';
@@ -21,7 +22,8 @@ import { AccommodationsService } from '../../services/accommodations.service';
     AccommodationsAdvancedFiltersComponent,
     AccommodationsSearchResultsComponent,
     TranslatePipe,
-    LoaderComponent,
+    PaginatorModule,
+    AccommodationsSearchPageLoaderComponent,
     AsyncPipe,
   ],
   templateUrl: './accommodations-search-page.component.html',
@@ -31,8 +33,10 @@ export class AccommodationsSearchPageComponent implements OnInit, OnDestroy {
   basicFiltersToPatch: BasicFilters | null = null;
   private basicFilters: BasicFilters = {} as BasicFilters;
   private advancedFilters: AdvancedFilters = {} as AdvancedFilters;
+  offset: number = 0;
+  recordNo: number = 10;
 
-  accommodations$!: Observable<Accommodation[]>;
+  accommodationsResponse$!: Observable<AccommodationsResponse>;
 
   private readonly _destroying$ = new Subject<void>();
 
@@ -77,13 +81,27 @@ export class AccommodationsSearchPageComponent implements OnInit, OnDestroy {
   }
 
   search(): void {
-    const params = mapFiltersToAccommodationsParams(
+    let params = mapFiltersToAccommodationsParams(
       this.basicFilters,
       this.advancedFilters
     );
 
-    this.accommodations$ =
+    params = {
+      ...params,
+      Offset: this.offset,
+      RecordNo: this.recordNo,
+    };
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    this.accommodationsResponse$ =
       this.accommodationsService.getAccommodations$(params);
+  }
+
+  onPageChange(event: PaginatorState): void {
+    this.offset = event.first ?? this.offset;
+    this.recordNo = event.rows ?? this.recordNo;
+    this.search();
   }
 
   ngOnDestroy(): void {

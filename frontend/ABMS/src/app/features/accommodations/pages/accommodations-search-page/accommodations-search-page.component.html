@@ -8,7 +8,8 @@
     (onFilter)="onAdvancedSearch($event)"
     class="abms-search-page__advanced-filters"
   ></app-accommodations-advanced-filters>
-  @if(accommodations$ | async; as accommodations){ @if(!accommodations.length){
+  @if(accommodationsResponse$ | async; as data){
+  @if(!data.accommodations.length){
   <div
     class="abms-search-page__no-results flex flex-column gap-3 align-items-center pt-5"
   >
@@ -19,10 +20,20 @@
       {{ "change_filters" | translate }}
     </p>
   </div>
-  } @else {<app-accommodations-search-results
-    [accommodations]="accommodations"
-  ></app-accommodations-search-results
-  >} } @else{
-  <app-loader class="abms-search-page__loader pt-5"></app-loader>
+  } @else {
+  <app-accommodations-search-results [accommodations]="data.accommodations">
+  </app-accommodations-search-results>
+  <p-paginator
+    class="abms-search-page__paginator"
+    (onPageChange)="onPageChange($event)"
+    [first]="offset"
+    [rows]="recordNo"
+    [totalRecords]="data.totalRecords"
+    [rowsPerPageOptions]="[10, 25, 50]"
+  ></p-paginator>
+  } } @else{
+  <app-accommodations-search-page-loader
+    [skeletonsAmount]="recordNo"
+  ></app-accommodations-search-page-loader>
   }
 </div>

@@ -2,5 +2,5 @@
 public class GetAccommodationsResponse
 {
     public required int TotalRecords { get; set; }
-    public List<AccommodationDto>? Accommodations { get; set; }
+    public required List<AccommodationDto> Accommodations { get; set; }
 }

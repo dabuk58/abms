@@ -18,8 +18,8 @@ import {
   Observable
 } from 'rxjs'
 import type {
-  AccommodationDto,
   AccommodationsParams,
+  GetAccommodationsResponse,
   SuggestionDto,
   SuggestionsParams
 } from '../../model'
@@ -45,15 +45,15 @@ type HttpClientOptions = {
 export class AccommodationsApiService {
   constructor(
     private http: HttpClient,
-  ) {} accommodations<TData = AccommodationDto[]>(
+  ) {} accommodations<TData = GetAccommodationsResponse>(
     params?: AccommodationsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    accommodations<TData = AccommodationDto[]>(
+    accommodations<TData = GetAccommodationsResponse>(
     params?: AccommodationsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    accommodations<TData = AccommodationDto[]>(
+    accommodations<TData = GetAccommodationsResponse>(
     params?: AccommodationsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;accommodations<TData = AccommodationDto[]>(
+  ): Observable<HttpEvent<TData>>;accommodations<TData = GetAccommodationsResponse>(
     params?: AccommodationsParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
@@ -81,5 +81,5 @@ export class AccommodationsApiService {
   }
 };
 
-export type AccommodationsClientResult = NonNullable<AccommodationDto[]>
+export type AccommodationsClientResult = NonNullable<GetAccommodationsResponse>
 export type SuggestionsClientResult = NonNullable<SuggestionDto[]>
