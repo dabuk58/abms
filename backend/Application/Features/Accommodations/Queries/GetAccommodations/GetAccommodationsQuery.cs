@@ -22,11 +22,11 @@ public record GetAccommodationsQuery(
     string? SortDirection,
     int Offset = 0,
     int RecordNo = 10
-    ) : IRequest<IEnumerable<AccommodationDto>>;
+    ) : IRequest<GetAccommodationsResponse>;
 
-public class GetAccommodationsQueryHandler(IMapper mapper, IApplicationDbContext dbContext) : IRequestHandler<GetAccommodationsQuery, IEnumerable<AccommodationDto>>
+public class GetAccommodationsQueryHandler(IMapper mapper, IApplicationDbContext dbContext) : IRequestHandler<GetAccommodationsQuery, GetAccommodationsResponse>
 {
-    public async Task<IEnumerable<AccommodationDto>> Handle(GetAccommodationsQuery request, CancellationToken cancellationToken)
+    public async Task<GetAccommodationsResponse> Handle(GetAccommodationsQuery request, CancellationToken cancellationToken)
     {
         var amenities = request.Amenities?.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
@@ -42,17 +42,25 @@ public class GetAccommodationsQueryHandler(IMapper mapper, IApplicationDbContext
             amenities,
             request.MinRating,
             request.SortBy,
-            request.SortDirection,
-            request.Offset,
-            request.RecordNo
+            request.SortDirection
             );
+
+        var totalRecords = await dbContext.Accommodations
+            .WithSpecification(new GetAccommodationsSpec(queryParameters))
+            .CountAsync(cancellationToken);
 
         var accommodations = await dbContext.Accommodations
             .Include(aa => aa.AccommodationAmenities)
             .WithSpecification(new GetAccommodationsSpec(queryParameters))
+            .Skip(request.Offset)
+            .Take(request.RecordNo)
             .ProjectTo<AccommodationDto>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        return accommodations;
+        return new GetAccommodationsResponse
+        {
+            TotalRecords = totalRecords,
+            Accommodations = accommodations
+        };
     }
 }

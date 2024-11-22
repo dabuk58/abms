@@ -26,7 +26,7 @@ namespace QualityManagement.WebApi.Features
                         await sender.Send(request, cancellationToken)
                 )
                 .WithName("accommodations")
-                .Produces<IEnumerable<AccommodationDto>>(StatusCodes.Status200OK);
+                .Produces<GetAccommodationsResponse>(StatusCodes.Status200OK);
 
             group.MapGet("suggestions",
                 [SwaggerOperation(summary: "Get accommodation suggestions based on search query.")]

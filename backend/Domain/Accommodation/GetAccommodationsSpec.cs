@@ -16,9 +16,7 @@ public class GetAccommodationsSpec : Specification<Accommodation>
         string[]? Amenities,
         int? MinRating,
         string? SortBy,
-        string? SortDirection,
-        int Offset,
-        int RecordNo);
+        string? SortDirection);
 
     public GetAccommodationsSpec(GetAccommodationsSpecQueryParams queryParams)
     {
@@ -37,7 +35,5 @@ public class GetAccommodationsSpec : Specification<Accommodation>
           );
 
         Query.ApplySorting(queryParams.SortBy, queryParams.SortDirection);
-
-        Query.ApplyPagination(queryParams.Offset, queryParams.RecordNo);
     }
 }
