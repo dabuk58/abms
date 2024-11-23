@@ -4,6 +4,7 @@
 
 export * from './accommodationDto';
 export * from './accommodationsParams';
+export * from './addFavoriteResponse';
 export * from './checkOrAddUserCommand';
 export * from './checkOrAddUserResponse';
 export * from './getAccommodationsResponse';

@@ -18,6 +18,7 @@ import {
   Observable
 } from 'rxjs'
 import type {
+  AddFavoriteResponse,
   CheckOrAddUserCommand,
   CheckOrAddUserResponse
 } from '../../model'
@@ -59,6 +60,23 @@ export class UsersApiService {
       checkOrAddUserCommand,options
     );
   }
+ favorites<TData = AddFavoriteResponse>(
+    favoritesBody: number, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    favorites<TData = AddFavoriteResponse>(
+    favoritesBody: number, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    favorites<TData = AddFavoriteResponse>(
+    favoritesBody: number, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;favorites<TData = AddFavoriteResponse>(
+    favoritesBody: number, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.post<TData>(
+      `/users/favorites`,
+      favoritesBody,options
+    );
+  }
 };
 
 export type CheckOrAddUserClientResult = NonNullable<CheckOrAddUserResponse>
+export type FavoritesClientResult = NonNullable<AddFavoriteResponse>
