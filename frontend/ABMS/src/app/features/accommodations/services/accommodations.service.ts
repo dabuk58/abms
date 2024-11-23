@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { delay, map, Observable } from 'rxjs';
+import { delay, map, Observable, Subject } from 'rxjs';
 import {
   AccommodationsApiService,
   AccommodationsParams,
@@ -12,7 +12,17 @@ import { mapAccommodations } from '../../home/mappers/accommodations-mapper';
   providedIn: 'root',
 })
 export class AccommodationsService {
+  private readonly _updateFilters$ = new Subject<void>();
+
   constructor(private accommodationsApiService: AccommodationsApiService) {}
+
+  get updateFiltersEvent$(): Observable<void> {
+    return this._updateFilters$;
+  }
+
+  updateFilters(): void {
+    this._updateFilters$.next();
+  }
 
   getAccommodations$(
     params: AccommodationsParams

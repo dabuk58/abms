@@ -1,21 +1,19 @@
 import { AccommodationsParams } from '../../../../api';
 import { AccommodationSort } from '../../../core/enums/accommodation-sort.enum';
-import { AdvancedFilters } from '../../../core/interfaces/advanced-filters';
-import { BasicFilters } from '../../../core/interfaces/basic-filters';
+import { CombinedFilters } from '../pages/accommodations-search-page/accommodations-search-page.component';
 
 export function mapFiltersToAccommodationsParams(
-  basicFilters: BasicFilters,
-  advancedFilters: AdvancedFilters
+  filters: CombinedFilters
 ): AccommodationsParams {
   return {
-    Query: basicFilters.query || undefined,
-    MinPricePerNight: advancedFilters.minPrice || undefined,
-    MaxPricePerNight: advancedFilters.maxPrice || undefined,
-    Amenities: advancedFilters.amenities?.join(','),
-    MinRating: advancedFilters.rating || undefined,
-    Guests: basicFilters.guests || undefined,
-    SortBy: getSortField(advancedFilters.sortBy),
-    SortDirection: getSortDirection(advancedFilters.sortBy) || undefined,
+    Query: filters.query || undefined,
+    MinPricePerNight: filters.minPrice || undefined,
+    MaxPricePerNight: filters.maxPrice || undefined,
+    Amenities: filters.amenities || undefined,
+    MinRating: filters.rating || undefined,
+    Guests: filters.guests || undefined,
+    SortBy: getSortField(filters.sortBy),
+    SortDirection: getSortDirection(filters.sortBy) || undefined,
   };
 }
 

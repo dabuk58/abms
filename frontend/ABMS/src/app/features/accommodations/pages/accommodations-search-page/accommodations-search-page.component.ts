@@ -1,9 +1,9 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AccommodationsResponse } from '../../../../core/interfaces/accommodations-response';
 import { AdvancedFilters } from '../../../../core/interfaces/advanced-filters';
 import { BasicFilters } from '../../../../core/interfaces/basic-filters';
@@ -11,8 +11,10 @@ import { AccommodationsAdvancedFiltersComponent } from '../../components/accommo
 import { AccommodationsBasicFiltersComponent } from '../../components/accommodations-basic-filters/accommodations-basic-filters.component';
 import { AccommodationsSearchPageLoaderComponent } from '../../components/accommodations-search-page-loader/accommodations-search-page-loader.component';
 import { AccommodationsSearchResultsComponent } from '../../components/accommodations-search-results/accommodations-search-results.component';
-import { mapFiltersToAccommodationsParams } from '../../mappers/accommodations-mapper';
+import { mapFiltersToAccommodationsParams } from '../../mappers/accommodations-params-mapper';
 import { AccommodationsService } from '../../services/accommodations.service';
+
+export type CombinedFilters = BasicFilters & AdvancedFilters;
 
 @Component({
   selector: 'app-accommodations-search-page',
@@ -29,10 +31,14 @@ import { AccommodationsService } from '../../services/accommodations.service';
   templateUrl: './accommodations-search-page.component.html',
   styleUrl: './accommodations-search-page.component.scss',
 })
-export class AccommodationsSearchPageComponent implements OnInit, OnDestroy {
-  basicFiltersToPatch: BasicFilters | null = null;
-  private basicFilters: BasicFilters = {} as BasicFilters;
-  private advancedFilters: AdvancedFilters = {} as AdvancedFilters;
+export class AccommodationsSearchPageComponent
+  implements AfterViewInit, OnDestroy
+{
+  @ViewChild(AccommodationsBasicFiltersComponent)
+  basicFiltersComponent!: AccommodationsBasicFiltersComponent;
+  @ViewChild(AccommodationsAdvancedFiltersComponent)
+  advancedFiltersComponent!: AccommodationsAdvancedFiltersComponent;
+
   offset: number = 0;
   recordNo: number = 10;
 
@@ -41,56 +47,29 @@ export class AccommodationsSearchPageComponent implements OnInit, OnDestroy {
   private readonly _destroying$ = new Subject<void>();
 
   constructor(
-    private route: ActivatedRoute,
-    private accommodationsService: AccommodationsService
+    private accommodationsService: AccommodationsService,
+    private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.extractQueryParamsData();
-    this.search();
-  }
-
-  extractQueryParamsData(): void {
-    this.route.queryParamMap
-      .pipe(takeUntil(this._destroying$))
-      .subscribe((paramMap: ParamMap) => {
-        this.setFilters(paramMap);
-      });
-  }
-
-  setFilters(paramMap: ParamMap): void {
-    if (paramMap.keys.length) {
-      const guests = paramMap.get('guests');
-      this.basicFiltersToPatch = {
-        query: paramMap.get('query'),
-        dateFrom: paramMap.get('dateFrom'),
-        dateTo: paramMap.get('dateTo'),
-        guests: guests !== null ? +guests : null,
-      };
-    }
-  }
-
-  onBasicSearch(event: BasicFilters): void {
-    this.basicFilters = event;
-    this.search();
-  }
-
-  onAdvancedSearch(event: AdvancedFilters): void {
-    this.advancedFilters = event;
+  ngAfterViewInit(): void {
     this.search();
   }
 
   search(): void {
-    let params = mapFiltersToAccommodationsParams(
-      this.basicFilters,
-      this.advancedFilters
-    );
+    const basicFilters = this.basicFiltersComponent.getFilters();
+    const advancedFilters = this.advancedFiltersComponent.getFilters();
 
-    params = {
-      ...params,
-      Offset: this.offset,
-      RecordNo: this.recordNo,
-    };
+    const filters: CombinedFilters = { ...basicFilters, ...advancedFilters };
+
+    console.log(filters);
+
+    const params = mapFiltersToAccommodationsParams(filters);
+
+    this.router.navigate([], {
+      queryParams: filters,
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 

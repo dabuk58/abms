@@ -68,7 +68,7 @@
         <p class="abms-advanced-filters__single-filter_title">
           {{ "amenitites" | translate }}
         </p>
-        @for(amenity of amenities; track amenity){
+        @for(amenity of amenitiesOptions; track amenity){
         <p-checkbox
           formControlName="amenities"
           [value]="amenity"

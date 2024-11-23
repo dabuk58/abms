@@ -70,6 +70,7 @@ export class HeaderComponent implements OnDestroy {
       .subscribe((userName) => {
         if (userName !== null) {
           this.showLoginWelcomeMessage(userName);
+          window.location.reload();
         } else {
           this.showLoginError();
         }

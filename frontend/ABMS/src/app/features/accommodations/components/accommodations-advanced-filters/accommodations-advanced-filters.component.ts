@@ -1,5 +1,12 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -9,6 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { RatingModule } from 'primeng/rating';
 import { SliderChangeEvent, SliderModule } from 'primeng/slider';
+import { Subject, takeUntil } from 'rxjs';
 import { AdvancedFilters } from '../../../../core/interfaces/advanced-filters';
 import { SelectOption } from '../../../../core/interfaces/select-option';
 import { ConstantsService } from '../../../../core/services/constants.service';
@@ -31,18 +39,23 @@ import { ConstantsService } from '../../../../core/services/constants.service';
   templateUrl: './accommodations-advanced-filters.component.html',
   styleUrl: './accommodations-advanced-filters.component.scss',
 })
-export class AccommodationsAdvancedFiltersComponent {
-  @Output() onFilter = new EventEmitter<AdvancedFilters>();
+export class AccommodationsAdvancedFiltersComponent
+  implements OnInit, OnDestroy
+{
+  @Output() onFilter = new EventEmitter<void>();
 
   form!: FormGroup;
-  amenities: string[] = [];
+  amenitiesOptions: string[] = [];
   sortOptions: SelectOption[] = [];
   selectedAmenities: string[] = [];
+
+  private readonly _destroying$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
     private constantsService: ConstantsService,
-    protected translation: TranslateService
+    protected translation: TranslateService,
+    private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
       minPrice: [0],
@@ -52,9 +65,32 @@ export class AccommodationsAdvancedFiltersComponent {
       rating: [null],
       sortBy: [null],
     });
-
     this.sortOptions = this.constantsService.getAccommodationsSortOptions();
-    this.amenities = this.constantsService.getAmenitiesOptions();
+    this.amenitiesOptions = this.constantsService.getAmenitiesOptions();
+  }
+
+  ngOnInit(): void {
+    this.patchFilters();
+  }
+
+  patchFilters(): void {
+    this.route.queryParams
+      .pipe(takeUntil(this._destroying$))
+      .subscribe((params) => {
+        console.log(params['sortBy']);
+        this.form.patchValue({
+          minPrice: params['minPrice'] || 0,
+          maxPrice: params['maxPrice'] || 5000,
+          priceRange: [params['minPrice'] || 0, params['maxPrice'] || 5000],
+          amenities: params['amenities'] ? params['amenities'].split(',') : [],
+          rating: params['rating'] || null,
+          sortBy: params['sortBy']
+            ? this.sortOptions.find(
+                (option) => option.value == params['sortBy']
+              ) || null
+            : null,
+        });
+      });
   }
 
   updatePriceInputs(event: SliderChangeEvent): void {
@@ -86,14 +122,31 @@ export class AccommodationsAdvancedFiltersComponent {
   }
 
   onSearch(): void {
-    const advancedFilters: AdvancedFilters = {
-      minPrice: this.form.get('minPrice')?.value,
-      maxPrice: this.form.get('maxPrice')?.value,
-      amenities: this.form.get('amenities')?.value,
+    this.onFilter.emit();
+  }
+
+  getFilters(): AdvancedFilters {
+    const filters: AdvancedFilters = {
+      minPrice:
+        this.form.get('minPrice')?.value !== 0
+          ? this.form.get('minPrice')?.value
+          : null,
+      maxPrice:
+        this.form.get('maxPrice')?.value !== 5000
+          ? this.form.get('maxPrice')?.value
+          : null,
+      amenities: this.form.get('amenities')?.value.length
+        ? this.form.get('amenities')?.value.join(',')
+        : null,
       rating: this.form.get('rating')?.value,
-      sortBy: this.form.get('sortBy')?.value.value,
+      sortBy: this.form.get('sortBy')?.value?.value,
     };
 
-    this.onFilter.emit(advancedFilters);
+    return filters;
+  }
+
+  ngOnDestroy(): void {
+    this._destroying$.next(undefined);
+    this._destroying$.complete();
   }
 }

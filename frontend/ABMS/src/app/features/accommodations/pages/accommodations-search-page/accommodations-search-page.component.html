@@ -1,11 +1,10 @@
 <div class="abms-search-page">
   <app-accommodations-basic-filters
-    (onFilter)="onBasicSearch($event)"
-    [filtersToPatch]="basicFiltersToPatch"
+    (onFilter)="search()"
     class="abms-search-page__basic-filters pt-3"
   ></app-accommodations-basic-filters>
   <app-accommodations-advanced-filters
-    (onFilter)="onAdvancedSearch($event)"
+    (onFilter)="search()"
     class="abms-search-page__advanced-filters"
   ></app-accommodations-advanced-filters>
   @if(accommodationsResponse$ | async; as data){

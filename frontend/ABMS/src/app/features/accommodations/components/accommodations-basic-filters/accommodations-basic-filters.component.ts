@@ -1,12 +1,20 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
+import { Subject, takeUntil } from 'rxjs';
 import { BasicFilters } from '../../../../core/interfaces/basic-filters';
 import { incrementDateByOneDay } from '../../../../shared/tools/functions';
 
@@ -26,9 +34,8 @@ import { incrementDateByOneDay } from '../../../../shared/tools/functions';
   templateUrl: './accommodations-basic-filters.component.html',
   styleUrl: './accommodations-basic-filters.component.scss',
 })
-export class AccommodationsBasicFiltersComponent implements OnInit {
-  @Input() filtersToPatch!: BasicFilters | null;
-  @Output() onFilter = new EventEmitter<BasicFilters>();
+export class AccommodationsBasicFiltersComponent implements OnInit, OnDestroy {
+  @Output() onFilter = new EventEmitter<void>();
 
   minDate: Date = new Date(
     new Date(new Date().setDate(new Date().getDate() + 1)).setHours(0, 0, 0, 0)
@@ -38,10 +45,13 @@ export class AccommodationsBasicFiltersComponent implements OnInit {
   );
   form!: FormGroup;
 
+  private readonly _destroying$ = new Subject<void>();
+
   constructor(
     private fb: FormBuilder,
     protected translation: TranslateService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
       query: [null],
@@ -55,22 +65,27 @@ export class AccommodationsBasicFiltersComponent implements OnInit {
   }
 
   patchFilters(): void {
-    if (!this.filtersToPatch) return;
+    this.route.queryParams
+      .pipe(takeUntil(this._destroying$))
+      .subscribe((params) => {
+        const query = params['query'] || null;
+        const dateFrom = params['dateFrom'] || null;
+        const dateTo = params['dateTo'] || null;
+        const guests = params['guests'] || null;
 
-    const { query, dateFrom, dateTo, guests } = this.filtersToPatch;
+        query && this.form.get('query')?.setValue(query);
 
-    query && this.form.get('query')?.setValue(query);
+        if (dateFrom) {
+          const datesValue = `${dateFrom} - ${
+            dateTo ?? incrementDateByOneDay(dateFrom)
+          }`;
+          this.form.get('calendarControl')?.setValue(datesValue);
+        }
 
-    if (dateFrom) {
-      const datesValue = `${dateFrom} - ${
-        dateTo ?? incrementDateByOneDay(dateFrom)
-      }`;
-      this.form.get('calendarControl')?.setValue(datesValue);
-    }
+        guests && this.form.get('guests')?.setValue(guests);
 
-    guests && this.form.get('guests')?.setValue(guests);
-
-    this.checkAndEnhanceDates();
+        this.checkAndEnhanceDates();
+      });
   }
 
   onInput(): void {
@@ -78,6 +93,11 @@ export class AccommodationsBasicFiltersComponent implements OnInit {
   }
 
   onSearch(): void {
+    this.checkAndEnhanceDates();
+    this.onFilter.emit();
+  }
+
+  getFilters(): BasicFilters {
     this.checkAndEnhanceDates();
 
     let dateFrom: string | null = null;
@@ -94,14 +114,14 @@ export class AccommodationsBasicFiltersComponent implements OnInit {
       }
     }
 
-    const basicFilters: BasicFilters = {
+    const filters: BasicFilters = {
       query: this.form.get('query') ? this.form.get('query')?.value : null,
       dateFrom: dateFrom,
       dateTo: dateTo,
       guests: this.form.get('guests')?.value,
     };
 
-    this.onFilter.emit(basicFilters);
+    return filters;
   }
 
   checkAndEnhanceDates(): void {
@@ -137,5 +157,10 @@ export class AccommodationsBasicFiltersComponent implements OnInit {
         .get('calendarControl')
         ?.patchValue(`${dateFrom} - ${enhancedDateTo}`);
     }
+  }
+
+  ngOnDestroy(): void {
+    this._destroying$.next(undefined);
+    this._destroying$.complete();
   }
 }

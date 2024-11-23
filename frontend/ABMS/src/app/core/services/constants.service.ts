@@ -86,10 +86,6 @@ export class ConstantsService {
         label: this.translation.instant('rating_desc'),
         value: AccommodationSort.RATING_DESC,
       },
-      // {
-      //   label: this.translation.instant('popularity'),
-      //   value: 'popularity',
-      // },
     ];
   }
 }
