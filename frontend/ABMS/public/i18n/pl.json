@@ -99,12 +99,19 @@
   "tv": "Telewizor",
   "free_meals": "Darmowe wyżywienie",
   "amenitites": "Udogodnienia",
-  "rating_stars_amount": "Ilość gwiazdek",
+  "minimal_rating": "Minimalna ocena",
   "clear": "Wyczyść",
   "no_search_results": "Brak wyników wyszukiwania",
   "change_filters": "Zmień filtry lub wybierz inny termin",
   "login_to_like": "Zaloguj się, aby dodać do ulubionych",
   "average_rating": "Średnia ocena",
   "no_reviews": "Brak opinii",
-  "details": "Szczegóły"
+  "details": "Szczegóły",
+  "price_asc": "Cena rosnąco",
+  "price_desc": "Cena malejąco",
+  "rating_asc": "Ocena rosnąco",
+  "rating_desc": "Ocena malejąco",
+  "popularity": "Popularność",
+  "sort_by": "Sortuj według",
+  "choose_an_option": "Wybierz opcję"
 }

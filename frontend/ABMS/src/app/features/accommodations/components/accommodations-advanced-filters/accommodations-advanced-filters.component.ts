@@ -3,12 +3,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { RatingModule } from 'primeng/rating';
 import { SliderChangeEvent, SliderModule } from 'primeng/slider';
 import { AdvancedFilters } from '../../../../core/interfaces/advanced-filters';
+import { SelectOption } from '../../../../core/interfaces/select-option';
 import { ConstantsService } from '../../../../core/services/constants.service';
 
 @Component({
@@ -21,6 +23,7 @@ import { ConstantsService } from '../../../../core/services/constants.service';
     ReactiveFormsModule,
     InputNumberModule,
     InputTextModule,
+    DropdownModule,
     CheckboxModule,
     ButtonModule,
     RatingModule,
@@ -33,6 +36,7 @@ export class AccommodationsAdvancedFiltersComponent {
 
   form!: FormGroup;
   amenities: string[] = [];
+  sortOptions: SelectOption[] = [];
   selectedAmenities: string[] = [];
 
   constructor(
@@ -46,8 +50,10 @@ export class AccommodationsAdvancedFiltersComponent {
       priceRange: [[0, 5000]],
       amenities: [null],
       rating: [null],
+      sortBy: [null],
     });
 
+    this.sortOptions = this.constantsService.getAccommodationsSortOptions();
     this.amenities = this.constantsService.getAmenitiesOptions();
   }
 
@@ -85,6 +91,7 @@ export class AccommodationsAdvancedFiltersComponent {
       maxPrice: this.form.get('maxPrice')?.value,
       amenities: this.form.get('amenities')?.value,
       rating: this.form.get('rating')?.value,
+      sortBy: this.form.get('sortBy')?.value.value,
     };
 
     this.onFilter.emit(advancedFilters);
