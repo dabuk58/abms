@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 
@@ -15,11 +15,7 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
 
   private readonly _destroying$ = new Subject<void>();
 
-  constructor(
-    protected translation: TranslateService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor(protected translation: TranslateService, private router: Router) {
     this.setAccommodationId();
     console.log(this.accommodationId);
   }

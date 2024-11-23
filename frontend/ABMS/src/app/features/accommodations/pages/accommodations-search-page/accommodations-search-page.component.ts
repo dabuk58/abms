@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { Observable, Subject } from 'rxjs';
+import { AccommodationsParams } from '../../../../../api';
 import { AccommodationsResponse } from '../../../../core/interfaces/accommodations-response';
 import { AdvancedFilters } from '../../../../core/interfaces/advanced-filters';
 import { BasicFilters } from '../../../../core/interfaces/basic-filters';
@@ -39,6 +40,8 @@ export class AccommodationsSearchPageComponent
   @ViewChild(AccommodationsAdvancedFiltersComponent)
   advancedFiltersComponent!: AccommodationsAdvancedFiltersComponent;
 
+  lastUsedParams: AccommodationsParams = {};
+
   offset: number = 0;
   recordNo: number = 10;
 
@@ -55,21 +58,34 @@ export class AccommodationsSearchPageComponent
     this.search();
   }
 
-  search(): void {
-    const basicFilters = this.basicFiltersComponent.getFilters();
-    const advancedFilters = this.advancedFiltersComponent.getFilters();
+  search(paginationSearch: boolean = false): void {
+    let params: AccommodationsParams;
 
-    const filters: CombinedFilters = { ...basicFilters, ...advancedFilters };
+    if (!paginationSearch) {
+      this.offset = 0;
 
-    console.log(filters);
+      const basicFilters = this.basicFiltersComponent.getFilters();
+      const advancedFilters = this.advancedFiltersComponent.getFilters();
+      const filters: CombinedFilters = { ...basicFilters, ...advancedFilters };
 
-    const params = mapFiltersToAccommodationsParams(filters);
+      params = {
+        ...mapFiltersToAccommodationsParams(filters),
+        Offset: this.offset,
+        RecordNo: this.recordNo,
+      };
 
-    this.router.navigate([], {
-      queryParams: filters,
-      queryParamsHandling: 'merge',
-      replaceUrl: true,
-    });
+      this.router.navigate([], {
+        queryParams: filters,
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
+    } else {
+      params = {
+        ...this.lastUsedParams,
+        Offset: this.offset,
+        RecordNo: this.recordNo,
+      };
+    }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -80,7 +96,7 @@ export class AccommodationsSearchPageComponent
   onPageChange(event: PaginatorState): void {
     this.offset = event.first ?? this.offset;
     this.recordNo = event.rows ?? this.recordNo;
-    this.search();
+    this.search(true);
   }
 
   ngOnDestroy(): void {

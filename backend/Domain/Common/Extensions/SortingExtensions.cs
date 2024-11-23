@@ -16,8 +16,8 @@ public static class SortingExtensions
 
         return direction.ToLower() switch
         {
-            "asc" => query.OrderBy(e => EF.Property<object>(e, sortBy)),
-            "desc" => query.OrderByDescending(e => EF.Property<object>(e, sortBy)),
+            "asc" => query.OrderBy(e => EF.Property<object>(e, sortBy) == null ? 1 : 0),
+            "desc" => query.OrderByDescending(e => EF.Property<object>(e, sortBy) == null ? 0 : 1),
             _ => query.OrderBy(e => EF.Property<object>(e, sortBy))
         };
     }

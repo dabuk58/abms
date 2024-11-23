@@ -77,7 +77,6 @@ export class AccommodationsAdvancedFiltersComponent
     this.route.queryParams
       .pipe(takeUntil(this._destroying$))
       .subscribe((params) => {
-        console.log(params['sortBy']);
         this.form.patchValue({
           minPrice: params['minPrice'] || 0,
           maxPrice: params['maxPrice'] || 5000,
