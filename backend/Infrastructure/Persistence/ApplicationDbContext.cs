@@ -2,6 +2,7 @@
 using Domain.Accommodation;
 using Domain.AccommodationAmenity;
 using Domain.Amenity;
+using Domain.Favorite;
 using Domain.Users;
 using Infrastructure.Persistence.Interceptors;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ public class ApplicationDbContext(
     public DbSet<User> Users => Set<User>();
     public DbSet<Amenity> Amenities => Set<Amenity>();
     public DbSet<AccommodationAmenity> AccommodationAmenities => Set<AccommodationAmenity>();
+    public DbSet<Favorite> Favorites => Set<Favorite>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -29,6 +31,7 @@ public class ApplicationDbContext(
         modelBuilder.Entity<User>(entity => entity.ToTable("users"));
         modelBuilder.Entity<Amenity>(entity => entity.ToTable("amenities"));
         modelBuilder.Entity<AccommodationAmenity>(entity => entity.ToTable("accommodation_amenities"));
+        modelBuilder.Entity<Favorite>(entity => entity.ToTable("favorites"));
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

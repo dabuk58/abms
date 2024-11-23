@@ -17,6 +17,8 @@ builder.Services
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
 
+builder.Services.AddTransient<IUserService, UserService>();
+
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
@@ -32,6 +34,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAngularApp");
 
 app.UseSerilogRequestLogging();
+
+app.UseMiddleware<TokenValidationMiddleware>();
 
 app.UseHttpsRedirection();
 
