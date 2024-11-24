@@ -88,4 +88,34 @@ export class ConstantsService {
       },
     ];
   }
+
+  getPlacesForPlaceholder(): string[] {
+    const places = [
+      this.translation.instant('places.krynica_zdroj'),
+      this.translation.instant('places.cracow'),
+      this.translation.instant('places.pomerania'),
+      this.translation.instant('places.silesia'),
+      this.translation.instant('places.wroclaw'),
+      this.translation.instant('places.sopot'),
+      this.translation.instant('places.zakopane'),
+      this.translation.instant('places.masovia'),
+      this.translation.instant('places.poznan'),
+      this.translation.instant('places.gdansk'),
+      this.translation.instant('places.szczawnica'),
+      this.translation.instant('places.solina'),
+      this.translation.instant('places.warsaw'),
+      this.translation.instant('places.szczecin'),
+      this.translation.instant('places.szklarska_poreba'),
+      this.translation.instant('places.chelm'),
+      this.translation.instant('places.zamosc'),
+      this.translation.instant('places.torun'),
+      this.translation.instant('places.zielona_gora'),
+      this.translation.instant('places.polanica_zdroj'),
+      this.translation.instant('places.ustron'),
+      this.translation.instant('places.bukowina_tatrzanska'),
+      this.translation.instant('places.przemysl'),
+    ];
+
+    return places.sort(() => Math.random() - 0.5);
+  }
 }

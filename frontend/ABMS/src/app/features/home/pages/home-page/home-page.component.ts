@@ -9,6 +9,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { ROUTES } from '../../../../core/constants/routes-constants';
+import { ConstantsService } from '../../../../core/services/constants.service';
 import { ProposalsCarouselComponent } from '../../components/proposals-carousel/proposals-carousel.component';
 
 @Component({
@@ -51,20 +52,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
     protected translation: TranslateService,
     private fb: FormBuilder,
     private router: Router,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private constantsService: ConstantsService
   ) {
-    this.placeholders = [
-      this.translation.instant('new_york'),
-      this.translation.instant('masovia'),
-      this.translation.instant('california'),
-      this.translation.instant('warsaw'),
-      this.translation.instant('london'),
-      this.translation.instant('prague'),
-      this.translation.instant('chile'),
-      this.translation.instant('london'),
-      this.translation.instant('italy'),
-      this.translation.instant('san_francisco'),
-    ];
+    this.placeholders = this.constantsService.getPlacesForPlaceholder();
 
     this.currentPlaceholder = this.placeholders[0];
 
