@@ -8,18 +8,6 @@
     <form [formGroup]="form" class="flex flex-column gap-4">
       <div class="flex flex-column gap-3">
         <p class="abms-advanced-filters__single-filter_title">
-          {{ "sort_by" | translate }}
-        </p>
-        <p-dropdown
-          [options]="sortOptions"
-          [showClear]="true"
-          optionLabel="label"
-          formControlName="sortBy"
-          [placeholder]="translation.instant('choose_an_option') + '...'"
-        ></p-dropdown>
-      </div>
-      <div class="flex flex-column gap-3">
-        <p class="abms-advanced-filters__single-filter_title">
           {{ "price_per_night" | translate }}
         </p>
         <div class="abms-advanced-filters__price-inputs">

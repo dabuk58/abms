@@ -3,7 +3,8 @@ import { AccommodationSort } from '../../../core/enums/accommodation-sort.enum';
 import { CombinedFilters } from '../pages/accommodations-search-page/accommodations-search-page.component';
 
 export function mapFiltersToAccommodationsParams(
-  filters: CombinedFilters
+  filters: CombinedFilters,
+  sortBy: AccommodationSort
 ): AccommodationsParams {
   return {
     Query: filters.query || undefined,
@@ -12,8 +13,8 @@ export function mapFiltersToAccommodationsParams(
     Amenities: filters.amenities || undefined,
     MinRating: filters.rating || undefined,
     Guests: filters.guests || undefined,
-    SortBy: getSortField(filters.sortBy),
-    SortDirection: getSortDirection(filters.sortBy) || undefined,
+    SortBy: getSortField(sortBy),
+    SortDirection: getSortDirection(sortBy),
   };
 }
 

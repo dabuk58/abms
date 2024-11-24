@@ -138,7 +138,6 @@ export class AccommodationsAdvancedFiltersComponent
         ? this.form.get('amenities')?.value.join(',')
         : null,
       rating: this.form.get('rating')?.value,
-      sortBy: this.form.get('sortBy')?.value?.value,
     };
 
     return filters;

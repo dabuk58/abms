@@ -1,13 +1,23 @@
 import { AsyncPipe } from '@angular/common';
-import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { TranslatePipe } from '@ngx-translate/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { ButtonModule } from 'primeng/button';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { AccommodationsParams } from '../../../../../api';
+import { AccommodationSort } from '../../../../core/enums/accommodation-sort.enum';
 import { AccommodationsResponse } from '../../../../core/interfaces/accommodations-response';
 import { AdvancedFilters } from '../../../../core/interfaces/advanced-filters';
 import { BasicFilters } from '../../../../core/interfaces/basic-filters';
+import { SelectOption } from '../../../../core/interfaces/select-option';
 import { AccommodationsAdvancedFiltersComponent } from '../../components/accommodations-advanced-filters/accommodations-advanced-filters.component';
 import { AccommodationsBasicFiltersComponent } from '../../components/accommodations-basic-filters/accommodations-basic-filters.component';
 import { AccommodationsSearchPageLoaderComponent } from '../../components/accommodations-search-page-loader/accommodations-search-page-loader.component';
@@ -26,14 +36,16 @@ export type CombinedFilters = BasicFilters & AdvancedFilters;
     AccommodationsSearchResultsComponent,
     TranslatePipe,
     PaginatorModule,
+    ButtonModule,
     AccommodationsSearchPageLoaderComponent,
     AsyncPipe,
+    ReactiveFormsModule,
   ],
   templateUrl: './accommodations-search-page.component.html',
   styleUrl: './accommodations-search-page.component.scss',
 })
 export class AccommodationsSearchPageComponent
-  implements AfterViewInit, OnDestroy
+  implements OnInit, AfterViewInit, OnDestroy
 {
   @ViewChild(AccommodationsBasicFiltersComponent)
   basicFiltersComponent!: AccommodationsBasicFiltersComponent;
@@ -45,14 +57,56 @@ export class AccommodationsSearchPageComponent
   offset: number = 0;
   recordNo: number = 10;
 
-  accommodationsResponse$!: Observable<AccommodationsResponse>;
+  form!: FormGroup;
 
+  accommodationsResponse$!: Observable<AccommodationsResponse>;
+  sortOptions: SelectOption[] = [];
   private readonly _destroying$ = new Subject<void>();
 
   constructor(
     private accommodationsService: AccommodationsService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private fb: FormBuilder,
+    protected translation: TranslateService,
+    private route: ActivatedRoute
+  ) {
+    this.sortOptions = [
+      {
+        label: this.translation.instant('price_asc'),
+        value: AccommodationSort.PRICE_ASC,
+      },
+      {
+        label: this.translation.instant('price_desc'),
+        value: AccommodationSort.PRICE_DESC,
+      },
+      {
+        label: this.translation.instant('rating_asc'),
+        value: AccommodationSort.RATING_ASC,
+      },
+      {
+        label: this.translation.instant('rating_desc'),
+        value: AccommodationSort.RATING_DESC,
+      },
+    ];
+
+    this.form = this.fb.group({
+      sortBy: [null],
+    });
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams
+      .pipe(takeUntil(this._destroying$))
+      .subscribe((params) => {
+        this.form.patchValue({
+          sortBy: params['sortBy']
+            ? this.sortOptions.find(
+                (option) => option.value == params['sortBy']
+              ) || null
+            : null,
+        });
+      });
+  }
 
   ngAfterViewInit(): void {
     this.search();
@@ -69,13 +123,21 @@ export class AccommodationsSearchPageComponent
       const filters: CombinedFilters = { ...basicFilters, ...advancedFilters };
 
       params = {
-        ...mapFiltersToAccommodationsParams(filters),
+        ...mapFiltersToAccommodationsParams(
+          filters,
+          this.form.get('sortBy')?.value
+        ),
         Offset: this.offset,
         RecordNo: this.recordNo,
       };
 
       this.router.navigate([], {
-        queryParams: filters,
+        queryParams: {
+          ...filters,
+          sortBy: this.form.get('sortBy')?.value
+            ? this.form.get('sortBy')?.value.value
+            : null,
+        },
         queryParamsHandling: 'merge',
         replaceUrl: true,
       });
@@ -91,6 +153,10 @@ export class AccommodationsSearchPageComponent
 
     this.accommodationsResponse$ =
       this.accommodationsService.getAccommodations$(params);
+  }
+
+  onSortChange(): void {
+    this.search();
   }
 
   onPageChange(event: PaginatorState): void {

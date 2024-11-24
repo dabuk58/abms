@@ -8,29 +8,52 @@
     class="abms-search-page__advanced-filters"
   ></app-accommodations-advanced-filters>
   @if(accommodationsResponse$ | async; as data){
-  @if(!data.accommodations.length){
-  <div
-    class="abms-search-page__no-results flex flex-column gap-3 align-items-center pt-5"
-  >
-    <p class="font-semibold text-xl">
-      {{ "no_search_results" | translate }}
-    </p>
-    <p class="abms-search-page__change-filters">
-      {{ "change_filters" | translate }}
-    </p>
+  <div class="flex flex-column gap-3">
+    <div class="flex flex-row justify-content-between">
+      <p-button
+        [label]="translation.instant('see_on_map')"
+        class="abms-search-page__map-view-button"
+        icon="pi pi-map"
+        iconPos="right"
+        [outlined]="true"
+        size="small"
+      ></p-button>
+      <form [formGroup]="form">
+        <p-dropdown
+          [options]="sortOptions"
+          [showClear]="true"
+          optionLabel="label"
+          formControlName="sortBy"
+          [placeholder]="translation.instant('sort_by') + '...'"
+          (onChange)="onSortChange()"
+        ></p-dropdown>
+      </form>
+    </div>
+    @if(!data.accommodations.length){
+    <div
+      class="abms-search-page__no-results flex flex-column gap-3 align-items-center pt-5"
+    >
+      <p class="font-semibold text-xl">
+        {{ "no_search_results" | translate }}
+      </p>
+      <p class="abms-search-page__change-filters">
+        {{ "change_filters" | translate }}
+      </p>
+    </div>
+    } @else {
+    <app-accommodations-search-results [accommodations]="data.accommodations">
+    </app-accommodations-search-results>
+    <p-paginator
+      class="abms-search-page__paginator"
+      (onPageChange)="onPageChange($event)"
+      [first]="offset"
+      [rows]="recordNo"
+      [totalRecords]="data.totalRecords"
+      [rowsPerPageOptions]="[10, 25, 50]"
+    ></p-paginator>
+    }
   </div>
-  } @else {
-  <app-accommodations-search-results [accommodations]="data.accommodations">
-  </app-accommodations-search-results>
-  <p-paginator
-    class="abms-search-page__paginator"
-    (onPageChange)="onPageChange($event)"
-    [first]="offset"
-    [rows]="recordNo"
-    [totalRecords]="data.totalRecords"
-    [rowsPerPageOptions]="[10, 25, 50]"
-  ></p-paginator>
-  } } @else{
+  } @else{
   <app-accommodations-search-page-loader
     [skeletonsAmount]="recordNo"
   ></app-accommodations-search-page-loader>

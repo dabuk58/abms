@@ -5,5 +5,4 @@ export interface AdvancedFilters {
   maxPrice: number | null;
   rating: number | null;
   amenities: string | null;
-  sortBy: AccommodationSort | null;
 }
