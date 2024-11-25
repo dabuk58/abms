@@ -1,0 +1,7 @@
+@import "./../variables.scss";
+
+.abms-loader--white {
+  .p-progress-spinner-circle {
+    stroke: $white;
+  }
+}

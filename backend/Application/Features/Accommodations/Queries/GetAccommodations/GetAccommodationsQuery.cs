@@ -20,8 +20,8 @@ public record GetAccommodationsQuery(
     int? MinRating,
     string? SortBy,
     string? SortDirection,
-    int Offset = 0,
-    int RecordNo = 10
+    int? RecordNo,
+    int Offset = 0
     ) : IRequest<GetAccommodationsResponse>;
 
 public class GetAccommodationsQueryHandler(IMapper mapper, IApplicationDbContext dbContext) : IRequestHandler<GetAccommodationsQuery, GetAccommodationsResponse>
@@ -53,7 +53,7 @@ public class GetAccommodationsQueryHandler(IMapper mapper, IApplicationDbContext
             .Include(aa => aa.AccommodationAmenities)
             .WithSpecification(new GetAccommodationsSpec(queryParameters))
             .Skip(request.Offset)
-            .Take(request.RecordNo)
+            .Take(request.RecordNo ?? int.MaxValue)
             .ProjectTo<AccommodationDto>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 

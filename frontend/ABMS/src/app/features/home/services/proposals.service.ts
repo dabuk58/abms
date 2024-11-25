@@ -12,7 +12,7 @@ export class ProposalsService {
 
   getAccommodationProposals$(): Observable<Accommodation[]> {
     return this.accommodationApiService
-      .accommodations()
+      .accommodations({ Offset: 0, RecordNo: 12 })
       .pipe(
         map((response) => mapAccommodationsProposals(response.accommodations))
       );

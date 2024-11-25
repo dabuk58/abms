@@ -1,0 +1,65 @@
+<div class="abms-map-popup p-1 pt-0 w-30rem">
+  <div class="abms-map-popup__header">
+    <div class="flex align-items-center justify-content-between">
+      <div class="flex flex-column">
+        <h2 class="text-lg font-semibold">{{ accommodation.name }}</h2>
+        <p class="abms-map-popup__region text-xs">
+          {{ accommodation.city }}, {{ accommodation.region }}
+        </p>
+      </div>
+      <app-heart-icon
+        class="abms-map-popup__favorite-icon"
+        [ngClass]="{
+                'abms-map-popup__favorite-icon--checked':
+                  accommodation.isFavorite,
+              }"
+        [pTooltip]="translation.instant('login_to_like')"
+        tooltipPosition="top"
+        showDelay="150"
+        [tooltipDisabled]="isLoggedIn"
+        [filled]="accommodation.isFavorite"
+        (click)="onFavorite(accommodation)"
+      ></app-heart-icon>
+    </div>
+  </div>
+  <div class="abms-map-popup__content">
+    <div class="abms-map-popup__result-content gap-3">
+      <img
+        class="border-round w-full"
+        src="https://static.leonardo-hotels.com/image/leonardohotelbucharestcitycenter_room_comfortdouble2_2022_4000x2600_7e18f254bc75491965d36cc312e8111f_1200x780_mobile_3.jpeg"
+      />
+      <div class="flex flex-column justify-content-between">
+        <p class="abms-map-popup__description">
+          {{ accommodation.description }}
+        </p>
+        <div class="abms-map-popup__price mt-0 font-semibold">
+          {{ accommodation.pricePerNight + "zł" }}
+          <span class="text-base">{{ "per_night" | translate }}</span>
+        </div>
+      </div>
+      <div class="flex flex-column justify-content-between">
+        <div class="flex flex-column gap-1 align-items-center">
+          @if(accommodation.rating){
+          <p>{{ "average_rating" | translate }}</p>
+          <div class="flex gap-2 align-items-center">
+            <p>{{ accommodation.rating }} / 10</p>
+            <i class="abms-map-popup__rating-star text-xl bi bi-star-fill"></i>
+          </div>
+          } @else {
+          <p>{{ "no_reviews" | translate }}</p>
+          }
+        </div>
+        <p-button
+          class="abms-advanced-filters__search-button"
+          [label]="translation.instant('details')"
+          icon="pi pi-angle-right"
+          iconPos="right"
+          [outlined]="false"
+          type="submit"
+          size="small"
+          (onClick)="onDetails(accommodation.id)"
+        />
+      </div>
+    </div>
+  </div>
+</div>

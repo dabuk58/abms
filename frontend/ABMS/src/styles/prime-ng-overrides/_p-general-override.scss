@@ -9,10 +9,13 @@
 
   & .p-dialog-content {
     padding: 0 14px 14px 14px;
+    overflow: hidden;
   }
 
   & .p-dialog-title {
     font-weight: 600;
+    font-size: 1rem;
+    color: $primary;
   }
 }
 

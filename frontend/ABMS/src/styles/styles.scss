@@ -1,10 +1,11 @@
 @import "./reset";
 @import "primeicons/primeicons.css";
 @import "./p-overrides-imports";
+@import "./../../node_modules/leaflet/dist/leaflet.css";
+@import "./leaflet_override";
 
 @layer reset, primeng;
 
-/* Reset CSS */
 @layer reset {
   @include css-reset;
 }

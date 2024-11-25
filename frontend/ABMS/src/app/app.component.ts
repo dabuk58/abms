@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { filter } from 'rxjs';
-import translationsPL from './../../public/i18n/pl.json';
+import translationsPL from './../assets/i18n/pl.json';
 import { FooterComponent } from './core/components/footer/footer.component';
 import { HeaderComponent } from './core/components/header/header.component';
 

@@ -11,12 +11,14 @@
   <div class="flex flex-column gap-3">
     <div class="flex flex-row justify-content-between">
       <p-button
-        [label]="translation.instant('see_on_map')"
         class="abms-search-page__map-view-button"
         icon="pi pi-map"
         iconPos="right"
-        [outlined]="true"
         size="small"
+        [outlined]="true"
+        [label]="translation.instant('see_on_map')"
+        [disabled]="!data.accommodations.length"
+        (onClick)="onMapView()"
       ></p-button>
       <form [formGroup]="form">
         <p-dropdown

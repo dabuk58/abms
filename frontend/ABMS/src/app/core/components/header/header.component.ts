@@ -60,9 +60,6 @@ export class HeaderComponent implements OnDestroy {
       header: this.translateService.instant('choose_option'),
       width: '400px',
       focusOnShow: false,
-      data: {
-        dialogRef: this.loginDialogRef,
-      },
     });
 
     this.loginDialogRef.onClose

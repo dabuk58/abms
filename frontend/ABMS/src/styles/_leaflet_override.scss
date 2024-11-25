@@ -1,0 +1,9 @@
+body {
+  .leaflet-popup-content {
+    width: fit-content !important;
+
+    p {
+      margin: 0;
+    }
+  }
+}
