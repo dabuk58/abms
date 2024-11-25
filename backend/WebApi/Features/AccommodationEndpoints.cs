@@ -1,8 +1,10 @@
-﻿using Application.Features.Accommodations.Queries.GetAccommodations;
+﻿using Application.Features.Accommodations.Queries.GetAccommodation;
+using Application.Features.Accommodations.Queries.GetAccommodations;
 using Application.Features.Accommodations.Queries.GetSuggestions;
 using Application.Features.Suggestions.Queries.GetSuggestions;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace QualityManagement.WebApi.Features
@@ -38,6 +40,18 @@ namespace QualityManagement.WebApi.Features
                         await sender.Send(request, cancellationToken)
                 )
                 .WithName("suggestions")
+                .Produces<IEnumerable<SuggestionDto>>(StatusCodes.Status200OK);
+
+            group.MapGet("/{id}",
+                [SwaggerOperation(summary: "Get details of a specific accommodation by ID.")]
+            [SwaggerResponse(200, "success")]
+            async (
+                    ISender sender,
+                    [FromRoute] int id,
+                    CancellationToken cancellationToken) =>
+                        await sender.Send(new GetAccommodationQuery(id), cancellationToken)
+                )
+                .WithName("accommodation")
                 .Produces<IEnumerable<SuggestionDto>>(StatusCodes.Status200OK);
         }
     }
