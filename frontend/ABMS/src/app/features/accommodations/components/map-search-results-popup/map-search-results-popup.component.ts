@@ -12,7 +12,7 @@ import { AccommodationsService } from '../../services/accommodations.service';
 import { HeartIconComponent } from '../heart-icon/heart-icon.component';
 
 @Component({
-  selector: 'app-map-popup',
+  selector: 'app-map-search-results-popup',
   standalone: true,
   imports: [
     TranslatePipe,
@@ -21,10 +21,10 @@ import { HeartIconComponent } from '../heart-icon/heart-icon.component';
     NgClass,
     TooltipModule,
   ],
-  templateUrl: './map-popup.component.html',
-  styleUrl: './map-popup.component.scss',
+  templateUrl: './map-search-results-popup.component.html',
+  styleUrl: './map-search-results-popup.component.scss',
 })
-export class MapPopupComponent implements OnInit, OnDestroy {
+export class MapSearchResultsPopupComponent implements OnInit, OnDestroy {
   @Input() markerId!: string;
   @Input() accommodation!: Accommodation;
 
