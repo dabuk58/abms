@@ -9,7 +9,7 @@ export interface AccommodationDto {
   description?: string;
   id?: number;
   /** @nullable */
-  image?: string;
+  images: string[];
   latitude: number;
   longitude: number;
   /** @nullable */

@@ -15,6 +15,6 @@ Amenities?: string;
 MinRating?: number;
 SortBy?: string;
 SortDirection?: string;
-Offset?: number;
 RecordNo?: number;
+Offset?: number;
 };

@@ -52,7 +52,7 @@ namespace QualityManagement.WebApi.Features
                         await sender.Send(new GetAccommodationQuery(id), cancellationToken)
                 )
                 .WithName("accommodation")
-                .Produces<IEnumerable<SuggestionDto>>(StatusCodes.Status200OK);
+                .Produces<GetAccommodationResponse>(StatusCodes.Status200OK);
         }
     }
 }

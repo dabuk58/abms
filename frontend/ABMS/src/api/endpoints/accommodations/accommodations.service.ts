@@ -19,6 +19,7 @@ import {
 } from 'rxjs'
 import type {
   AccommodationsParams,
+  GetAccommodationResponse,
   GetAccommodationsResponse,
   SuggestionDto,
   SuggestionsParams
@@ -79,7 +80,23 @@ export class AccommodationsApiService {
         params: {...params, ...options?.params},}
     );
   }
+ accommodation<TData = GetAccommodationResponse>(
+    id: number, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    accommodation<TData = GetAccommodationResponse>(
+    id: number, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    accommodation<TData = GetAccommodationResponse>(
+    id: number, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;accommodation<TData = GetAccommodationResponse>(
+    id: number, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `/accommodations/${id}`,options
+    );
+  }
 };
 
 export type AccommodationsClientResult = NonNullable<GetAccommodationsResponse>
 export type SuggestionsClientResult = NonNullable<SuggestionDto[]>
+export type AccommodationClientResult = NonNullable<GetAccommodationResponse>

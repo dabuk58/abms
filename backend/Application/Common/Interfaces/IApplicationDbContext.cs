@@ -1,5 +1,6 @@
 ﻿using Domain.Accommodation;
 using Domain.AccommodationAmenity;
+using Domain.AccommodationImage;
 using Domain.Amenity;
 using Domain.Favorite;
 using Domain.Users;
@@ -15,5 +16,6 @@ public interface IApplicationDbContext
     DbSet<Amenity> Amenities { get; }
     DbSet<AccommodationAmenity> AccommodationAmenities { get; }
     DbSet<Favorite> Favorites { get; }
+    DbSet<AccommodationImage> AccommodationImages { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

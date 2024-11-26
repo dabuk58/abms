@@ -66,13 +66,14 @@ public class AccommodationConfiguration : IEntityTypeConfiguration<Accommodation
             .HasColumnType("decimal(10,2)")
             .IsRequired();
 
-        builder.Property(x => x.Image)
-            .HasColumnName("image")
-            .IsRequired(false);
-
         builder.HasMany(a => a.AccommodationAmenities)
             .WithOne(aa => aa.Accommodation)
             .HasForeignKey(aa => aa.AccommodationId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(a => a.AccommodationImages)
+            .WithOne(ai => ai.Accommodation)
+            .HasForeignKey(ai => ai.AccommodationId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(x => x.CreatedAt)
@@ -82,5 +83,6 @@ public class AccommodationConfiguration : IEntityTypeConfiguration<Accommodation
         builder.Property(x => x.UpdatedAt)
             .HasColumnName("updated_at")
             .IsRequired(false);
+
     }
 }

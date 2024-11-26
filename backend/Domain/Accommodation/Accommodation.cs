@@ -15,6 +15,6 @@ public class Accommodation : AuditableEntity
     public required decimal Latitude { get; set; }
     public required decimal Longitude { get; set; }
     public required decimal PricePerNight { get; set; }
-    public string? Image { get; set; }
     public virtual ICollection<AccommodationAmenity.AccommodationAmenity>? AccommodationAmenities { get; }
+    public virtual ICollection<AccommodationImage.AccommodationImage>? AccommodationImages { get; }
 }

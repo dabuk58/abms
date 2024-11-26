@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241126163606_AddAccommodationImagesTable")]
+    partial class AddAccommodationImagesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,6 +47,10 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text")
                         .HasColumnName("description");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("text")
+                        .HasColumnName("image");
 
                     b.Property<decimal>("Latitude")
                         .HasColumnType("decimal(9,6)")
@@ -247,7 +254,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.AccommodationImage.AccommodationImage", b =>
                 {
                     b.HasOne("Domain.Accommodation.Accommodation", "Accommodation")
-                        .WithMany("AccommodationImages")
+                        .WithMany()
                         .HasForeignKey("AccommodationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -280,8 +287,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Accommodation.Accommodation", b =>
                 {
                     b.Navigation("AccommodationAmenities");
-
-                    b.Navigation("AccommodationImages");
                 });
 
             modelBuilder.Entity("Domain.Amenity.Amenity", b =>

@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Accommodation;
 using Domain.AccommodationAmenity;
+using Domain.AccommodationImage;
 using Domain.Amenity;
 using Domain.Favorite;
 using Domain.Users;
@@ -21,6 +22,7 @@ public class ApplicationDbContext(
     public DbSet<Amenity> Amenities => Set<Amenity>();
     public DbSet<AccommodationAmenity> AccommodationAmenities => Set<AccommodationAmenity>();
     public DbSet<Favorite> Favorites => Set<Favorite>();
+    public DbSet<AccommodationImage> AccommodationImages => Set<AccommodationImage>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -32,6 +34,7 @@ public class ApplicationDbContext(
         modelBuilder.Entity<Amenity>(entity => entity.ToTable("amenities"));
         modelBuilder.Entity<AccommodationAmenity>(entity => entity.ToTable("accommodation_amenities"));
         modelBuilder.Entity<Favorite>(entity => entity.ToTable("favorites"));
+        modelBuilder.Entity<AccommodationImage>(entity => entity.ToTable("accommodation_images"));
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -51,6 +51,7 @@ public class GetAccommodationsQueryHandler(IMapper mapper, IApplicationDbContext
 
         var accommodations = await dbContext.Accommodations
             .Include(aa => aa.AccommodationAmenities)
+            .Include(ai => ai.AccommodationImages)
             .WithSpecification(new GetAccommodationsSpec(queryParameters))
             .Skip(request.Offset)
             .Take(request.RecordNo ?? int.MaxValue)

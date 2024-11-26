@@ -6,6 +6,7 @@ public class GetAccommodationsMapping : Profile
 {
     public GetAccommodationsMapping()
     {
-        CreateMap<Accommodation, AccommodationDto>();
+        CreateMap<Accommodation, AccommodationDto>()
+            .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.AccommodationImages.Select(ai => ai.Image).ToArray()));
     }
 }
