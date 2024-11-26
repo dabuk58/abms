@@ -11,4 +11,5 @@ public class User : AuditableEntity
     public string? FullName { get; set; }
     public string? PhoneNumber { get; set; }
     public virtual ICollection<Review.Review>? Reviews { get; set; }
+    public virtual ICollection<Booking.Booking>? Bookings { get; set; }
 }

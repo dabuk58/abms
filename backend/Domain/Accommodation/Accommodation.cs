@@ -18,4 +18,5 @@ public class Accommodation : AuditableEntity
     public virtual ICollection<AccommodationAmenity.AccommodationAmenity>? AccommodationAmenities { get; }
     public virtual ICollection<AccommodationImage.AccommodationImage>? AccommodationImages { get; }
     public virtual ICollection<Review.Review>? Reviews { get; }
+    public virtual ICollection<Booking.Booking>? Bookings { get; }
 }

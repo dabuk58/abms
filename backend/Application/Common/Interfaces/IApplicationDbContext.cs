@@ -2,7 +2,9 @@
 using Domain.AccommodationAmenity;
 using Domain.AccommodationImage;
 using Domain.Amenity;
+using Domain.Booking;
 using Domain.Favorite;
+using Domain.Payment;
 using Domain.Review;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
@@ -19,5 +21,7 @@ public interface IApplicationDbContext
     DbSet<Favorite> Favorites { get; }
     DbSet<AccommodationImage> AccommodationImages { get; }
     DbSet<Review> Reviews { get; }
+    DbSet<Booking> Bookings { get; }
+    DbSet<Payment> Payments { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

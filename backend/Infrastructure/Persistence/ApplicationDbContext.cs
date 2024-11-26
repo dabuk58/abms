@@ -3,7 +3,9 @@ using Domain.Accommodation;
 using Domain.AccommodationAmenity;
 using Domain.AccommodationImage;
 using Domain.Amenity;
+using Domain.Booking;
 using Domain.Favorite;
+using Domain.Payment;
 using Domain.Review;
 using Domain.Users;
 using Infrastructure.Persistence.Interceptors;
@@ -25,6 +27,8 @@ public class ApplicationDbContext(
     public DbSet<Favorite> Favorites => Set<Favorite>();
     public DbSet<AccommodationImage> AccommodationImages => Set<AccommodationImage>();
     public DbSet<Review> Reviews => Set<Review>();
+    public DbSet<Booking> Bookings => Set<Booking>();
+    public DbSet<Payment> Payments => Set<Payment>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -38,6 +42,8 @@ public class ApplicationDbContext(
         modelBuilder.Entity<Favorite>(entity => entity.ToTable("favorites"));
         modelBuilder.Entity<AccommodationImage>(entity => entity.ToTable("accommodation_images"));
         modelBuilder.Entity<Review>(entity => entity.ToTable("reviews"));
+        modelBuilder.Entity<Booking>(entity => entity.ToTable("bookings"));
+        modelBuilder.Entity<Payment>(entity => entity.ToTable("payments"));
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
