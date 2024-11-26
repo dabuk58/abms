@@ -1,4 +1,6 @@
-﻿namespace Application.Features.Accommodations.Queries.GetAccommodations;
+﻿using Application.Features.Accommodations.Queries.GetAccommodation;
+
+namespace Application.Features.Accommodations.Queries.GetAccommodations;
 public class AccommodationDto
 {
     public int Id { get; set; }
@@ -14,4 +16,5 @@ public class AccommodationDto
     public required decimal Longitude { get; set; }
     public required decimal PricePerNight { get; set; }
     public required string[] Images { get; set; }
+    public required ReviewDto[] Reviews { get; set; }
 }

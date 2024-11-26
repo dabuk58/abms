@@ -17,4 +17,5 @@ public class Accommodation : AuditableEntity
     public required decimal PricePerNight { get; set; }
     public virtual ICollection<AccommodationAmenity.AccommodationAmenity>? AccommodationAmenities { get; }
     public virtual ICollection<AccommodationImage.AccommodationImage>? AccommodationImages { get; }
+    public virtual ICollection<Review.Review>? Reviews { get; }
 }

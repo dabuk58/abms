@@ -7,6 +7,7 @@ public class GetAccommodationsMapping : Profile
     public GetAccommodationsMapping()
     {
         CreateMap<Accommodation, AccommodationDto>()
-            .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.AccommodationImages.Select(ai => ai.Image).ToArray()));
+            .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.AccommodationImages.Select(ai => ai.Image).ToArray()))
+            .ForMember(dest => dest.Reviews, opt => opt.MapFrom(src => src.Reviews.ToArray()));
     }
 }

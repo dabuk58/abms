@@ -5,5 +5,4 @@ public class AccommodationImage
     public required string Image { get; set; }
     public int AccommodationId { get; set; }
     public virtual Accommodation.Accommodation Accommodation { get; set; } = null!;
-
 }

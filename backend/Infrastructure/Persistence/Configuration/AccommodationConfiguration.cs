@@ -72,8 +72,13 @@ public class AccommodationConfiguration : IEntityTypeConfiguration<Accommodation
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(a => a.AccommodationImages)
-            .WithOne(ai => ai.Accommodation)
-            .HasForeignKey(ai => ai.AccommodationId)
+            .WithOne(a => a.Accommodation)
+            .HasForeignKey(a => a.AccommodationId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(a => a.Reviews)
+            .WithOne(a => a.Accommodation)
+            .HasForeignKey(a => a.AccommodationId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(x => x.CreatedAt)
