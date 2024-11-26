@@ -9,6 +9,7 @@ export * from './checkOrAddUserCommand';
 export * from './checkOrAddUserResponse';
 export * from './getAccommodationResponse';
 export * from './getAccommodationsResponse';
+export * from './reviewDto';
 export * from './suggestionDto';
 export * from './suggestionsParams';
 export * from './userDto';

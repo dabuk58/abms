@@ -22,10 +22,11 @@
       ></p-button>
       <form [formGroup]="form">
         <p-dropdown
-          [options]="sortOptions"
-          [showClear]="true"
+          class="abms-search-page__sort-dropdown"
           optionLabel="label"
           formControlName="sortBy"
+          [showClear]="true"
+          [options]="sortOptions"
           [placeholder]="translation.instant('sort_by') + '...'"
           (onChange)="onSortChange()"
         ></p-dropdown>

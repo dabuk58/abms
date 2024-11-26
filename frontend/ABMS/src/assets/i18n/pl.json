@@ -113,7 +113,7 @@
   "private_bathroom": "Prywatna łazienka",
   "tv": "Telewizor",
   "free_meals": "Darmowe wyżywienie",
-  "amenitites": "Udogodnienia",
+  "amenities": "Udogodnienia",
   "minimal_rating": "Minimalna ocena",
   "clear": "Wyczyść",
   "no_search_results": "Brak wyników wyszukiwania",
@@ -131,5 +131,17 @@
   "choose_an_option": "Wybierz opcję",
   "see_on_map": "Zobacz na mapie",
   "found_accommodations": "Znalezionych obiektów",
-  "see_more": "Zobacz więcej"
+  "see_more": "Zobacz więcej",
+  "error_occured": "Wystąpił błąd",
+  "browser": "Wyszukiwarka",
+  "favorites": "Ulubione",
+  "add_to_favorites": "Dodaj do ulubionych",
+  "remove_from_favorites": "Usuń z ulubionych",
+  "description": "Opis",
+  "no_description": "Brak opisu",
+  "no_amenities": "Brak udogodnień",
+  "reviews": "Opinie",
+  "address": "Adres",
+  "street_shortcut": "ul.",
+  "reserve": "Rezerwuj"
 }

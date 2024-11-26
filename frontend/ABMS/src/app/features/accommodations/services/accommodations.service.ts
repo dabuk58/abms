@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { delay, map, Observable, Subject } from 'rxjs';
+import { catchError, delay, map, Observable, Subject, throwError } from 'rxjs';
 import {
   AccommodationsApiService,
   AccommodationsParams,
@@ -8,7 +8,11 @@ import {
 } from '../../../../api';
 import { AccommodationsResponse } from '../../../core/interfaces/accommodations-response';
 import { removeEmptyParams } from '../../../shared/tools/functions';
-import { mapAccommodations } from '../../home/mappers/accommodations-mapper';
+import {
+  mapAccommodation,
+  mapAccommodations,
+} from '../../home/mappers/accommodations-mapper';
+import { Accommodation } from '../../../core/interfaces/accommodation';
 
 @Injectable({
   providedIn: 'root',
@@ -42,5 +46,20 @@ export class AccommodationsService {
 
   addRemoveFavorite$(accommodationId: number): Observable<AddFavoriteResponse> {
     return this.usersApiService.favorites(accommodationId);
+  }
+
+  getAccommodation$(id: number): Observable<Accommodation> {
+    return this.accommodationsApiService.accommodation(id).pipe(
+      catchError((error) => {
+        console.error('Error fetching accommodation:', error);
+        return throwError(() => new Error('Failed to fetch accommodation'));
+      }),
+      map((response) => {
+        if (!response.accommodation) {
+          throw new Error();
+        }
+        return mapAccommodation(response.accommodation);
+      })
+    );
   }
 }

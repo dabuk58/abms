@@ -1,6 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component, Input, OnDestroy } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
@@ -25,7 +25,6 @@ import { HeartIconComponent } from '../heart-icon/heart-icon.component';
     RatingModule,
     TooltipModule,
     TranslatePipe,
-    RouterLink,
     ButtonModule,
   ],
   templateUrl: './accommodations-search-results.component.html',

@@ -39,6 +39,9 @@
   border: 1px solid #e2e8f0;
   padding: 0.25rem;
 }
+.p-tieredmenu .p-menuitem > .p-menuitem-content .p-menuitem-link {
+  color: $primary;
+}
 
 .p-menuitem-text {
   margin-left: 0.5rem;

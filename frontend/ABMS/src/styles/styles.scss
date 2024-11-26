@@ -10,6 +10,10 @@
   @include css-reset;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body,
 body .p-component {
   font-family: "Poppins", sans-serif;
@@ -18,6 +22,12 @@ body .p-component {
 
 app-accommodations-search-page {
   width: 60%;
+  align-self: center;
+  margin-bottom: 10rem;
+}
+
+app-accommodation-details-page {
+  width: 53%;
   align-self: center;
   margin-bottom: 10rem;
 }

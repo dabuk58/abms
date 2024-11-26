@@ -8,7 +8,13 @@
   >
     BedFind
   </p>
-  <div class="card flex justify-content-center gap-3">
+  <div class="flex gap-1"></div>
+  <div class="flex gap-1">
+    <p-button [label]="'search' | translate" (onClick)="onBrowser()"></p-button>
+    <p-button
+      [label]="'favorites' | translate"
+      (onClick)="onBrowser()"
+    ></p-button>
     @if(!isLoggedIn()){
     <p-button
       icon="pi pi-sign-in"

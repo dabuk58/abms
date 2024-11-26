@@ -1,1 +1,160 @@
-<p>accommodation-details-page works!</p>
+<div class="abms-accommodation-details gap-3 pt-4">
+  @if(accommodation$ | async; as accommodation){
+  <p-galleria
+    class="abms-accommodation-details__gallery"
+    [value]="accommodation.images"
+    thumbnailsPosition="right"
+    [responsiveOptions]="responsiveOptions"
+    [containerStyle]="{ 'max-width': '1141px' }"
+    [numVisible]="3"
+    [showItemNavigators]="true"
+  >
+    <ng-template pTemplate="item" let-item>
+      <div class="">
+        <div class="abms-accommodation-details__image-container">
+          <img [src]="item" />
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="thumbnail" let-item>
+      <div class="grid grid-nogutter justify-content-center">
+        <img [src]="item" />
+      </div>
+    </ng-template>
+    <ng-template pTemplate="previousthumbnailicon">
+      <i class="pi pi-angle-up"></i>
+    </ng-template>
+    <ng-template pTemplate="nextthumbnailicon">
+      <i class="pi pi-angle-down"></i>
+    </ng-template>
+  </p-galleria>
+  <p-card>
+    <div class="flex flex-column gap-6">
+      <div class="flex justify-content-between align-items-center">
+        <div class="flex gap-3 align-items-center">
+          <h1 class="text-3xl font-semibold">
+            {{ accommodation.name }}
+          </h1>
+          <div>
+            <span class="text-base mr-2">{{ rating }} / 10</span>
+            <i
+              class="abms-accommodation-details__rating-star ml-1 text-xl bi bi-star-fill"
+            ></i>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <p>
+            {{
+              accommodation.isFavorite
+                ? ("remove_from_favorites" | translate)
+                : ("add_to_favorites" | translate)
+            }}
+          </p>
+          <app-heart-icon
+            class="abms-accommodation-details__favorite-icon"
+            [pTooltip]="translation.instant('login_to_like')"
+            tooltipPosition="top"
+            showDelay="150"
+            [tooltipDisabled]="isLoggedIn"
+            [ngClass]="{
+            'abms-accommodation-details__favorite-icon--checked':
+            accommodation.isFavorite,
+          }"
+            tooltipPosition="top"
+            showDelay="150"
+            [filled]="accommodation.isFavorite"
+            (click)="onFavorite(accommodation)"
+          ></app-heart-icon>
+        </div>
+      </div>
+      <div>
+        <div class="abms-accommodation-details__price mt-0 font-semibold">
+          {{ accommodation.pricePerNight + "zł" }}
+          <span class="text-base">{{ "per_night" | translate }}</span>
+        </div>
+        <p-button
+          class="abms-search-page__map-view-button"
+          icon="pi pi-arrow-right"
+          iconPos="right"
+          size="small"
+          [label]="translation.instant('reserve')"
+          (onClick)="onMapPreview()"
+        ></p-button>
+      </div>
+      <div class="flex flex-column gap-2">
+        <h2 class="font-semibold text-xl">{{ "description" | translate }}</h2>
+        @if(accommodation.description){
+        <p class="abms-accommodation-details__desription">
+          {{ accommodation.description }}
+        </p>
+        } @else {
+        <p>{{ "no_description" | translate }}</p>
+        }
+      </div>
+      <div class="flex flex-column gap-2">
+        <h2 class="font-semibold text-xl">{{ "amenities" | translate }}</h2>
+        <div class="abms-accommodation-details__amenities">
+          @if(!accommodation.amenities.length){
+          <p>{{ "no_amenities" | translate }}</p>
+          } @else { @for(amenity of accommodation.amenities; track amenity){
+          <div class="p-1 inline-block">
+            <p-chip styleClass="p-2">
+              <div class="flex gap-1">
+                <span>
+                  <i class="bi" [class]="getAmenityIconClass(amenity)"></i>
+                </span>
+                <span>{{ amenity | translate }}</span>
+              </div>
+            </p-chip>
+          </div>
+          } }
+        </div>
+      </div>
+      <div class="flex flex-column gap-2">
+        <h2 class="font-semibold text-xl">{{ "address" | translate }}</h2>
+        <div class="flex gap-3 align-items-center justify-content-between">
+          <p class="text-base">
+            {{ "street_shortcut" | translate }} {{ accommodation.street }}
+            {{ accommodation.streetNumber }}, {{ accommodation.zipCode }}
+            {{ accommodation.city }}
+          </p>
+          <p-button
+            class="abms-search-page__map-view-button"
+            icon="pi pi-map"
+            iconPos="right"
+            size="small"
+            [outlined]="true"
+            [label]="translation.instant('see_on_map')"
+            (onClick)="onMapPreview()"
+          ></p-button>
+        </div>
+      </div>
+      <div class="abms-accommodation-details__reviews flex flex-column gap-2">
+        <h2 class="font-semibold text-xl mb-3">{{ "reviews" | translate }}</h2>
+        @if(!accommodation.reviews.length){
+        <p>{{ "no_reviews" | translate }}</p>
+        } @else { @for( review of accommodation.reviews; track review; let i=
+        $index) {
+        <div class="flex align-items-center gap-5">
+          <div>
+            <span>{{ review.rating }} / 10</span>
+            <i
+              class="abms-accommodation-details__rating-star ml-1 text-xl bi bi-star-fill"
+            ></i>
+          </div>
+          <p>{{ review.reviewText }}</p>
+        </div>
+        @if(accommodation.reviews[i+1]){
+        <p-divider></p-divider>
+        } } }
+      </div>
+    </div>
+  </p-card>
+  }@else {
+  <div
+    class="abms-accommodation-details__loader-container w-full flex justify-content-center mt-10"
+  >
+    <app-loader></app-loader>
+  </div>
+  }
+</div>

@@ -3,7 +3,7 @@ import { NgElement, WithProperties } from '@angular/elements';
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { Accommodation } from '../../../core/interfaces/accommodation';
-import { MapPopupComponent } from '../components/map-popup/map-popup.component';
+import { MapSearchResultsPopupComponent } from '../components/map-search-results-popup/map-search-results-popup.component';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +33,7 @@ export class MapService {
     const marker = L.marker(coords).setIcon(icon);
 
     marker.bindPopup(() => {
-      const popupEl: NgElement & WithProperties<MapPopupComponent> =
+      const popupEl: NgElement & WithProperties<MapSearchResultsPopupComponent> =
         document.createElement('app-map-popup') as any;
 
       popupEl.accommodation = accommodation;
