@@ -15,6 +15,7 @@ public class AccommodationDto
     public required decimal Latitude { get; set; }
     public required decimal Longitude { get; set; }
     public required decimal PricePerNight { get; set; }
+    public required string[] Amenities { get; set; }
     public required string[] Images { get; set; }
     public required ReviewDto[] Reviews { get; set; }
 }
