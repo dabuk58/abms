@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ChipModule } from 'primeng/chip';
 import { DividerModule } from 'primeng/divider';
+import { DialogService } from 'primeng/dynamicdialog';
 import { GalleriaModule } from 'primeng/galleria';
 import { TooltipModule } from 'primeng/tooltip';
 import { catchError, Observable, of, Subject, takeUntil, tap } from 'rxjs';
@@ -15,6 +16,7 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { ToastService } from '../../../../core/services/toast.service';
 import { fillString } from '../../../../shared/tools/functions';
 import { HeartIconComponent } from '../../components/heart-icon/heart-icon.component';
+import { MapAccommodationPreviewComponent } from '../../components/map-accommodation-preview/map-accommodation-preview.component';
 import { AccommodationsService } from '../../services/accommodations.service';
 
 @Component({
@@ -32,6 +34,7 @@ import { AccommodationsService } from '../../services/accommodations.service';
     DividerModule,
     ChipModule,
   ],
+  providers: [DialogService],
   templateUrl: './accommodation-details-page.component.html',
   styleUrl: './accommodation-details-page.component.scss',
 })
@@ -52,6 +55,7 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
     private router: Router,
     private toast: ToastService,
     private accommodationsService: AccommodationsService,
+    private dialogService: DialogService,
     private authService: AuthService
   ) {
     this.setAccommodationId();
@@ -157,7 +161,22 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  onMapPreview(): void {}
+  onMapPreview(accommodation: Accommodation): void {
+    this.dialogService.open(MapAccommodationPreviewComponent, {
+      header: accommodation.name,
+      width: '70%',
+      height: '70%',
+      focusOnShow: false,
+      data: {
+        lat: accommodation.latitude,
+        lon: accommodation.longitude,
+      },
+    });
+  }
+
+  onBook(): void {
+    //TODO book accommodation
+  }
 
   ngOnDestroy(): void {
     this._destroying$.next(undefined);

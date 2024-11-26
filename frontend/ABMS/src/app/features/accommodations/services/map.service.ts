@@ -33,8 +33,10 @@ export class MapService {
     const marker = L.marker(coords).setIcon(icon);
 
     marker.bindPopup(() => {
-      const popupEl: NgElement & WithProperties<MapSearchResultsPopupComponent> =
-        document.createElement('app-map-popup') as any;
+      const popupEl: NgElement &
+        WithProperties<MapSearchResultsPopupComponent> = document.createElement(
+        'app-map-popup'
+      ) as any;
 
       popupEl.accommodation = accommodation;
       popupEl.markerId = markerId.toString();
@@ -43,6 +45,13 @@ export class MapService {
     });
 
     this.markerId++;
+    return marker;
+  }
+
+  createPreviewMarker(lat: number, lon: number): L.Marker {
+    const coords = L.latLng(lat, lon);
+    const icon = this.createMarkerIcon();
+    const marker = L.marker(coords).setIcon(icon);
     return marker;
   }
 
