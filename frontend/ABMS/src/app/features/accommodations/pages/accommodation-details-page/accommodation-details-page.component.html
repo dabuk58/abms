@@ -67,10 +67,10 @@
           ></app-heart-icon>
         </div>
       </div>
-      <div>
+      <div class="flex justify-content-between">
         <div class="abms-accommodation-details__price mt-0 font-semibold">
-          {{ accommodation.pricePerNight + "zł" }}
-          <span class="text-base">{{ "per_night" | translate }}</span>
+          <span class="text-4xl">{{ accommodation.pricePerNight + "zł" }}</span>
+          <span class="text-base"> {{ "per_night" | translate }}</span>
         </div>
         <p-button
           class="abms-search-page__map-view-button"

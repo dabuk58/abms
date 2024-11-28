@@ -36,7 +36,7 @@ export class MapService {
       const popupEl: NgElement &
         WithProperties<MapSearchResultsPopupComponent> = document.createElement(
         'app-map-popup'
-      ) as any;
+      ) as NgElement & WithProperties<MapSearchResultsPopupComponent>;
 
       popupEl.accommodation = accommodation;
       popupEl.markerId = markerId.toString();

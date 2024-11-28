@@ -59,6 +59,28 @@ public class GetAccommodationsQueryHandler(IMapper mapper, IApplicationDbContext
             .ProjectTo<AccommodationDto>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
+        var accommodationIds = accommodations.Select(a => a.Id).ToList();
+
+        var bookings = await dbContext.Bookings
+            .AsNoTracking()
+            .WithSpecification(new GetBookingsByAccommodationIdsSpec(accommodationIds))
+            .ToListAsync(cancellationToken);
+
+        var datesByAccommodation = bookings
+            .GroupBy(a => a.AccommodationId)
+            .ToDictionary(
+            g => g.Key,
+            g => g.Select(b => (
+                new DateRangeDto(b.StartDate, b.EndDate)
+            )).ToArray());
+
+        foreach (var accommodation in accommodations)
+        {
+            accommodation.UnavailableDates = datesByAccommodation.TryGetValue(accommodation.Id, out var dates)
+                ? dates
+                : Array.Empty<DateRangeDto>();
+        }
+
         return new GetAccommodationsResponse
         {
             TotalRecords = totalRecords,

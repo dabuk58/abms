@@ -7,6 +7,7 @@ export * from './accommodationsParams';
 export * from './addFavoriteResponse';
 export * from './checkOrAddUserCommand';
 export * from './checkOrAddUserResponse';
+export * from './dateRangeDto';
 export * from './getAccommodationResponse';
 export * from './getAccommodationsResponse';
 export * from './reviewDto';

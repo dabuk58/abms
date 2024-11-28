@@ -23,9 +23,17 @@ public class GetAccommodationQueryHandler(IMapper mapper, IApplicationDbContext 
         {
             return new GetAccommodationResponse(false, null);
         }
-        else
-        {
-            return new GetAccommodationResponse(true, accommodation);
-        }
+
+        var bookings = await dbContext.Bookings
+            .AsNoTracking()
+            .WithSpecification(new GetBookingsByAccommodationIdsSpec(new List<int> { accommodation.Id }))
+            .ToListAsync(cancellationToken);
+
+        accommodation.UnavailableDates = bookings
+            .Select(b => new DateRangeDto(b.StartDate, b.EndDate))
+            .ToArray();
+
+        return new GetAccommodationResponse(true, accommodation);
+
     }
 }

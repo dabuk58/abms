@@ -66,6 +66,10 @@ public class AccommodationConfiguration : IEntityTypeConfiguration<Accommodation
             .HasColumnType("decimal(10,2)")
             .IsRequired();
 
+        builder.Property(x => x.MaxGuests)
+            .HasColumnName("max_guests")
+            .IsRequired();
+
         builder.HasMany(a => a.AccommodationAmenities)
             .WithOne(aa => aa.Accommodation)
             .HasForeignKey(aa => aa.AccommodationId)

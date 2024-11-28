@@ -273,6 +273,7 @@
           "reviews",
           "street",
           "streetNumber",
+          "unavailableDates",
           "zipCode"
         ],
         "type": "object",
@@ -325,6 +326,13 @@
           "pricePerNight": {
             "type": "number",
             "format": "double"
+          },
+          "unavailableDates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DateRangeDto"
+            },
+            "nullable": true
           },
           "amenities": {
             "type": "array",
@@ -389,6 +397,20 @@
           },
           "didExist": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DateRangeDto": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
