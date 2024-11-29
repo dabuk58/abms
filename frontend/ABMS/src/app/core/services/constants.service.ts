@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
 import { ROUTES } from '../constants/routes-constants';
 import { AccommodationSort } from '../enums/accommodation-sort.enum';
+import { Amenity } from '../enums/amenity.enum';
 import { SelectOption } from '../interfaces/select-option';
 import { AuthService } from './auth.service';
 
@@ -117,5 +118,22 @@ export class ConstantsService {
     ];
 
     return places.sort(() => Math.random() - 0.5);
+  }
+
+  getAmenityIconMap(): Record<Amenity, string> {
+    const amenityIconMap: Record<Amenity, string> = {
+      [Amenity.FreeWifi]: 'bi-wifi',
+      [Amenity.Parking]: 'bi-p-circle',
+      [Amenity.Pool]: 'bi-water',
+      [Amenity.Gym]: 'bi-duffle',
+      [Amenity.TV]: 'bi-tv',
+      [Amenity.FreeBreakfast]: 'bi-alarm',
+      [Amenity.FreeMeals]: 'bi-egg-fried',
+      [Amenity.Kitchen]: 'bi-cup-hot',
+      [Amenity.Balcony]: 'bi-wind',
+      [Amenity.PrivateBathroom]: 'bi-badge-wc',
+    };
+
+    return amenityIconMap;
   }
 }

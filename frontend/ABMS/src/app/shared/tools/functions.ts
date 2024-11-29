@@ -34,3 +34,24 @@ export function incrementDateByOneDay(dateString: string): string {
 
   return `${newDay}.${newMonth}.${newYear}`;
 }
+
+export function mapApiDate(date: Date): string {
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${day}.${month}.${year}`;
+}
+
+export function mapToApiDate(date: string): string {
+  const [day, month, year] = date.split('.').map(Number);
+
+  const parsedDate = new Date(year, month - 1, day);
+  parsedDate.setHours(0, 0, 0, 0);
+
+  const yearStr = parsedDate.getFullYear();
+  const monthStr = String(parsedDate.getMonth() + 1).padStart(2, '0');
+  const dayStr = String(parsedDate.getDate()).padStart(2, '0');
+
+  return `${yearStr}-${monthStr}-${dayStr}T00:00:00.000Z`;
+}

@@ -143,5 +143,8 @@
   "reviews": "Opinie",
   "address": "Adres",
   "street_shortcut": "ul.",
-  "reserve": "Rezerwuj"
+  "reserve": "Rezerwuj",
+  "max_guests": "Maksymalna liczba gości",
+  "no_dates": "Brak terminów",
+  "first_available_date": "Pierwszy wolny termin"
 }

@@ -8,9 +8,9 @@ public class GetAccommodationsSpec : Specification<Accommodation>
         string? Query,
         string? City,
         string? Region,
-        string? DateFrom,//TODO filtering
-        string? DateTo,//TODO filtering
-        int? Guests,//TODO add guests number column
+        DateOnly? DateFrom,
+        DateOnly? DateTo,
+        int? Guests,
         int? MinPricePerNight,
         int? MaxPricePerNight,
         string[]? Amenities,
@@ -32,6 +32,11 @@ public class GetAccommodationsSpec : Specification<Accommodation>
             && (queryParams.MinRating == null || a.Rating >= queryParams.MinRating)
             && (queryParams.Amenities == null || queryParams.Amenities.All(amenity =>
                 a.AccommodationAmenities.Any(aa => aa.Amenity.Name == amenity)))
+            && (queryParams.Guests == null || a.MaxGuests >= queryParams.Guests)
+            && (queryParams.DateFrom == null || queryParams.DateTo == null ||
+                !a.Bookings.Any(b =>
+                    queryParams.DateFrom < b.EndDate &&
+                    queryParams.DateTo > b.StartDate))
           );
 
         Query.ApplySorting(queryParams.SortBy, queryParams.SortDirection);

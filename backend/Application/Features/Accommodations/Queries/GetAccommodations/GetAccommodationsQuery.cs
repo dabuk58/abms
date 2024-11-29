@@ -30,12 +30,25 @@ public class GetAccommodationsQueryHandler(IMapper mapper, IApplicationDbContext
     {
         var amenities = request.Amenities?.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
+        DateOnly? dateFrom = null;
+        DateOnly? dateTo = null;
+
+        if (DateOnly.TryParse(request.DateFrom, out var parsedDateFrom))
+        {
+            dateFrom = parsedDateFrom;
+        }
+
+        if (DateOnly.TryParse(request.DateTo, out var parsedDateTo))
+        {
+            dateTo = parsedDateTo;
+        }
+
         var queryParameters = new GetAccommodationsSpec.GetAccommodationsSpecQueryParams(
             request.Query,
             request.City,
             request.Region,
-            request.DateFrom,
-            request.DateTo,
+            dateFrom,
+            dateTo,
             request.Guests,
             request.MinPricePerNight,
             request.MaxPricePerNight,
@@ -52,34 +65,35 @@ public class GetAccommodationsQueryHandler(IMapper mapper, IApplicationDbContext
         var accommodations = await dbContext.Accommodations
             .Include(aa => aa.AccommodationAmenities)
             .Include(ai => ai.AccommodationImages)
-            .Include(ai => ai.Reviews)
+            .Include(r => r.Reviews)
+            .Include(b => b.Bookings)
             .WithSpecification(new GetAccommodationsSpec(queryParameters))
             .Skip(request.Offset)
             .Take(request.RecordNo ?? int.MaxValue)
             .ProjectTo<AccommodationDto>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        var accommodationIds = accommodations.Select(a => a.Id).ToList();
+        //var accommodationIds = accommodations.Select(a => a.Id).ToList();
 
-        var bookings = await dbContext.Bookings
-            .AsNoTracking()
-            .WithSpecification(new GetBookingsByAccommodationIdsSpec(accommodationIds))
-            .ToListAsync(cancellationToken);
+        //var bookings = await dbContext.Bookings
+        //    .AsNoTracking()
+        //    .WithSpecification(new GetBookingsByAccommodationIdsSpec(accommodationIds))
+        //    .ToListAsync(cancellationToken);
 
-        var datesByAccommodation = bookings
-            .GroupBy(a => a.AccommodationId)
-            .ToDictionary(
-            g => g.Key,
-            g => g.Select(b => (
-                new DateRangeDto(b.StartDate, b.EndDate)
-            )).ToArray());
+        //var datesByAccommodation = bookings
+        //    .GroupBy(a => a.AccommodationId)
+        //    .ToDictionary(
+        //    g => g.Key,
+        //    g => g.Select(b => (
+        //        new DateRangeDto(b.StartDate, b.EndDate)
+        //    )).ToArray());
 
-        foreach (var accommodation in accommodations)
-        {
-            accommodation.UnavailableDates = datesByAccommodation.TryGetValue(accommodation.Id, out var dates)
-                ? dates
-                : Array.Empty<DateRangeDto>();
-        }
+        //foreach (var accommodation in accommodations)
+        //{
+        //    accommodation.UnavailableDates = datesByAccommodation.TryGetValue(accommodation.Id, out var dates)
+        //        ? dates
+        //        : Array.Empty<DateRangeDto>();
+        //}
 
         return new GetAccommodationsResponse
         {

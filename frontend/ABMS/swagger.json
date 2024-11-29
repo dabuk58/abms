@@ -267,6 +267,7 @@
           "images",
           "latitude",
           "longitude",
+          "maxGuests",
           "name",
           "pricePerNight",
           "region",
@@ -326,6 +327,10 @@
           "pricePerNight": {
             "type": "number",
             "format": "double"
+          },
+          "maxGuests": {
+            "type": "integer",
+            "format": "int32"
           },
           "unavailableDates": {
             "type": "array",

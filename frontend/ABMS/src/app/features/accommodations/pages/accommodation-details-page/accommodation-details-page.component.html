@@ -67,10 +67,38 @@
           ></app-heart-icon>
         </div>
       </div>
-      <div class="flex justify-content-between">
+      <div class="flex justify-content-between align-items-center">
         <div class="abms-accommodation-details__price mt-0 font-semibold">
           <span class="text-4xl">{{ accommodation.pricePerNight + "zł" }}</span>
           <span class="text-base"> {{ "per_night" | translate }}</span>
+        </div>
+        <div class="flex align-items-center gap-1">
+          <span>{{ accommodation.maxGuests }}</span>
+          <i
+            [pTooltip]="translation.instant('max_guests')"
+            tooltipPosition="top"
+            showDelay="150"
+            class="bi bi-people-fill text-xl"
+          ></i>
+          <!-- <p-calendar
+            class="max-w-full"
+            [disabledDates]="accommodation.unavailableDates"
+            [inline]="true"
+            selectionMode="range"
+          /> -->
+        </div>
+        <div class="flex align-items-center gap-2">
+          <span>
+            {{
+              firstAvailableDate ? firstAvailableDate : ("no_dates" | translate)
+            }}
+          </span>
+          <i
+            [pTooltip]="translation.instant('first_available_date')"
+            tooltipPosition="top"
+            showDelay="150"
+            class="bi bi-calendar-check text-xl"
+          ></i>
         </div>
         <p-button
           class="abms-search-page__map-view-button"

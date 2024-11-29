@@ -13,6 +13,7 @@ export interface Accommodation {
   longitude: number;
   unavailableDates: Date[];
   pricePerNight: number;
+  maxGuests: number;
   images: string[];
   amenities: string[];
   reviews: ReviewDto[];

@@ -11,13 +11,16 @@ import { GalleriaModule } from 'primeng/galleria';
 import { TooltipModule } from 'primeng/tooltip';
 import { catchError, Observable, of, Subject, takeUntil, tap } from 'rxjs';
 import { LoaderComponent } from '../../../../core/components/loader/loader.component';
+import { Amenity } from '../../../../core/enums/amenity.enum';
 import { Accommodation } from '../../../../core/interfaces/accommodation';
 import { AuthService } from '../../../../core/services/auth.service';
+import { ConstantsService } from '../../../../core/services/constants.service';
 import { ToastService } from '../../../../core/services/toast.service';
-import { fillString } from '../../../../shared/tools/functions';
+import { fillString, mapApiDate } from '../../../../shared/tools/functions';
 import { HeartIconComponent } from '../../components/heart-icon/heart-icon.component';
 import { MapAccommodationPreviewComponent } from '../../components/map-accommodation-preview/map-accommodation-preview.component';
 import { AccommodationsService } from '../../services/accommodations.service';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-accommodation-details-page',
@@ -28,6 +31,7 @@ import { AccommodationsService } from '../../services/accommodations.service';
     CardModule,
     HeartIconComponent,
     LoaderComponent,
+    CalendarModule,
     TooltipModule,
     ButtonModule,
     GalleriaModule,
@@ -43,6 +47,8 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
   responsiveOptions: any[] | undefined;
   isLoggedIn: boolean;
   rating!: number | null;
+  amenityIconMap: Record<Amenity, string>;
+  firstAvailableDate: string | null = null;
 
   accommodation$!: Observable<Accommodation>;
 
@@ -56,7 +62,8 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
     private toast: ToastService,
     private accommodationsService: AccommodationsService,
     private dialogService: DialogService,
-    private authService: AuthService
+    private authService: AuthService,
+    private contantsService: ConstantsService
   ) {
     this.setAccommodationId();
     this.responsiveOptions = [
@@ -73,7 +80,7 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
         numVisible: 1,
       },
     ];
-
+    this.amenityIconMap = this.contantsService.getAmenityIconMap();
     this.isLoggedIn = this.authService.isLoggedIn;
   }
 
@@ -99,6 +106,10 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
         .getAccommodation$(this.accommodationId)
         .pipe(
           tap((accommodation) => this.setAverageRating(accommodation)),
+          tap((x) => console.log(x)),
+          tap((accommodation) =>
+            this.setFirstAvailableDate(accommodation.unavailableDates)
+          ),
           catchError(() => {
             this.toast.showError(
               this.translation.instant('error_occured'),
@@ -107,6 +118,33 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
             return of();
           })
         );
+    }
+  }
+
+  setFirstAvailableDate(unavailableDates: Date[]): void {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const theNextDay = new Date(today);
+    theNextDay.setDate(today.getDate() + 1);
+
+    const unavailableDateTimes = new Set(
+      unavailableDates.map((date) => {
+        const normalizedDate = new Date(date);
+        normalizedDate.setHours(0, 0, 0, 0);
+        return normalizedDate.getTime();
+      })
+    );
+
+    const maxSearchDays = 728;
+    let daysSearched = 0;
+
+    while (daysSearched < maxSearchDays) {
+      if (!unavailableDateTimes.has(theNextDay.getTime())) {
+        this.firstAvailableDate = mapApiDate(theNextDay);
+        break;
+      }
+      theNextDay.setDate(theNextDay.getDate() + 1);
+      daysSearched++;
     }
   }
 
@@ -135,30 +173,7 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
   }
 
   getAmenityIconClass(amenity: string): string {
-    switch (amenity) {
-      case 'free_wifi':
-        return 'bi-wifi';
-      case 'parking':
-        return 'bi-p-circle';
-      case 'pool':
-        return 'bi-water';
-      case 'gym':
-        return 'bi-duffle';
-      case 'tv':
-        return 'bi-tv';
-      case 'free_breakfast':
-        return 'bi-alarm';
-      case 'free_meals':
-        return 'bi-egg-fried';
-      case 'kitchen':
-        return 'bi-cup-hot';
-      case 'balcony':
-        return 'bi-wind';
-      case 'private_bathroom':
-        return 'bi-badge-wc';
-      default:
-        return 'bi-arrow-right-circle';
-    }
+    return this.amenityIconMap[amenity as Amenity] || 'bi-arrow-right-circle';
   }
 
   onMapPreview(accommodation: Accommodation): void {

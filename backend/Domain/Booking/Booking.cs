@@ -8,8 +8,8 @@ public class Booking : AuditableEntity
     public int Id { get; set; }
     public required int UserId { get; set; }
     public required int AccommodationId { get; set; }
-    public required DateTimeOffset StartDate { get; set; }
-    public required DateTimeOffset EndDate { get; set; }
+    public required DateOnly StartDate { get; set; }
+    public required DateOnly EndDate { get; set; }
     public required BookingStatus BookingStatus { get; set; }
     public required int PaymentId { get; set; }
     public virtual Accommodation.Accommodation Accommodation { get; set; } = null!;

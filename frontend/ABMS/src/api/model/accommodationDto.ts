@@ -16,6 +16,7 @@ export interface AccommodationDto {
   images: string[];
   latitude: number;
   longitude: number;
+  maxGuests: number;
   /** @nullable */
   name: string;
   pricePerNight: number;

@@ -1,17 +1,22 @@
 import { AccommodationsParams } from '../../../../api';
 import { AccommodationSort } from '../../../core/enums/accommodation-sort.enum';
+import { mapToApiDate } from '../../../shared/tools/functions';
 import { CombinedFilters } from '../pages/accommodations-search-page/accommodations-search-page.component';
 
 export function mapFiltersToAccommodationsParams(
   filters: CombinedFilters,
   sortBy: AccommodationSort
 ): AccommodationsParams {
+  console.log(filters.dateFrom);
+  console.log(filters.dateTo);
   return {
     Query: filters.query || undefined,
     MinPricePerNight: filters.minPrice || undefined,
     MaxPricePerNight: filters.maxPrice || undefined,
     Amenities: filters.amenities || undefined,
     MinRating: filters.rating || undefined,
+    DateFrom: filters.dateFrom || undefined,
+    DateTo: filters.dateTo || undefined,
     Guests: filters.guests || undefined,
     SortBy: getSortField(sortBy),
     SortDirection: getSortDirection(sortBy),

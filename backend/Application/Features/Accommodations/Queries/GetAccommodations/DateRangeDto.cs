@@ -1,9 +1,9 @@
 ﻿public class DateRangeDto
 {
-    public DateTimeOffset StartDate { get; set; }
-    public DateTimeOffset EndDate { get; set; }
+    public DateOnly StartDate { get; set; }
+    public DateOnly EndDate { get; set; }
 
-    public DateRangeDto(DateTimeOffset startDate, DateTimeOffset endDate)
+    public DateRangeDto(DateOnly startDate, DateOnly endDate)
     {
         StartDate = startDate;
         EndDate = endDate;
