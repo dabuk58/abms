@@ -196,6 +196,47 @@
         }
       }
     },
+    "/accommodations/{id}/bookings": {
+      "post": {
+        "tags": [
+          "accommodations"
+        ],
+        "operationId": "addBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddBookingRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddBookingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/users/checkOrAddUser": {
       "post": {
         "tags": [
@@ -363,6 +404,55 @@
         },
         "additionalProperties": false
       },
+      "AddBookingRequest": {
+        "required": [
+          "checkInDate",
+          "checkOutDate",
+          "email",
+          "name",
+          "phoneNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "checkInDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "checkOutDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddBookingResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "booking": {
+            "$ref": "#/components/schemas/BookingDto"
+          }
+        },
+        "additionalProperties": false
+      },
       "AddFavoriteResponse": {
         "type": "object",
         "properties": {
@@ -371,6 +461,48 @@
           },
           "message": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BookingDto": {
+        "required": [
+          "accommodationId",
+          "bookingStatus",
+          "endDate",
+          "startDate",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accommodationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "bookingStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "paymentId": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },
@@ -411,11 +543,11 @@
         "properties": {
           "startDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date"
           },
           "endDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date"
           }
         },
         "additionalProperties": false

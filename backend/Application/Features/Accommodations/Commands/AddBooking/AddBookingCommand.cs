@@ -1,5 +1,7 @@
 ﻿using Application.Common.Interfaces;
+using Application.Features.Accommodations.Commands.AddBooking;
 using Ardalis.Specification.EntityFrameworkCore;
+using AutoMapper;
 using Domain.Accommodation;
 using Domain.Booking;
 using Domain.Common.Enums;
@@ -18,7 +20,10 @@ public record AddBookingCommand(
     string PhoneNumber
     ) : IRequest<AddBookingResponse>;
 
-public class AddBookingCommandHandler(IApplicationDbContext _dbContext, IHttpContextAccessor _httpContextAccessor) : IRequestHandler<AddBookingCommand, AddBookingResponse>
+public class AddBookingCommandHandler(
+    IApplicationDbContext _dbContext,
+    IMapper _mapper,
+    IHttpContextAccessor _httpContextAccessor) : IRequestHandler<AddBookingCommand, AddBookingResponse>
 {
     public async Task<AddBookingResponse> Handle(AddBookingCommand command, CancellationToken cancellationToken)
     {
@@ -48,17 +53,18 @@ public class AddBookingCommandHandler(IApplicationDbContext _dbContext, IHttpCon
                 StartDate = command.CheckInDate,
                 EndDate = command.CheckOutDate,
                 BookingStatus = BookingStatus.AwaitingPayment,
-                PaymentId = 0,
                 UserId = 8,
             };
 
             _dbContext.Bookings.Add(booking);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
+            var bookingDto = _mapper.Map<BookingDto>(booking);
+
             return new AddBookingResponse(
                 success: true,
                 message: "Successfully added booking.",
-                booking: booking);
+                booking: bookingDto);
         }
 
         return new AddBookingResponse(

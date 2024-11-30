@@ -1,13 +1,13 @@
-﻿using Domain.Booking;
+﻿using Application.Features.Accommodations.Commands.AddBooking;
 
 namespace Application.Features.Accommodations.Commands.AddReservation;
 public class AddBookingResponse
 {
     public bool Success { get; set; }
     public string Message { get; set; }
-    public Booking? Booking { get; set; }
+    public BookingDto? Booking { get; set; }
 
-    public AddBookingResponse(bool success, string message, Booking? booking)
+    public AddBookingResponse(bool success, string message, BookingDto? booking)
     {
         Success = success;
         Message = message;

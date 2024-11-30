@@ -47,7 +47,7 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
 
         builder.Property(x => x.PaymentId)
             .HasColumnName("payment_id")
-            .IsRequired();
+            .IsRequired(false);
 
         builder.HasOne(x => x.Payment)
             .WithOne(x => x.Booking)

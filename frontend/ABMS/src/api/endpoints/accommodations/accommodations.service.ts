@@ -19,6 +19,8 @@ import {
 } from 'rxjs'
 import type {
   AccommodationsParams,
+  AddBookingRequest,
+  AddBookingResponse,
   GetAccommodationResponse,
   GetAccommodationsResponse,
   SuggestionDto,
@@ -95,8 +97,29 @@ export class AccommodationsApiService {
       `/accommodations/${id}`,options
     );
   }
+ addBooking<TData = AddBookingResponse>(
+    id: number,
+    addBookingRequest: AddBookingRequest, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    addBooking<TData = AddBookingResponse>(
+    id: number,
+    addBookingRequest: AddBookingRequest, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    addBooking<TData = AddBookingResponse>(
+    id: number,
+    addBookingRequest: AddBookingRequest, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;addBooking<TData = AddBookingResponse>(
+    id: number,
+    addBookingRequest: AddBookingRequest, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.post<TData>(
+      `/accommodations/${id}/bookings`,
+      addBookingRequest,options
+    );
+  }
 };
 
 export type AccommodationsClientResult = NonNullable<GetAccommodationsResponse>
 export type SuggestionsClientResult = NonNullable<SuggestionDto[]>
 export type AccommodationClientResult = NonNullable<GetAccommodationResponse>
+export type AddBookingClientResult = NonNullable<AddBookingResponse>
