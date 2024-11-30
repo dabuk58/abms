@@ -17,6 +17,8 @@ builder.Services
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddTransient<IUserService, UserService>();
 
 builder.Host.UseSerilog((context, configuration) =>

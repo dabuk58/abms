@@ -1,7 +1,8 @@
 ﻿namespace Domain.Common.Enums;
 public enum BookingStatus
 {
-    Confirmed = 0,
+    AwaitingPayment = 0,
+    Confirmed,
     Cancelled,
     Completed
 }

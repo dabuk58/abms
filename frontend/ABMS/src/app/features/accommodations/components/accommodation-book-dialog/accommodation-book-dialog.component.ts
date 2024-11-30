@@ -70,7 +70,7 @@ export class AccommodationBookDialogComponent implements OnInit, OnDestroy {
   disabledCheckOutDates: Date[] = [];
   unavailableDates: Date[] = [];
   maxGuests: number = this.accommodation.maxGuests || 20;
-  
+
   transformDate = mapApiDate;
 
   private readonly _destroying$ = new Subject<void>();
@@ -101,7 +101,9 @@ export class AccommodationBookDialogComponent implements OnInit, OnDestroy {
     this.form.get('checkOutDate')?.disable();
   }
 
-  confirmBooking(): void {}
+  confirmBooking(): void {
+    console.log(this.form.value);
+  }
 
   onNext(nextCallback: EventEmitter<void>) {
     if (this.form.valid) {

@@ -7,6 +7,6 @@ public class GetBookingsByAccommodationIdsSpec : Specification<Booking.Booking>
     public GetBookingsByAccommodationIdsSpec(IEnumerable<int> accommodationIds)
     {
         Query
-            .Where(b => accommodationIds.Contains(b.AccommodationId) && b.BookingStatus == BookingStatus.Confirmed);
+            .Where(b => accommodationIds.Contains(b.AccommodationId) && b.BookingStatus != BookingStatus.Cancelled);
     }
 }
