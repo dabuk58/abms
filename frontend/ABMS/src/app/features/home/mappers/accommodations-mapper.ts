@@ -18,7 +18,12 @@ export function mapAccommodation(
   return {
     ...accommodation,
     id: accommodation.id!,
-    unavailableDates: mapUnavailableDates(accommodation.unavailableDates),
+    unavailableCheckInDates: mapUnavailableCheckInDates(
+      accommodation.unavailableDates
+    ),
+    unavailableCheckOutDates: mapUnavailableCheckOutDates(
+      accommodation.unavailableDates
+    ),
     isFavorite: false,
   };
 }
@@ -34,7 +39,7 @@ export function mapAccommodations(
   };
 }
 
-export function mapUnavailableDates(dateRanges: DateRangeDto[]): Date[] {
+export function mapUnavailableCheckInDates(dateRanges: DateRangeDto[]): Date[] {
   const unavailableDates: Date[] = [];
 
   if (!dateRanges || !dateRanges.length) {
@@ -48,6 +53,33 @@ export function mapUnavailableDates(dateRanges: DateRangeDto[]): Date[] {
 
       for (
         let currentDate = new Date(startDate);
+        currentDate < endDate;
+        currentDate.setDate(currentDate.getDate() + 1)
+      ) {
+        unavailableDates.push(new Date(currentDate));
+      }
+    }
+  });
+
+  return unavailableDates;
+}
+
+export function mapUnavailableCheckOutDates(
+  dateRanges: DateRangeDto[]
+): Date[] {
+  const unavailableDates: Date[] = [];
+
+  if (!dateRanges || !dateRanges.length) {
+    return [];
+  }
+
+  dateRanges.forEach((dateRange) => {
+    if (dateRange.startDate && dateRange.endDate) {
+      const startDate = new Date(dateRange.startDate);
+      const endDate = new Date(dateRange.endDate);
+
+      for (
+        let currentDate = new Date(startDate.setDate(startDate.getDate() + 1));
         currentDate <= endDate;
         currentDate.setDate(currentDate.getDate() + 1)
       ) {

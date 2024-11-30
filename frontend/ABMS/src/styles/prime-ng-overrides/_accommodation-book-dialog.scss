@@ -1,0 +1,16 @@
+.abms-accommodation-book {
+  .p-inputtext {
+    height: 33px;
+    width: 17rem;
+    padding-right: 2rem;
+  }
+
+  .p-inputnumber.p-inputnumber-buttons-stacked .p-inputnumber-button-group {
+    right: 35px;
+
+    & .p-inputnumber-button {
+      gap: 0;
+      border-radius: 0;
+    }
+  }
+}

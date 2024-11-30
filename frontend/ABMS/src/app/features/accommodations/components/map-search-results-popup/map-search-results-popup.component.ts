@@ -1,6 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
@@ -24,7 +23,7 @@ import { HeartIconComponent } from '../heart-icon/heart-icon.component';
   templateUrl: './map-search-results-popup.component.html',
   styleUrl: './map-search-results-popup.component.scss',
 })
-export class MapSearchResultsPopupComponent implements OnInit, OnDestroy {
+export class MapSearchResultsPopupComponent implements OnDestroy {
   @Input() markerId!: string;
   @Input() accommodation!: Accommodation;
 
@@ -35,16 +34,10 @@ export class MapSearchResultsPopupComponent implements OnInit, OnDestroy {
 
   constructor(
     protected translation: TranslateService,
-    private router: Router,
     private authService: AuthService,
     private accommodationsService: AccommodationsService
   ) {
     this.isLoggedIn = this.authService.isLoggedIn;
-  }
-
-  ngOnInit(): void {
-    console.log(this.markerId);
-    console.log(this.accommodation);
   }
 
   onFavorite(accommodation: Accommodation): void {

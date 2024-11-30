@@ -7,8 +7,6 @@ export function mapFiltersToAccommodationsParams(
   filters: CombinedFilters,
   sortBy: AccommodationSort
 ): AccommodationsParams {
-  console.log(filters.dateFrom);
-  console.log(filters.dateTo);
   return {
     Query: filters.query || undefined,
     MinPricePerNight: filters.minPrice || undefined,

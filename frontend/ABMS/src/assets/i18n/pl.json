@@ -146,5 +146,29 @@
   "reserve": "Rezerwuj",
   "max_guests": "Maksymalna liczba gości",
   "no_dates": "Brak terminów",
-  "first_available_date": "Pierwszy wolny termin"
+  "first_available_date": "Pierwszy wolny termin",
+  "ten_latest_reviews": "Wyświetlane jest 10 najnowszych opinii",
+  "visit_details": "Dane pobytu",
+  "summary": "Podsumowanie",
+  "booking": "Rezerwacja",
+  "next": "Dalej",
+  "back": "Wstecz",
+  "guests_amount": "Liczba gości",
+  "full_name": "Imię i nazwisko",
+  "phone_number": "Numer telefonu",
+  "confirm_with_payment_duty": "Potwierdzam z obowiązkiem zapłaty",
+  "login_to_book": "Zaloguj się, aby zarezerwować",
+  "validation_errors": {
+    "required": "Pole obowiązkowe",
+    "email": "Wprowadź poprawny adres email",
+    "phone_number": "Wprowadź poprawny numer telefonu",
+    "missing_country_code": "Wprowadź numer kierunkowy",
+    "min": "Wartość musi być większa od lub równa {0}",
+    "max": "Wartość musi być mniejsza od lub równa {0}"
+  },
+  "check_in_date": "Data zameldowania",
+  "check_out_date": "Data wymeldowania",
+  "change_data": "Zmień dane",
+  "residence": "Miejsce pobytu",
+  "total_to_pay": "Razem do zapłaty"
 }

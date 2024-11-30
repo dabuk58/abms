@@ -11,7 +11,8 @@ export interface Accommodation {
   city: string;
   latitude: number;
   longitude: number;
-  unavailableDates: Date[];
+  unavailableCheckInDates: Date[];
+  unavailableCheckOutDates: Date[];
   pricePerNight: number;
   maxGuests: number;
   images: string[];

@@ -1,0 +1,193 @@
+<div class="abms-accommodation-book">
+  <p-stepper [linear]="true">
+    <p-stepperPanel [header]="translation.instant('visit_details')">
+      <ng-template
+        pTemplate="content"
+        let-nextCallback="nextCallback"
+        let-index="index"
+      >
+        <div class="flex flex-column gap-3 pt-3 h-23rem">
+          <form
+            [formGroup]="form"
+            class="abms-accommodation-book__visit-details-form row-gap-5 column-gap-2 align-items-center"
+          >
+            <label class="abms-accommodation-book__input-label">
+              {{ "check_in_date" | translate }}
+            </label>
+            <app-control-error-wrapper
+              [control]="getFormControlByName('checkInDate')"
+            >
+              <span class="abms-accommodation-book__input-container relative">
+                <p-calendar
+                  dateFormat="dd.mm.yy"
+                  formControlName="checkInDate"
+                  [readonlyInput]="true"
+                  [disabledDates]="unavailableCheckInDates"
+                  [minDate]="minDate"
+                  [maxDate]="maxDate"
+                  [hideOnDateTimeSelect]="false"
+                  (onSelect)="onCheckInDateSelect()"
+                ></p-calendar>
+                <i
+                  class="abms-accommodation-book__icon pi pi-calendar-plus absolute top-50"
+                ></i>
+              </span>
+            </app-control-error-wrapper>
+            <label class="abms-accommodation-book__input-label">
+              {{ "check_out_date" | translate }}
+            </label>
+            <app-control-error-wrapper
+              [control]="getFormControlByName('checkOutDate')"
+            >
+              <span class="abms-accommodation-book__input-container relative">
+                <p-calendar
+                  dateFormat="dd.mm.yy"
+                  formControlName="checkOutDate"
+                  [readonlyInput]="true"
+                  [disabledDates]="unavailableCheckOutDates"
+                  [minDate]="minCheckOutDate"
+                  [maxDate]="maxCheckOutDate"
+                  [hideOnDateTimeSelect]="false"
+                ></p-calendar>
+                <i
+                  class="abms-accommodation-book__icon pi pi-calendar-minus absolute top-50"
+                ></i>
+              </span>
+            </app-control-error-wrapper>
+            <label class="abms-accommodation-book__input-label">
+              {{ "guests_amount" | translate }}
+            </label>
+            <app-control-error-wrapper
+              [control]="getFormControlByName('guests')"
+            >
+              <span class="abms-accommodation-book__input-container relative">
+                <p-inputNumber
+                  inputId="integeronly"
+                  formControlName="guests"
+                  [showButtons]="true"
+                  [min]="1"
+                  [max]="maxGuests"
+                ></p-inputNumber>
+                <i
+                  class="abms-accommodation-book__icon pi pi-users absolute top-50"
+                ></i>
+              </span>
+            </app-control-error-wrapper>
+            <label class="abms-accommodation-book__input-label">
+              {{ "full_name" | translate }}
+            </label>
+            <app-control-error-wrapper [control]="getFormControlByName('name')">
+              <span class="abms-accommodation-book__input-container relative">
+                <input formControlName="name" pInputText />
+                <i
+                  class="abms-accommodation-book__icon pi pi-address-book absolute top-50"
+                ></i>
+              </span>
+            </app-control-error-wrapper>
+            <label class="abms-accommodation-book__input-label">
+              {{ "email" | translate }}
+            </label>
+            <app-control-error-wrapper
+              [control]="getFormControlByName('email')"
+            >
+              <span class="abms-accommodation-book__input-container relative">
+                <input formControlName="email" pInputText />
+                <i
+                  class="abms-accommodation-book__icon pi pi-at absolute top-50"
+                ></i>
+              </span>
+            </app-control-error-wrapper>
+            <label class="abms-accommodation-book__input-label">
+              {{ "phone_number" | translate }}
+            </label>
+            <app-control-error-wrapper
+              [control]="getFormControlByName('phoneNumber')"
+            >
+              <span class="abms-accommodation-book__input-container relative">
+                <input formControlName="phoneNumber" type="tel" pInputText />
+                <i
+                  class="abms-accommodation-book__icon pi pi-phone absolute top-50"
+                ></i>
+              </span>
+            </app-control-error-wrapper>
+          </form>
+        </div>
+        <div class="flex pt-4 justify-content-end">
+          <p-button
+            [label]="translation.instant('next')"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            type="submit"
+            (onClick)="onNext(nextCallback)"
+          />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+    <p-stepperPanel [header]="translation.instant('summary')">
+      <ng-template
+        pTemplate="content"
+        let-prevCallback="prevCallback"
+        let-index="index"
+      >
+        <div class="abms-accommodation-book__summary pt-3 h-23rem">
+          <p class="abms-accommodation-book__summary-data-type">
+            {{ "residence" | translate }}:
+          </p>
+          <p>{{ accommodation.name }}</p>
+          <p class="abms-accommodation-book__summary-data-type">
+            {{ "address" | translate }}:
+          </p>
+          <p>
+            {{ "street_shortcut" | translate }} {{ accommodation.street }}
+            {{ accommodation.streetNumber }}, {{ accommodation.zipCode }}
+            {{ accommodation.city }}
+          </p>
+          <p class="abms-accommodation-book__summary-data-type">
+            {{ "check_in_date" | translate }}:
+          </p>
+          <p>{{ transformDate(form.get("checkInDate")?.value) }}</p>
+          <p class="abms-accommodation-book__summary-data-type">
+            {{ "check_out_date" | translate }}:
+          </p>
+          <p>{{ transformDate(form.get("checkOutDate")?.value) }}</p>
+          <p class="abms-accommodation-book__summary-data-type">
+            {{ "guests_amount" | translate }}:
+          </p>
+          <p>{{ form.get("guests")?.value }}</p>
+          <p class="abms-accommodation-book__summary-data-type">
+            {{ "full_name" | translate }}:
+          </p>
+          <p>{{ form.get("name")?.value }}</p>
+          <p class="abms-accommodation-book__summary-data-type">
+            {{ "email" | translate }}:
+          </p>
+          <p>{{ form.get("email")?.value }}</p>
+          <p class="abms-accommodation-book__summary-data-type">
+            {{ "phone_number" | translate }}:
+          </p>
+          <p>{{ form.get("phoneNumber")?.value }}</p>
+          <div class="abms-accommodation-book__summary-price-container">
+            {{ "total_to_pay" | translate }}:
+            <span
+              class="abms-accommodation-book__summary-price text-2xl font-semibold"
+              >{{ getTotalPrice() }}</span
+            >
+            zł
+          </div>
+        </div>
+        <div class="flex pt-4 justify-content-between">
+          <p-button
+            [label]="translation.instant('change_data')"
+            icon="pi pi-arrow-left"
+            (onClick)="prevCallback.emit()"
+          />
+          <p-button
+            [label]="translation.instant('confirm_with_payment_duty')"
+            icon="pi pi-check"
+            (onClick)="confirmBooking()"
+          />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+  </p-stepper>
+</div>

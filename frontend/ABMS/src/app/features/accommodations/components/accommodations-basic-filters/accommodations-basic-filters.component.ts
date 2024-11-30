@@ -6,7 +6,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -16,7 +21,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { Subject, takeUntil } from 'rxjs';
 import { BasicFilters } from '../../../../core/interfaces/basic-filters';
-import { incrementDateByOneDay } from '../../../../shared/tools/functions';
+import {
+  enhanceCalendarDates,
+  incrementDateByOneDay,
+} from '../../../../shared/tools/functions';
 
 @Component({
   selector: 'app-accommodations-basic-filters',
@@ -84,7 +92,10 @@ export class AccommodationsBasicFiltersComponent implements OnInit, OnDestroy {
 
         guests && this.form.get('guests')?.setValue(guests);
 
-        this.checkAndEnhanceDates();
+        enhanceCalendarDates(
+          this.form.get('calendarControl') as FormControl,
+          this.datePipe
+        );
       });
   }
 
@@ -93,12 +104,18 @@ export class AccommodationsBasicFiltersComponent implements OnInit, OnDestroy {
   }
 
   onSearch(): void {
-    this.checkAndEnhanceDates();
+    enhanceCalendarDates(
+      this.form.get('calendarControl') as FormControl,
+      this.datePipe
+    );
     this.onFilter.emit();
   }
 
   getFilters(): BasicFilters {
-    this.checkAndEnhanceDates();
+    enhanceCalendarDates(
+      this.form.get('calendarControl') as FormControl,
+      this.datePipe
+    );
 
     let dateFrom: string | null = null;
     let dateTo: string | null = null;
@@ -122,41 +139,6 @@ export class AccommodationsBasicFiltersComponent implements OnInit, OnDestroy {
     };
 
     return filters;
-  }
-
-  checkAndEnhanceDates(): void {
-    let dateFrom, dateTo;
-    const dates = this.form.get('calendarControl')?.value;
-
-    if (!dates) return;
-
-    if (Array.isArray(dates)) {
-      dateFrom = this.form.get('calendarControl')?.value[0];
-      dateTo = this.form.get('calendarControl')?.value[1];
-    } else {
-      dateFrom = dates.split(' - ')[0];
-      dateTo = dates.split(' - ')[1];
-    }
-
-    if (!dateFrom && !dateTo) return;
-
-    if (!/^\d{2}\.\d{2}\.\d{4}$/.test(dateFrom)) {
-      dateFrom = this.datePipe.transform(
-        this.form.get('calendarControl')?.value[0],
-        'dd.MM.yyyy'
-      );
-      dateTo = this.datePipe.transform(
-        this.form.get('calendarControl')?.value[1],
-        'dd.MM.yyyy'
-      );
-    }
-
-    if (dateFrom && (!dateTo || dateFrom === dateTo)) {
-      const enhancedDateTo = incrementDateByOneDay(dateFrom);
-      this.form
-        .get('calendarControl')
-        ?.patchValue(`${dateFrom} - ${enhancedDateTo}`);
-    }
   }
 
   ngOnDestroy(): void {

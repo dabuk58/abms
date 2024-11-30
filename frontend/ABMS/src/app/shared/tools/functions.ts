@@ -1,3 +1,6 @@
+import { DatePipe } from '@angular/common';
+import { FormControl } from '@angular/forms';
+
 export function fillString(template: string, ...args: string[]): string {
   return template.replace(/{(\d+)}/, (_, index) => args[index] || '');
 }
@@ -54,4 +57,46 @@ export function mapToApiDate(date: string): string {
   const dayStr = String(parsedDate.getDate()).padStart(2, '0');
 
   return `${yearStr}-${monthStr}-${dayStr}T00:00:00.000Z`;
+}
+
+export function enhanceCalendarDates(
+  control: FormControl,
+  datePipe: DatePipe
+): void {
+  let dateFrom, dateTo;
+  const dates = control.value;
+
+  if (!dates) return;
+
+  if (Array.isArray(dates)) {
+    dateFrom = control.value[0];
+    dateTo = control.value[1];
+  } else {
+    dateFrom = dates.split(' - ')[0];
+    dateTo = dates.split(' - ')[1];
+  }
+
+  if (!dateFrom && !dateTo) return;
+
+  if (!/^\d{2}\.\d{2}\.\d{4}$/.test(dateFrom)) {
+    dateFrom = datePipe.transform(control.value[0], 'dd.MM.yyyy');
+    dateTo = datePipe.transform(control.value[1], 'dd.MM.yyyy');
+  }
+
+  if (dateFrom && (!dateTo || dateFrom === dateTo)) {
+    const enhancedDateTo = incrementDateByOneDay(dateFrom);
+    control.patchValue(`${dateFrom} - ${enhancedDateTo}`);
+  }
+}
+
+export function addOneDay(date: Date): Date {
+  const result = new Date(date);
+  result.setDate(result.getDate() + 1);
+  return result;
+}
+
+export function subtractOneDay(date: Date): Date {
+  const result = new Date(date);
+  result.setDate(result.getDate() - 1);
+  return result;
 }

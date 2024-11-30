@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { ChipModule } from 'primeng/chip';
 import { DividerModule } from 'primeng/divider';
@@ -17,10 +18,10 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { ConstantsService } from '../../../../core/services/constants.service';
 import { ToastService } from '../../../../core/services/toast.service';
 import { fillString, mapApiDate } from '../../../../shared/tools/functions';
+import { AccommodationBookDialogComponent } from '../../components/accommodation-book-dialog/accommodation-book-dialog.component';
 import { HeartIconComponent } from '../../components/heart-icon/heart-icon.component';
 import { MapAccommodationPreviewComponent } from '../../components/map-accommodation-preview/map-accommodation-preview.component';
 import { AccommodationsService } from '../../services/accommodations.service';
-import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-accommodation-details-page',
@@ -106,9 +107,8 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
         .getAccommodation$(this.accommodationId)
         .pipe(
           tap((accommodation) => this.setAverageRating(accommodation)),
-          tap((x) => console.log(x)),
           tap((accommodation) =>
-            this.setFirstAvailableDate(accommodation.unavailableDates)
+            this.setFirstAvailableDate(accommodation.unavailableCheckInDates)
           ),
           catchError(() => {
             this.toast.showError(
@@ -189,8 +189,15 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  onBook(): void {
-    //TODO book accommodation
+  onBook(accommodation: Accommodation): void {
+    this.dialogService.open(AccommodationBookDialogComponent, {
+      header: this.translation.instant('booking'),
+      width: '50%',
+      height: '60%',
+      data: {
+        accommodation: accommodation,
+      },
+    });
   }
 
   ngOnDestroy(): void {
