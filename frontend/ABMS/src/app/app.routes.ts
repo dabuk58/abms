@@ -15,11 +15,11 @@ export const routes: Routes = [
       ),
   },
   {
-    path: ROUTES.PROFILE,
-    loadComponent: () =>
-      import(
-        './features/profile/pages/profile-page/profile-page.component'
-      ).then((c) => c.ProfilePageComponent),
+    path: ROUTES.USER,
+    loadChildren: () =>
+      import('./features/user-dashboard/user-dashboard.routes').then(
+        (c) => c.routes
+      ),
   },
   {
     path: ROUTES.ACCOMMODATIONS,

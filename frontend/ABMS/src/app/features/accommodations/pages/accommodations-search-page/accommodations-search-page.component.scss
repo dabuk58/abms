@@ -1,7 +1,7 @@
 .abms-search-page {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  gap: 15px;
+  gap: 1rem;
 
   &__basic-filters {
     grid-column: 1 / 3;

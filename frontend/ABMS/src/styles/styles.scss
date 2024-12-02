@@ -20,7 +20,9 @@ body .p-component {
   font-size: 15px;
 }
 
-app-accommodations-search-page {
+app-accommodations-search-page,
+app-user-dashboard-page,
+app-accommodation-details-page {
   width: 60%;
   align-self: center;
   margin-bottom: 10rem;
@@ -28,6 +30,4 @@ app-accommodations-search-page {
 
 app-accommodation-details-page {
   width: 53%;
-  align-self: center;
-  margin-bottom: 10rem;
 }

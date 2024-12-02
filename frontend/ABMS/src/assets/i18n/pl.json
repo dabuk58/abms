@@ -48,7 +48,7 @@
   "sign_in_with_microsoft": "Zaloguj się z Microsoft",
   "logout": "Wyloguj",
   "profile": "Profil",
-  "reservations": "Rezerwacje",
+  "bookings": "Rezerwacje",
   "active": "Aktywne",
   "completed": "Zakończone",
   "your_journey_starts_here": "Twoja przygoda zaczyna się tutaj",
@@ -143,7 +143,7 @@
   "reviews": "Opinie",
   "address": "Adres",
   "street_shortcut": "ul.",
-  "reserve": "Rezerwuj",
+  "book": "Rezerwuj",
   "max_guests": "Maksymalna liczba gości",
   "no_dates": "Brak terminów",
   "first_available_date": "Pierwszy wolny termin",
@@ -170,5 +170,6 @@
   "check_out_date": "Data wymeldowania",
   "change_data": "Zmień dane",
   "residence": "Miejsce pobytu",
-  "total_to_pay": "Razem do zapłaty"
+  "total_to_pay": "Razem do zapłaty",
+  "my_offers": "Moje oferty"
 }

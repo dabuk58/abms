@@ -23,25 +23,12 @@ export class ConstantsService {
       {
         label: this.translation.instant('profile'),
         icon: 'pi pi-fw pi-user',
-        command: () => this.router.navigate([ROUTES.PROFILE]),
+        command: () => this.router.navigate([ROUTES.USER, ROUTES.PROFILE]),
       },
       {
-        label: this.translation.instant('reservations'),
+        label: this.translation.instant('bookings'),
         icon: 'pi pi-fw pi-calendar',
-        items: [
-          {
-            label: this.translation.instant('active'),
-            icon: 'pi pi-fw pi-check',
-            command: () =>
-              this.router.navigate([ROUTES.USER, ROUTES.ACTIVE_RESERVATIONS]),
-          },
-          {
-            label: this.translation.instant('completed'),
-            icon: 'pi pi-fw pi-history',
-            command: () =>
-              this.router.navigate([ROUTES.USER, ROUTES.RESERVATIONS_HISTORY]),
-          },
-        ],
+        command: () => this.router.navigate([ROUTES.USER, ROUTES.BOOKINGS]),
       },
       {
         separator: true,

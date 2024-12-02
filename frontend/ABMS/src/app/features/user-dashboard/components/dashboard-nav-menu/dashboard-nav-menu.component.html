@@ -1,0 +1,37 @@
+<p-panel class="abms-dashboard-nav-menu">
+  <ng-template pTemplate="content">
+    <p-button
+      class="flex align-items-center justify-content-center"
+      [routerLink]="[ROUTES.PROFILE]"
+      [label]="'profile' | translate"
+      [text]="true"
+      icon="pi pi-user"
+      iconPos="right"
+    ></p-button>
+    <p-button
+      class="flex align-items-center justify-content-center"
+      [routerLink]="[ROUTES.BOOKINGS]"
+      [label]="'bookings' | translate"
+      [text]="true"
+      icon="pi pi-calendar"
+      iconPos="right"
+    ></p-button>
+    <p-button
+      class="flex align-items-center justify-content-center"
+      [routerLink]="[ROUTES.OFFERS]"
+      [label]="'my_offers' | translate"
+      [text]="true"
+      icon="pi pi-home"
+      iconPos="right"
+    ></p-button>
+    <p-divider></p-divider>
+    <p-button
+      class="flex align-items-center justify-content-center"
+      [label]="'logout' | translate"
+      [text]="true"
+      icon="pi pi-sign-out"
+      iconPos="right"
+      (onClick)="onSignOut()"
+    ></p-button>
+  </ng-template>
+</p-panel>
