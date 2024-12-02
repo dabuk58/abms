@@ -11,6 +11,7 @@ public class Booking : AuditableEntity
     public required DateOnly StartDate { get; set; }
     public required DateOnly EndDate { get; set; }
     public required BookingStatus BookingStatus { get; set; }
+    public required int Guests { get; set; }
     public int? PaymentId { get; set; }
     public virtual Accommodation.Accommodation Accommodation { get; set; }
     public virtual User User { get; set; }

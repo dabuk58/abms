@@ -3,6 +3,8 @@ import { catchError, delay, map, Observable, Subject, throwError } from 'rxjs';
 import {
   AccommodationsApiService,
   AccommodationsParams,
+  AddBookingRequest,
+  AddBookingResponse,
   AddFavoriteResponse,
   UsersApiService,
 } from '../../../../api';
@@ -60,6 +62,16 @@ export class AccommodationsService {
         }
         return mapAccommodation(response.accommodation);
       })
+    );
+  }
+
+  bookAccommodation$(
+    accommodationId: number,
+    params: AddBookingRequest
+  ): Observable<AddBookingResponse> {
+    return this.accommodationsApiService.addBooking(
+      accommodationId,
+      removeEmptyParams(params)
     );
   }
 }

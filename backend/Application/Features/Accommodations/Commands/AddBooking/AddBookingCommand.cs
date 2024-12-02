@@ -17,7 +17,8 @@ public record AddBookingCommand(
     DateOnly CheckOutDate,
     string Email,
     string Name,
-    string PhoneNumber
+    string PhoneNumber,
+    int Guests
     ) : IRequest<AddBookingResponse>;
 
 public class AddBookingCommandHandler(
@@ -54,6 +55,7 @@ public class AddBookingCommandHandler(
                 EndDate = command.CheckOutDate,
                 BookingStatus = BookingStatus.AwaitingPayment,
                 UserId = 8,
+                Guests = command.Guests
             };
 
             _dbContext.Bookings.Add(booking);

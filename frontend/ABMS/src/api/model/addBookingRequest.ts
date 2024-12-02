@@ -7,6 +7,7 @@ export interface AddBookingRequest {
   checkOutDate: string;
   /** @nullable */
   email: string;
+  guests: number;
   /** @nullable */
   name: string;
   /** @nullable */

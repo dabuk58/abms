@@ -191,3 +191,6 @@
     </p-stepperPanel>
   </p-stepper>
 </div>
+@if(isLoading$ | async){
+  <app-overlay-loader></app-overlay-loader>
+}

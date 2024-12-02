@@ -100,3 +100,16 @@ export function subtractOneDay(date: Date): Date {
   result.setDate(result.getDate() - 1);
   return result;
 }
+
+export function mapDottedDateToDashedDate(date: string): string {
+  const [day, month, year] = date.split('.');
+
+  return `${year}-${month}-${day}`;
+}
+
+export function mapFullDateToDashedDate(date: Date): string {
+  const dottedDate = mapApiDate(date);
+  const [day, month, year] = dottedDate.split('.');
+
+  return `${year}-${month}-${day}`;
+}

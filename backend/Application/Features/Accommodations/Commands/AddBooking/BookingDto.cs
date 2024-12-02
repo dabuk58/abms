@@ -7,5 +7,6 @@ public class BookingDto
     public required DateOnly StartDate { get; set; }
     public required DateOnly EndDate { get; set; }
     public required int BookingStatus { get; set; }
+    public required int Guests { get; set; }
     public int? PaymentId { get; set; }
 }

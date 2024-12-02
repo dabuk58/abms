@@ -70,7 +70,8 @@ namespace QualityManagement.WebApi.Features
                             command.CheckOutDate,
                             command.Email,
                             command.Name,
-                            command.PhoneNumber
+                            command.PhoneNumber,
+                            command.Guests
                             ), cancellationToken)
                 )
                 .WithName("addBooking")

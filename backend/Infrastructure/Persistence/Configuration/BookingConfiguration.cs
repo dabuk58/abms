@@ -45,6 +45,10 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
             .HasColumnName("booking_status")
             .IsRequired();
 
+        builder.Property(x => x.Guests)
+            .HasColumnName("guests")
+            .IsRequired();
+
         builder.Property(x => x.PaymentId)
             .HasColumnName("payment_id")
             .IsRequired(false);

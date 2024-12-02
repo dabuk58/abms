@@ -6,6 +6,7 @@ export interface BookingDto {
   accommodationId: number;
   bookingStatus: number;
   endDate: string;
+  guests: number;
   id?: number;
   /** @nullable */
   paymentId?: number;

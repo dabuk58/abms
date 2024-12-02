@@ -409,6 +409,7 @@
           "checkInDate",
           "checkOutDate",
           "email",
+          "guests",
           "name",
           "phoneNumber"
         ],
@@ -421,6 +422,10 @@
           "checkOutDate": {
             "type": "string",
             "format": "date"
+          },
+          "guests": {
+            "type": "integer",
+            "format": "int32"
           },
           "email": {
             "type": "string",
@@ -471,6 +476,7 @@
           "accommodationId",
           "bookingStatus",
           "endDate",
+          "guests",
           "startDate",
           "userId"
         ],
@@ -497,6 +503,10 @@
             "format": "date"
           },
           "bookingStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "guests": {
             "type": "integer",
             "format": "int32"
           },
