@@ -6,7 +6,6 @@
       [label]="'profile' | translate"
       [text]="true"
       icon="pi pi-user"
-      iconPos="right"
     ></p-button>
     <p-button
       class="flex align-items-center justify-content-center"
@@ -14,7 +13,13 @@
       [label]="'bookings' | translate"
       [text]="true"
       icon="pi pi-calendar"
-      iconPos="right"
+    ></p-button>
+    <p-button
+      class="flex align-items-center justify-content-center"
+      [routerLink]="[ROUTES.FAVORITES]"
+      [label]="'favorites' | translate"
+      [text]="true"
+      icon="pi pi-heart"
     ></p-button>
     <p-button
       class="flex align-items-center justify-content-center"
@@ -22,7 +27,6 @@
       [label]="'my_offers' | translate"
       [text]="true"
       icon="pi pi-home"
-      iconPos="right"
     ></p-button>
     <p-divider></p-divider>
     <p-button
@@ -30,7 +34,6 @@
       [label]="'logout' | translate"
       [text]="true"
       icon="pi pi-sign-out"
-      iconPos="right"
       (onClick)="onSignOut()"
     ></p-button>
   </ng-template>

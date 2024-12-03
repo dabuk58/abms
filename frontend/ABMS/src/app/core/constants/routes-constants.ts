@@ -5,4 +5,5 @@ export const ROUTES = {
   BOOKINGS: 'bookings',
   ACCOMMODATIONS: 'accommodations',
   OFFERS: 'offers',
+  FAVORITES: 'favorites',
 };
