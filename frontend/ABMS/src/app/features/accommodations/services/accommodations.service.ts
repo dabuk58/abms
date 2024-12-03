@@ -47,7 +47,7 @@ export class AccommodationsService {
   }
 
   addRemoveFavorite$(accommodationId: number): Observable<AddFavoriteResponse> {
-    return this.userApiService.favorites(accommodationId);
+    return this.userApiService.updateFavorites(accommodationId);
   }
 
   getAccommodation$(id: number): Observable<Accommodation> {

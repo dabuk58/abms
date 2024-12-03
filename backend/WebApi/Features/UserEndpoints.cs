@@ -2,6 +2,7 @@
 using Application.Features.User.Commands.CheckOrAddUser;
 using Application.Features.User.Commands.EditUser;
 using Application.Features.User.Queries.GetBookings;
+using Application.Features.User.Queries.GetFavorites;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -44,7 +45,7 @@ namespace QualityManagement.WebApi.Features
 
                     return await sender.Send(command, cancellationToken);
                 })
-                .WithName("favorites")
+                .WithName("updateFavorites")
                 .Produces<AddFavoriteResponse>(StatusCodes.Status200OK);
 
             group.MapPost("update",
@@ -78,6 +79,20 @@ namespace QualityManagement.WebApi.Features
                 })
                 .WithName("bookings")
                 .Produces<GetBookingsResponse>(StatusCodes.Status200OK);
+
+            group.MapGet("favorites",
+                [SwaggerOperation(summary: "Returns user's favorite accommodations.")]
+            [SwaggerResponse(200, "List of user's favorite accommodations.")]
+            async (
+                    ISender sender,
+                    CancellationToken cancellationToken) =>
+                {
+                    return await sender.Send(
+                        new GetFavoritesQuery(),
+                        cancellationToken);
+                })
+                .WithName("favorites")
+                .Produces<GetFavoritesResponse>(StatusCodes.Status200OK);
         }
     }
 }

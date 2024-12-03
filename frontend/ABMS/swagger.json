@@ -272,7 +272,7 @@
         "tags": [
           "user"
         ],
-        "operationId": "favorites",
+        "operationId": "updateFavorites",
         "requestBody": {
           "content": {
             "application/json": {
@@ -291,6 +291,24 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AddFavoriteResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "operationId": "favorites",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetFavoritesResponse"
                 }
               }
             }
@@ -700,6 +718,26 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/BookingDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetFavoritesResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "accommodations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccommodationDto"
             },
             "nullable": true
           }

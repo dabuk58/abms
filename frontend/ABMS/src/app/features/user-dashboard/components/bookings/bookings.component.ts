@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, delay, Observable, of } from 'rxjs';
 import { LoaderComponent } from '../../../../core/components/loader/loader.component';
 import { ROUTES } from '../../../../core/constants/routes-constants';
 import { BookingStatus } from '../../../../core/enums/booking-status.enum';
@@ -33,6 +33,7 @@ export class BookingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.bookings$ = this.userService.getUserBookings$().pipe(
+      delay(1000),
       catchError(() => {
         return of();
       })

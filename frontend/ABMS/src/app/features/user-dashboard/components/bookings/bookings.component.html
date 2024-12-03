@@ -1,5 +1,6 @@
 <div class="abms-bookings flex flex-column gap-3">
-  @if(bookings$ |async; as bookings){ @for(booking of bookings; track booking){
+  @if(bookings$ | async; as bookings){ @if(bookings.length){@for(booking of
+  bookings; track booking){
   <p-panel>
     <ng-template pTemplate="header">
       <div class="flex w-full justify-content-between align-items-center">
@@ -58,5 +59,18 @@
       </div>
     </ng-template>
   </p-panel>
-  } }
+  }} @else {
+  <div
+    class="w-full flex flex-column justify-content-center align-items-center gap-2 mt-8"
+  >
+    <p class="text-xl font-semibold">{{ "no_bookings" | translate }}</p>
+    <p>
+      {{ "add_booking_to_see_it_here" | translate }}
+    </p>
+  </div>
+  } } @else {
+  <div class="w-full flex justify-content-center mt-8">
+    <app-loader></app-loader>
+  </div>
+  }
 </div>

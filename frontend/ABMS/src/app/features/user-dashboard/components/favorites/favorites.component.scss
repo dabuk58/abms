@@ -1,0 +1,29 @@
+@import "./../../../../../styles/variables.scss";
+
+.abms-favorites {
+  &__favorite-icon {
+    cursor: pointer;
+
+    &--checked {
+      color: $red;
+    }
+
+    &:not(.abms-search-results__favorite-icon--checked):hover {
+      color: $red;
+    }
+  }
+  &__result-content {
+    display: grid;
+    grid-template-columns: 17fr 18fr auto;
+  }
+  &__price {
+    font-size: 1.4rem;
+  }
+  &__region {
+    color: $gray;
+  }
+  &__rating-star {
+    margin-bottom: 2px;
+    color: $rating-star;
+  }
+}

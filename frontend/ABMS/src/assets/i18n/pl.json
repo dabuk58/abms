@@ -190,5 +190,9 @@
   "awaiting_payment": "Oczekuje na płatność",
   "confirmed": "Potwierdzona",
   "cancelled": "Anulowana",
-  "completed_feminine": "Zakończona"
+  "completed_feminine": "Zakończona",
+  "no_bookings": "Brak rezerwacji",
+  "no_favorites": "Brak ulubionych",
+  "add_accommodation_to_see_it_here": "Dodaj obiekt do ulubionych, a pojawi się tutaj",
+  "add_booking_to_see_it_here": "Zarezerwuj obiekt, a rezerwacja pojawi się tutaj"
 }

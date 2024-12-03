@@ -23,7 +23,8 @@ import type {
   CheckOrAddUserResponse,
   EditUserDto,
   EditUserResponse,
-  GetBookingsResponse
+  GetBookingsResponse,
+  GetFavoritesResponse
 } from '../../model'
 
 
@@ -63,20 +64,35 @@ export class UserApiService {
       checkOrAddUserCommand,options
     );
   }
- favorites<TData = AddFavoriteResponse>(
-    favoritesBody: number, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ updateFavorites<TData = AddFavoriteResponse>(
+    updateFavoritesBody: number, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    favorites<TData = AddFavoriteResponse>(
-    favoritesBody: number, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    updateFavorites<TData = AddFavoriteResponse>(
+    updateFavoritesBody: number, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    favorites<TData = AddFavoriteResponse>(
-    favoritesBody: number, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;favorites<TData = AddFavoriteResponse>(
-    favoritesBody: number, options?: HttpClientOptions
+    updateFavorites<TData = AddFavoriteResponse>(
+    updateFavoritesBody: number, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;updateFavorites<TData = AddFavoriteResponse>(
+    updateFavoritesBody: number, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.post<TData>(
       `/user/favorites`,
-      favoritesBody,options
+      updateFavoritesBody,options
+    );
+  }
+ favorites<TData = GetFavoritesResponse>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    favorites<TData = GetFavoritesResponse>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    favorites<TData = GetFavoritesResponse>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;favorites<TData = GetFavoritesResponse>(
+     options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `/user/favorites`,options
     );
   }
  update<TData = EditUserResponse>(
@@ -113,6 +129,7 @@ export class UserApiService {
 };
 
 export type CheckOrAddClientResult = NonNullable<CheckOrAddUserResponse>
-export type FavoritesClientResult = NonNullable<AddFavoriteResponse>
+export type UpdateFavoritesClientResult = NonNullable<AddFavoriteResponse>
+export type FavoritesClientResult = NonNullable<GetFavoritesResponse>
 export type UpdateClientResult = NonNullable<EditUserResponse>
 export type BookingsClientResult = NonNullable<GetBookingsResponse>
