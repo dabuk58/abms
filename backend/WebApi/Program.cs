@@ -2,6 +2,7 @@ using Application;
 using Infrastructure;
 using QualityManagement.WebApi.Features;
 using Serilog;
+using WebApi.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,5 +44,6 @@ app.UseHttpsRedirection();
 
 app.MapAccommodationsEndpoints();
 app.MapUsersEndpoints();
+app.MapBookingsEndpoints();
 
 app.Run();
