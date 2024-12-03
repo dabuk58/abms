@@ -167,6 +167,7 @@ export class AuthService {
     if (window.google) {
       window.google.accounts.id.disableAutoSelect();
     }
+    this.router.navigate([ROUTES.HOME]);
     window.location.reload();
   }
 

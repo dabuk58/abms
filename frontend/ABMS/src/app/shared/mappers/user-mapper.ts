@@ -5,5 +5,7 @@ export function mapUser(user: UserDto): UserInfo {
   return {
     id: user.id!,
     email: user.email,
+    fullname: user.fullName,
+    phoneNumber: user.phoneNumber,
   };
 }

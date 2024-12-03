@@ -20,7 +20,9 @@ import {
 import type {
   AddFavoriteResponse,
   CheckOrAddUserCommand,
-  CheckOrAddUserResponse
+  CheckOrAddUserResponse,
+  EditUserDto,
+  EditUserResponse
 } from '../../model'
 
 
@@ -76,7 +78,24 @@ export class UserApiService {
       favoritesBody,options
     );
   }
+ update<TData = EditUserResponse>(
+    editUserDto: EditUserDto, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    update<TData = EditUserResponse>(
+    editUserDto: EditUserDto, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    update<TData = EditUserResponse>(
+    editUserDto: EditUserDto, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;update<TData = EditUserResponse>(
+    editUserDto: EditUserDto, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.post<TData>(
+      `/user/update`,
+      editUserDto,options
+    );
+  }
 };
 
 export type CheckOrAddClientResult = NonNullable<CheckOrAddUserResponse>
 export type FavoritesClientResult = NonNullable<AddFavoriteResponse>
+export type UpdateClientResult = NonNullable<EditUserResponse>

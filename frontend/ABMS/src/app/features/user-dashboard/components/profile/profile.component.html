@@ -1,1 +1,27 @@
-<p>profile works!</p>
+<p-panel class="abms-profile">
+  <ng-template pTemplate="header">
+    <div
+      class="flex w-full justify-content-center align-items-center relative mt-2"
+    >
+      <h2 class="text-lg font-semibold">{{ "your_data" | translate }}</h2>
+      <p-button
+        [label]="'edit' | translate"
+        [outlined]="true"
+        icon="pi pi-user-edit"
+        iconPos="right"
+        class="ml-auto absolute right-0"
+        (onClick)="onEdit()"
+      ></p-button>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="abms-profile__user-data-container mb-4 mt-3">
+      <p class="abms-profile__label">{{ "email" | translate }}:</p>
+      <p>{{ userData.email }}</p>
+      <p class="abms-profile__label">{{ "full_name" | translate }}:</p>
+      <p>{{ userData.fullname || "lack_of" | translate }}</p>
+      <p class="abms-profile__label">{{ "phone_number" | translate }}:</p>
+      <p>{{ userData.phoneNumber || "lack_of" | translate }}</p>
+    </div>
+  </ng-template>
+</p-panel>

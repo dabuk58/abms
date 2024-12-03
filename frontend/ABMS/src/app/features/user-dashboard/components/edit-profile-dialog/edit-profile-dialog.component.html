@@ -1,0 +1,28 @@
+<div class="abms-edit-profile">
+  <form [formGroup]="form" class="abms-edit-profile__form">
+    <p class="abms-edit-profile__label">{{ "full_name" | translate }}:</p>
+    <app-control-error-wrapper [control]="getFormControlByName('fullname')">
+      <input pInputText formControlName="fullname" class="w-17rem" />
+    </app-control-error-wrapper>
+    <p class="abms-edit-profile__label">{{ "email" | translate }}:</p>
+    <app-control-error-wrapper [control]="getFormControlByName('email')">
+      <input pInputText formControlName="email" class="w-17rem" />
+    </app-control-error-wrapper>
+    <p class="abms-edit-profile__label">{{ "phone_number" | translate }}:</p>
+    <app-control-error-wrapper [control]="getFormControlByName('phoneNumber')">
+      <input pInputText formControlName="phoneNumber" class="w-17rem" />
+    </app-control-error-wrapper>
+  </form>
+  <footer class="flex mt-4">
+    <p-button
+      [label]="'save' | translate"
+      icon="pi pi-check"
+      iconPos="right"
+      (onClick)="onSave()"
+      class="ml-auto"
+    ></p-button>
+  </footer>
+</div>
+@if(isLoading$ | async){
+<app-overlay-loader></app-overlay-loader>
+}

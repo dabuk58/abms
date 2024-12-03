@@ -1,5 +1,6 @@
-﻿using Application.Features.Users.AddFavorite;
+﻿using Application.Features.Users.Commands.AddFavorite;
 using Application.Features.Users.Commands.CheckOrAddUser;
+using Application.Features.Users.Commands.EditUser;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +45,24 @@ namespace QualityManagement.WebApi.Features
                 })
                 .WithName("favorites")
                 .Produces<AddFavoriteResponse>(StatusCodes.Status200OK);
+
+            group.MapPost("update",
+                [SwaggerOperation(summary: "Updates user data.")]
+            [SwaggerResponse(200, "User data updated successfully.")]
+            async (
+                    ISender sender,
+                    [FromBody] EditUserDto request,
+                    CancellationToken cancellationToken) =>
+                {
+                    return await sender.Send(
+                        new EditUserCommand(
+                            request.Email,
+                            request.Fullname,
+                            request.PhoneNumber),
+                        cancellationToken);
+                })
+                .WithName("update")
+                .Produces<EditUserResponse>(StatusCodes.Status200OK);
         }
     }
 }

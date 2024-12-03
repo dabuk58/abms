@@ -96,10 +96,6 @@ export class HeaderComponent implements OnDestroy {
     this.previousScrollTop = currentScrollTop;
   }
 
-  onBrowser(): void {
-    this.router.navigate([ROUTES.ACCOMMODATIONS]);
-  }
-
   ngOnDestroy(): void {
     this._destroying$.next(undefined);
     this._destroying$.complete();

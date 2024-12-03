@@ -175,5 +175,14 @@
   "hey": "Hej",
   "login_to_continue": "Zaloguj się, aby kontynuować",
   "logout_successfully": "Wylogowano pomyślnie",
-  "account_has_been_logout_successfully": "Twoje konto zostało pomyślnie wylogowane"
+  "account_has_been_logout_successfully": "Twoje konto zostało pomyślnie wylogowane",
+  "edit": "Edytuj",
+  "lack_of": "Brak",
+  "edit_profile": "Edytuj profil",
+  "save": "Zapisz",
+  "your_data": "Twoje dane",
+  "success": "Sukces",
+  "your_profile_has_been_updated": "Twój profil został zaktualizowany",
+  "error": "Błąd",
+  "error_occured_try_again_later": "Wystąpił błąd, spróbuj ponownie później."
 }

@@ -10,10 +10,13 @@
   </p>
   <div class="flex gap-1"></div>
   <div class="flex gap-1">
-    <p-button [label]="'search' | translate" (onClick)="onBrowser()"></p-button>
+    <p-button
+      [label]="'search' | translate"
+      [routerLink]="[ROUTES.ACCOMMODATIONS]"
+    ></p-button>
     <p-button
       [label]="'favorites' | translate"
-      (onClick)="onBrowser()"
+      [routerLink]="[ROUTES.USER, ROUTES.FAVORITES]"
     ></p-button>
     @if(!isLoggedIn()){
     <p-button

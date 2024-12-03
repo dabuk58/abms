@@ -11,6 +11,8 @@ export * from './bookingDto';
 export * from './checkOrAddUserCommand';
 export * from './checkOrAddUserResponse';
 export * from './dateRangeDto';
+export * from './editUserDto';
+export * from './editUserResponse';
 export * from './getAccommodationResponse';
 export * from './getAccommodationsResponse';
 export * from './reviewDto';

@@ -1,0 +1,11 @@
+.abms-profile {
+  &__user-data-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  &__label {
+    justify-self: end;
+  }
+}
