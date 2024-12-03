@@ -13,10 +13,14 @@
     <p-button
       [label]="'search' | translate"
       [routerLink]="[ROUTES.ACCOMMODATIONS]"
+      icon="pi pi-search"
+      iconPos="right"
     ></p-button>
     <p-button
       [label]="'favorites' | translate"
       [routerLink]="[ROUTES.USER, ROUTES.FAVORITES]"
+      icon="pi pi-heart"
+      iconPos="right"
     ></p-button>
     @if(!isLoggedIn()){
     <p-button
