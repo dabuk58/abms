@@ -184,5 +184,11 @@
   "success": "Sukces",
   "your_profile_has_been_updated": "Twój profil został zaktualizowany",
   "error": "Błąd",
-  "error_occured_try_again_later": "Wystąpił błąd, spróbuj ponownie później."
+  "error_occured_try_again_later": "Wystąpił błąd, spróbuj ponownie później.",
+  "cancel_booking": "Anuluj rezerwację",
+  "view_accommodation": "Zobacz obiekt",
+  "awaiting_payment": "Oczekuje na płatność",
+  "confirmed": "Potwierdzona",
+  "cancelled": "Anulowana",
+  "completed_feminine": "Zakończona"
 }

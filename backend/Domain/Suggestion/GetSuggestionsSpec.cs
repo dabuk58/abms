@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification;
 
-namespace Domain.Accommodation;
-public class GetSuggestionsSpec : Specification<Accommodation>
+namespace Domain.Suggestions;
+public class GetSuggestionsSpec : Specification<Accommodation.Accommodation>
 {
     public record GetSuggestionsSpecQueryParams(string query);
 

@@ -4,6 +4,8 @@
 
 export interface BookingDto {
   accommodationId: number;
+  /** @nullable */
+  accommodationName?: string;
   bookingStatus: number;
   endDate: string;
   guests: number;

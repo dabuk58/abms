@@ -1,6 +1,6 @@
-﻿using Application.Features.Users.Commands.CheckOrAddUser;
+﻿using Application.Features.User.Commands.CheckOrAddUser;
 
-namespace Application.Features.Users.Commands.EditUser;
+namespace Application.Features.User.Commands.EditUser;
 public class EditUserResponse
 {
     public bool Success { get; set; }

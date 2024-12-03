@@ -1,1 +1,62 @@
-<p>bookings works!</p>
+<div class="abms-bookings flex flex-column gap-3">
+  @if(bookings$ |async; as bookings){ @for(booking of bookings; track booking){
+  <p-panel>
+    <ng-template pTemplate="header">
+      <div class="flex w-full justify-content-between align-items-center">
+        <p class="text-lg font-semibold">{{ booking.accommodationName }}</p>
+        <app-booking-status-badge
+          [status]="booking.bookingStatus"
+        ></app-booking-status-badge>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <div class="flex flex-column gap-2">
+        <div class="flex gap-2">
+          <i class="pi pi-calendar-plus"></i>
+          <p class="abms-bookings__info-label">
+            {{ "check_in_date" | translate }}:
+          </p>
+          <p>{{ booking.startDate }}</p>
+        </div>
+        <div class="flex gap-2">
+          <i class="pi pi-calendar-minus"></i>
+          <p class="abms-bookings__info-label">
+            {{ "check_out_date" | translate }}:
+          </p>
+          <p>{{ booking.endDate }}</p>
+        </div>
+        <div class="flex gap-2">
+          <i class="pi pi-users"></i>
+          <p class="abms-bookings__info-label">
+            {{ "guests_amount" | translate }}:
+          </p>
+          <p>{{ booking.guests }}</p>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="flex w-full">
+        <div class="flex gap-2 ml-auto">
+          <p-button
+            [label]="'view_accommodation' | translate"
+            icon="pi pi-home"
+            [outlined]="true"
+            iconPos="right"
+            (onClick)="onAccommodationDetails(booking.accommodationId)"
+          ></p-button>
+          @if(canCancelBooking(booking.bookingStatus)){
+          <p-button
+            [label]="'cancel_booking' | translate"
+            icon="pi pi-times"
+            iconPos="right"
+            [outlined]="true"
+            severity="danger"
+            (onClick)="onCancel(booking.id!)"
+          ></p-button>
+          }
+        </div>
+      </div>
+    </ng-template>
+  </p-panel>
+  } }
+</div>

@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { EditUserDto, EditUserResponse, UserApiService } from '../../../api';
+import { catchError, map, Observable, throwError } from 'rxjs';
+import {
+  EditUserDto,
+  EditUserResponse,
+  UserApiService
+} from '../../../api';
+import { mapBookingDtosToBookings } from '../../features/user-dashboard/mappers/booking.mapper';
 import { removeEmptyParams } from '../../shared/tools/functions';
+import { Booking } from '../interfaces/booking';
 import { UserInfo } from '../interfaces/user-info';
 
 @Injectable({
@@ -22,5 +28,22 @@ export class UserService {
 
   updateUser$(params: EditUserDto): Observable<EditUserResponse> {
     return this.userApiService.update(removeEmptyParams(params));
+  }
+
+  getUserBookings$(): Observable<Booking[]> {
+    return this.userApiService.bookings().pipe(
+      map((response) => {
+        if (!response.success) {
+          throw new Error('Error occurred.');
+        }
+        return response.bookings
+          ? mapBookingDtosToBookings(response.bookings)
+          : [];
+      }),
+      catchError((error) => {
+        console.error('Error fetching bookings:', error);
+        return throwError(() => new Error('Failed to fetch bookings.'));
+      })
+    );
   }
 }

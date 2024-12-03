@@ -1,11 +1,9 @@
-﻿using Domain.Users;
-
-namespace Domain.Favorite;
+﻿namespace Domain.Favorite;
 public class Favorite
 {
     public int AccommodationId { get; set; }
     public Accommodation.Accommodation Accommodation { get; set; } = null!;
 
     public int UserId { get; set; }
-    public User User { get; set; } = null!;
+    public User.User User { get; set; } = null!;
 }

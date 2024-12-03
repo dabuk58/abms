@@ -1,5 +1,5 @@
 ﻿using Application.Common.Interfaces;
-using Application.Features.Users.Commands.AddFavorite;
+using Application.Features.User.Commands.AddFavorite;
 using Domain.Favorite;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

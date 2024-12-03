@@ -6,7 +6,7 @@ using Domain.Booking;
 using Domain.Favorite;
 using Domain.Payment;
 using Domain.Review;
-using Domain.Users;
+using Domain.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 

@@ -15,6 +15,7 @@ export * from './editUserDto';
 export * from './editUserResponse';
 export * from './getAccommodationResponse';
 export * from './getAccommodationsResponse';
+export * from './getBookingsResponse';
 export * from './reviewDto';
 export * from './suggestionDto';
 export * from './suggestionsParams';

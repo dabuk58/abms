@@ -22,7 +22,8 @@ import type {
   CheckOrAddUserCommand,
   CheckOrAddUserResponse,
   EditUserDto,
-  EditUserResponse
+  EditUserResponse,
+  GetBookingsResponse
 } from '../../model'
 
 
@@ -94,8 +95,24 @@ export class UserApiService {
       editUserDto,options
     );
   }
+ bookings<TData = GetBookingsResponse>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    bookings<TData = GetBookingsResponse>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    bookings<TData = GetBookingsResponse>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;bookings<TData = GetBookingsResponse>(
+     options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `/user/bookings`,options
+    );
+  }
 };
 
 export type CheckOrAddClientResult = NonNullable<CheckOrAddUserResponse>
 export type FavoritesClientResult = NonNullable<AddFavoriteResponse>
 export type UpdateClientResult = NonNullable<EditUserResponse>
+export type BookingsClientResult = NonNullable<GetBookingsResponse>

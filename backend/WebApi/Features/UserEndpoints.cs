@@ -1,6 +1,7 @@
-﻿using Application.Features.Users.Commands.AddFavorite;
-using Application.Features.Users.Commands.CheckOrAddUser;
-using Application.Features.Users.Commands.EditUser;
+﻿using Application.Features.User.Commands.AddFavorite;
+using Application.Features.User.Commands.CheckOrAddUser;
+using Application.Features.User.Commands.EditUser;
+using Application.Features.User.Queries.GetBookings;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -63,6 +64,20 @@ namespace QualityManagement.WebApi.Features
                 })
                 .WithName("update")
                 .Produces<EditUserResponse>(StatusCodes.Status200OK);
+
+            group.MapGet("bookings",
+                [SwaggerOperation(summary: "Returns user's bookings.")]
+            [SwaggerResponse(200, "List of user's bookings.")]
+            async (
+                    ISender sender,
+                    CancellationToken cancellationToken) =>
+                {
+                    return await sender.Send(
+                        new GetBookingsQuery(),
+                        cancellationToken);
+                })
+                .WithName("bookings")
+                .Produces<GetBookingsResponse>(StatusCodes.Status200OK);
         }
     }
 }

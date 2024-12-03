@@ -1,0 +1,27 @@
+<div class="abms-booking-status-badge">
+  @switch(status){ @case(BookingStatus.AwaitingPayment){
+  <p-chip
+    [label]="'awaiting_payment' | translate"
+    icon="pi pi-wallet"
+    class="abms-booking-status-badge--awaiting-payment"
+  ></p-chip>
+  } @case(BookingStatus.Confirmed){
+  <p-chip
+    [label]="'confirmed' | translate"
+    icon="pi pi-check"
+    class="abms-booking-status-badge--confirmed"
+  ></p-chip>
+  } @case(BookingStatus.Cancelled){
+  <p-chip
+    [label]="'cancelled' | translate"
+    icon="pi pi-times"
+    class="abms-booking-status-badge--cancelled"
+  ></p-chip>
+  } @case(BookingStatus.Completed){
+  <p-chip
+    [label]="'completed_feminine' | translate"
+    icon="pi pi-history"
+    class="abms-booking-status-badge--completed"
+  ></p-chip>
+  } }
+</div>

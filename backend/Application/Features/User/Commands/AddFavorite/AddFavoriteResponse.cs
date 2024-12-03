@@ -1,4 +1,5 @@
-﻿namespace Application.Features.Users.Commands.AddFavorite;
+﻿namespace Application.Features.User.Commands.AddFavorite;
+
 public class AddFavoriteResponse
 {
     public bool Success { get; set; }

@@ -1,6 +1,5 @@
 ﻿using Domain.Common.Base;
 using Domain.Common.Enums;
-using Domain.Users;
 
 namespace Domain.Booking;
 public class Booking : AuditableEntity
@@ -14,6 +13,6 @@ public class Booking : AuditableEntity
     public required int Guests { get; set; }
     public int? PaymentId { get; set; }
     public virtual Accommodation.Accommodation Accommodation { get; set; }
-    public virtual User User { get; set; }
+    public virtual User.User User { get; set; }
     public virtual Payment.Payment Payment { get; set; }
 }

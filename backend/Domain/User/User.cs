@@ -1,7 +1,7 @@
 ﻿using Domain.Common.Base;
 using Domain.Common.Enums;
 
-namespace Domain.Users;
+namespace Domain.User;
 public class User : AuditableEntity
 {
     public int Id { get; set; }

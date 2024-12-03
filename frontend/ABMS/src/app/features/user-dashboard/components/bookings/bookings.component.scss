@@ -1,0 +1,10 @@
+.abms-bookings {
+  &__booking-info {
+    display: grid;
+    gap: 1rem;
+  }
+
+  &__info-label {
+    justify-self: end;
+  }
+}

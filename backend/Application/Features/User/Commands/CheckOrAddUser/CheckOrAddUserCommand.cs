@@ -1,11 +1,10 @@
 ﻿using Application.Common.Interfaces;
 using AutoMapper;
 using Domain.Common.Enums;
-using Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Features.Users.Commands.CheckOrAddUser;
+namespace Application.Features.User.Commands.CheckOrAddUser;
 public record CheckOrAddUserCommand(
     string AuthProviderUserId,
     int AuthProvider,
@@ -27,7 +26,7 @@ public class CheckOrAddUserCommandHandler(IApplicationDbContext _dbContext, IMap
         }
         else
         {
-            var newUser = new User
+            var newUser = new Domain.User.User
             {
                 Email = command.Email,
                 AuthProvider = (AuthProvider)command.AuthProvider,

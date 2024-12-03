@@ -1,7 +1,6 @@
 ﻿using Ardalis.Specification;
-using Domain.Users;
 
-namespace Domain.Accommodation;
+namespace Domain.User;
 public class GetUserByIdSpec : Specification<User>
 {
     public GetUserByIdSpec(int userId)

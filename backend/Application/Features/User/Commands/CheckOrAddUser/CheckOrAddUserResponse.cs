@@ -1,4 +1,4 @@
-﻿namespace Application.Features.Users.Commands.CheckOrAddUser;
+﻿namespace Application.Features.User.Commands.CheckOrAddUser;
 public class CheckOrAddUserResponse
 {
     public UserDto User { get; set; }

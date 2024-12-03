@@ -1,9 +1,9 @@
 ﻿using Application.Common.Interfaces;
-using Application.Features.Users.Commands.CheckOrAddUser;
-using Application.Features.Users.Commands.EditUser;
+using Application.Features.User.Commands.CheckOrAddUser;
+using Application.Features.User.Commands.EditUser;
 using Ardalis.Specification.EntityFrameworkCore;
 using AutoMapper;
-using Domain.Accommodation;
+using Domain.User;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;

@@ -327,6 +327,26 @@
           }
         }
       }
+    },
+    "/user/bookings": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "operationId": "bookings",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBookingsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -540,6 +560,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "accommodationName": {
+            "type": "string",
+            "nullable": true
+          },
           "paymentId": {
             "type": "integer",
             "format": "int32",
@@ -656,6 +680,26 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AccommodationDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBookingsResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "bookings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BookingDto"
             },
             "nullable": true
           }

@@ -107,6 +107,12 @@ export function mapDottedDateToDashedDate(date: string): string {
   return `${year}-${month}-${day}`;
 }
 
+export function mapDashedDateToDottedDate(date: string): string {
+  const [year, month, day] = date.split('-');
+
+  return `${day}.${month}.${year}`;
+}
+
 export function mapFullDateToDashedDate(date: Date): string {
   const dottedDate = mapApiDate(date);
   const [day, month, year] = dottedDate.split('.');
