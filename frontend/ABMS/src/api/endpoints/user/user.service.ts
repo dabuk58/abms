@@ -41,22 +41,22 @@ type HttpClientOptions = {
 
 
 @Injectable({ providedIn: 'root' })
-export class UsersApiService {
+export class UserApiService {
   constructor(
     private http: HttpClient,
-  ) {} checkOrAddUser<TData = CheckOrAddUserResponse>(
+  ) {} checkOrAdd<TData = CheckOrAddUserResponse>(
     checkOrAddUserCommand: CheckOrAddUserCommand, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    checkOrAddUser<TData = CheckOrAddUserResponse>(
+    checkOrAdd<TData = CheckOrAddUserResponse>(
     checkOrAddUserCommand: CheckOrAddUserCommand, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    checkOrAddUser<TData = CheckOrAddUserResponse>(
+    checkOrAdd<TData = CheckOrAddUserResponse>(
     checkOrAddUserCommand: CheckOrAddUserCommand, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;checkOrAddUser<TData = CheckOrAddUserResponse>(
+  ): Observable<HttpEvent<TData>>;checkOrAdd<TData = CheckOrAddUserResponse>(
     checkOrAddUserCommand: CheckOrAddUserCommand, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.post<TData>(
-      `/users/checkOrAddUser`,
+      `/user/checkOrAdd`,
       checkOrAddUserCommand,options
     );
   }
@@ -72,11 +72,11 @@ export class UsersApiService {
     favoritesBody: number, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.post<TData>(
-      `/users/favorites`,
+      `/user/favorites`,
       favoritesBody,options
     );
   }
 };
 
-export type CheckOrAddUserClientResult = NonNullable<CheckOrAddUserResponse>
+export type CheckOrAddClientResult = NonNullable<CheckOrAddUserResponse>
 export type FavoritesClientResult = NonNullable<AddFavoriteResponse>

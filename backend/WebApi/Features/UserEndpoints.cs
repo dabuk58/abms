@@ -7,16 +7,16 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace QualityManagement.WebApi.Features
 {
-    public static class UsersEndpoints
+    public static class UserEndpoints
     {
         public static void MapUsersEndpoints(this WebApplication app)
         {
             var group = app
-                .MapGroup("users")
-                .WithTags("users")
+                .MapGroup("user")
+                .WithTags("user")
                 .WithOpenApi();
 
-            group.MapPost("checkOrAddUser",
+            group.MapPost("checkOrAdd",
                 [SwaggerOperation(summary: "Check if user exists or add his if he does not exist.")]
             [SwaggerResponse(200, "User already exists.")]
             async (
@@ -25,7 +25,7 @@ namespace QualityManagement.WebApi.Features
                     CancellationToken cancellationToken) =>
                         await sender.Send(command, cancellationToken)
                 )
-                .WithName("checkOrAddUser")
+                .WithName("checkOrAdd")
                 .Produces<CheckOrAddUserResponse>(StatusCodes.Status200OK);
 
             group.MapPost("favorites",

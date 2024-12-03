@@ -54,7 +54,7 @@ public class AddBookingCommandHandler(
                 StartDate = command.CheckInDate,
                 EndDate = command.CheckOutDate,
                 BookingStatus = BookingStatus.AwaitingPayment,
-                UserId = 8,
+                UserId = (int)userId,
                 Guests = command.Guests
             };
 

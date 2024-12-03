@@ -237,12 +237,12 @@
         }
       }
     },
-    "/users/checkOrAddUser": {
+    "/user/checkOrAdd": {
       "post": {
         "tags": [
-          "users"
+          "user"
         ],
-        "operationId": "checkOrAddUser",
+        "operationId": "checkOrAdd",
         "requestBody": {
           "content": {
             "application/json": {
@@ -267,10 +267,10 @@
         }
       }
     },
-    "/users/favorites": {
+    "/user/favorites": {
       "post": {
         "tags": [
-          "users"
+          "user"
         ],
         "operationId": "favorites",
         "requestBody": {

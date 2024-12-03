@@ -6,7 +6,7 @@ import {
   AddBookingRequest,
   AddBookingResponse,
   AddFavoriteResponse,
-  UsersApiService,
+  UserApiService,
 } from '../../../../api';
 import { AccommodationsResponse } from '../../../core/interfaces/accommodations-response';
 import { removeEmptyParams } from '../../../shared/tools/functions';
@@ -24,7 +24,7 @@ export class AccommodationsService {
 
   constructor(
     private accommodationsApiService: AccommodationsApiService,
-    private usersApiService: UsersApiService
+    private userApiService: UserApiService
   ) {}
 
   get updateFiltersEvent$(): Observable<void> {
@@ -47,7 +47,7 @@ export class AccommodationsService {
   }
 
   addRemoveFavorite$(accommodationId: number): Observable<AddFavoriteResponse> {
-    return this.usersApiService.favorites(accommodationId);
+    return this.userApiService.favorites(accommodationId);
   }
 
   getAccommodation$(id: number): Observable<Accommodation> {

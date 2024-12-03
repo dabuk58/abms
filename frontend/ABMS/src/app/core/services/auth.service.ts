@@ -14,7 +14,7 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { CheckOrAddUserCommand, UserDto, UsersApiService } from '../../../api';
+import { CheckOrAddUserCommand, UserApiService, UserDto } from '../../../api';
 import { environment } from '../../environments/environment';
 import { mapUser } from '../../shared/mappers/user-mapper';
 import { fillString } from '../../shared/tools/functions';
@@ -36,7 +36,7 @@ export class AuthService {
   constructor(
     private msalAuthService: MsalService,
     private loaderService: LoaderService,
-    private usersApiService: UsersApiService,
+    private userApiService: UserApiService,
     private userService: UserService,
     private translation: TranslateService,
     private toastService: ToastService,
@@ -117,7 +117,7 @@ export class AuthService {
       email: userEmail,
     };
 
-    return this.usersApiService.checkOrAddUser(params).pipe(
+    return this.userApiService.checkOrAdd(params).pipe(
       tap((response) => this.setActiveUser(response.user)),
       switchMap(() => of(userName))
     );
@@ -139,7 +139,7 @@ export class AuthService {
       email: userEmail,
     };
 
-    return this.usersApiService.checkOrAddUser(params).pipe(
+    return this.userApiService.checkOrAdd(params).pipe(
       tap((response) => this.setActiveUser(response.user)),
       switchMap(() => of(userName))
     );
