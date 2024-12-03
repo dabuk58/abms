@@ -171,5 +171,9 @@
   "change_data": "Zmień dane",
   "residence": "Miejsce pobytu",
   "total_to_pay": "Razem do zapłaty",
-  "my_offers": "Moje oferty"
+  "my_offers": "Moje oferty",
+  "hey": "Hej",
+  "login_to_continue": "Zaloguj się, aby kontynuować",
+  "logout_successfully": "Wylogowano pomyślnie",
+  "account_has_been_logout_successfully": "Twoje konto zostało pomyślnie wylogowane"
 }

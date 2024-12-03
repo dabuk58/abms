@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ROUTES } from './core/constants/routes-constants';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,7 @@ export const routes: Routes = [
       import('./features/user-dashboard/user-dashboard.routes').then(
         (c) => c.routes
       ),
+    canActivate: [authGuard],
   },
   {
     path: ROUTES.ACCOMMODATIONS,

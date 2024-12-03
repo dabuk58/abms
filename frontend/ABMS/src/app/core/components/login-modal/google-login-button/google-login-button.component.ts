@@ -4,6 +4,7 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { catchError, Observable, Subject, takeUntil, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { LoaderEnum } from '../../../enums/loader.enum';
+import { SessionStorageItem } from '../../../enums/session-storage-item.enum';
 import { AuthService } from '../../../services/auth.service';
 import { LoaderService } from '../../../services/loader.service';
 
@@ -55,6 +56,7 @@ export class GoogleLoginButtonComponent implements AfterViewInit {
           text: 'signin_with',
           size: 'large',
           logo_alignment: 'left',
+          personalization: 'none',
         }
       );
     }
@@ -73,8 +75,16 @@ export class GoogleLoginButtonComponent implements AfterViewInit {
         takeUntil(this._destroying$)
       )
       .subscribe(() => {
-        sessionStorage.setItem('loggedinUser', JSON.stringify(responsePayload));
-        this.dialogRef.close(responsePayload?.given_name);
+        sessionStorage.setItem(
+          SessionStorageItem.LoggedUser,
+          JSON.stringify(responsePayload)
+        );
+        sessionStorage.setItem(
+          SessionStorageItem.AccessToken,
+          response.credential
+        );
+        this.authService.showWelcomeToast(responsePayload?.given_name);
+        this.dialogRef.close();
         this.authService.setAuthMethod();
         this.loaderService.setInactive(LoaderEnum.LOGIN);
       });

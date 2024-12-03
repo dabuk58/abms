@@ -1,6 +1,5 @@
 import { NgClass } from '@angular/common';
 import { Component, Input, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
@@ -41,7 +40,6 @@ export class AccommodationsSearchResultsComponent implements OnDestroy {
   constructor(
     private authService: AuthService,
     private accommodationsService: AccommodationsService,
-    private router: Router,
     protected translation: TranslateService
   ) {
     this.isLoggedIn = this.authService.isLoggedIn;

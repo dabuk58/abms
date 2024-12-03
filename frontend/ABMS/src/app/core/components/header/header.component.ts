@@ -11,8 +11,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
-import { Subject, takeUntil } from 'rxjs';
-import { fillString } from '../../../shared/tools/functions';
+import { Subject } from 'rxjs';
 import { ROUTES } from '../../constants/routes-constants';
 import { AuthService } from '../../services/auth.service';
 import { ConstantsService } from '../../services/constants.service';
@@ -61,27 +60,6 @@ export class HeaderComponent implements OnDestroy {
       width: '400px',
       focusOnShow: false,
     });
-
-    this.loginDialogRef.onClose
-      .pipe(takeUntil(this._destroying$))
-      .subscribe((userName) => {
-        if (userName !== null) {
-          this.showLoginWelcomeMessage(userName);
-          window.location.reload();
-        } else {
-          this.showLoginError();
-        }
-      });
-  }
-
-  showLoginWelcomeMessage(userName: string): void {
-    this.toast.showSuccess(
-      this.translateService.instant('logged_in_successfully'),
-      fillString(
-        this.translateService.instant('hi_user_nice_to_see_you'),
-        userName ? ' ' + userName : userName
-      )
-    );
   }
 
   showLoginError(): void {
@@ -100,7 +78,7 @@ export class HeaderComponent implements OnDestroy {
   }
 
   onProfile(): void {
-    this.router.navigate([ROUTES.PROFILE]);
+    this.router.navigate([ROUTES.USER, ROUTES.PROFILE]);
   }
 
   @HostListener('window:scroll')

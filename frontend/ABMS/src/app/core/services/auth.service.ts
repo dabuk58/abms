@@ -1,10 +1,8 @@
-import { Inject, Injectable } from '@angular/core';
-import {
-  MSAL_GUARD_CONFIG,
-  MsalGuardConfiguration,
-  MsalService,
-} from '@azure/msal-angular';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { MsalService } from '@azure/msal-angular';
 import { AuthenticationResult, PopupRequest } from '@azure/msal-browser';
+import { TranslateService } from '@ngx-translate/core';
 import { jwtDecode } from 'jwt-decode';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
@@ -19,23 +17,30 @@ import {
 import { CheckOrAddUserCommand, UserDto, UsersApiService } from '../../../api';
 import { environment } from '../../environments/environment';
 import { mapUser } from '../../shared/mappers/user-mapper';
-import { AuthProviderEnum } from '../enums/auth-provider.enum';
+import { fillString } from '../../shared/tools/functions';
+import { ROUTES } from '../constants/routes-constants';
+import { AuthProvider } from '../enums/auth-provider.enum';
 import { LoaderEnum } from '../enums/loader.enum';
+import { SessionStorageItem } from '../enums/session-storage-item.enum';
+import { ToastType } from '../enums/toast-type.enum';
 import { LoaderService } from './loader.service';
+import { ToastService } from './toast.service';
 import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private authProvider: AuthProviderEnum | undefined;
+  private authProvider: AuthProvider | undefined;
 
   constructor(
-    @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
     private msalAuthService: MsalService,
     private loaderService: LoaderService,
     private usersApiService: UsersApiService,
-    private userService: UserService
+    private userService: UserService,
+    private translation: TranslateService,
+    private toastService: ToastService,
+    private router: Router
   ) {
     if (this.isLoggedIn) {
       this.setAuthMethod();
@@ -44,33 +49,34 @@ export class AuthService {
 
   get isLoggedIn(): boolean {
     const activeMsalAccount = this.msalAuthService.instance.getActiveAccount();
-    const googleUser = sessionStorage.getItem('loggedinUser');
+    const googleUser = sessionStorage.getItem(SessionStorageItem.LoggedUser);
     return !!activeMsalAccount || !!googleUser;
+  }
+
+  get currentAuthProvider(): AuthProvider | undefined {
+    return this.authProvider;
   }
 
   setAuthMethod(): void {
     if (this.msalAuthService.instance.getActiveAccount()) {
-      this.authProvider = AuthProviderEnum.MICROSOFT;
-    } else if (sessionStorage.getItem('loggedInUser')) {
-      this.authProvider = AuthProviderEnum.GOOGLE;
+      this.authProvider = AuthProvider.MICROSOFT;
+    } else if (sessionStorage.getItem(SessionStorageItem.LoggedUser)) {
+      this.authProvider = AuthProvider.GOOGLE;
     }
   }
 
   logout(): void {
-    if (this.authProvider === AuthProviderEnum.MICROSOFT) {
+    this.router.navigate([ROUTES.HOME]);
+    if (this.authProvider === AuthProvider.MICROSOFT) {
       this.logoutMicrosoft();
     } else {
       this.logoutGoogle();
-      window.location.reload();
     }
   }
 
   loginMicrosoft(dialogRef: DynamicDialogRef): void {
-    const authRequest = this.msalGuardConfig.authRequest
-      ? { ...this.msalGuardConfig.authRequest }
-      : {};
     this.msalAuthService
-      .loginPopup(authRequest as PopupRequest)
+      .loginPopup({} as PopupRequest)
       .pipe(
         catchError(() => throwError(() => new Error())),
         tap((response: AuthenticationResult) => {
@@ -83,12 +89,14 @@ export class AuthService {
         finalize(() => this.loaderService.setInactive(LoaderEnum.LOGIN))
       )
       .subscribe({
-        next: (userName) => {
-          dialogRef.close(userName);
+        next: (username) => {
+          dialogRef.close();
+          this.showWelcomeToast(username);
         },
         error: () => {
-          this.logout();
-          dialogRef.close(null);
+          this.msalAuthService.instance.setActiveAccount(null);
+          this.msalAuthService.instance.clearCache();
+          dialogRef.close();
         },
       });
   }
@@ -142,15 +150,46 @@ export class AuthService {
   }
 
   private logoutMicrosoft(): void {
-    this.msalAuthService.logoutPopup({
+    const logoutRequest = {
+      account: this.msalAuthService.instance.getActiveAccount(),
       mainWindowRedirectUri: environment.homePath,
-    });
+    };
+    this.msalAuthService.logoutPopup(logoutRequest);
+    this.msalAuthService.instance.setActiveAccount(null);
+    this.setLogoutToastInStorage();
+    window.location.reload();
   }
 
   private logoutGoogle(): void {
-    sessionStorage.removeItem('loggedinUser');
+    this.setLogoutToastInStorage();
+    sessionStorage.removeItem(SessionStorageItem.AccessToken);
+    sessionStorage.removeItem(SessionStorageItem.LoggedUser);
     if (window.google) {
       window.google.accounts.id.disableAutoSelect();
     }
+    window.location.reload();
+  }
+
+  showWelcomeToast(username: string): void {
+    this.toastService.showSuccess(
+      this.translation.instant('logged_in_successfully'),
+      fillString(
+        this.translation.instant('hi_user_nice_to_see_you'),
+        username ? ' ' + username : username
+      )
+    );
+  }
+
+  private setLogoutToastInStorage(): void {
+    sessionStorage.setItem(
+      SessionStorageItem.ToastMessage,
+      JSON.stringify({
+        title: this.translation.instant('logout_successfully'),
+        message: this.translation.instant(
+          'account_has_been_logout_successfully'
+        ),
+        type: ToastType.Success,
+      })
+    );
   }
 }

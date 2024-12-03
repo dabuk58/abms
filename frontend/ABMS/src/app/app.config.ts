@@ -12,6 +12,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { MessageService } from 'primeng/api';
 import { routes } from './app.routes';
 import { msalProviders } from './core/config/msal.config';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { urlInterceptor } from './core/interceptors/url.interceptor';
 
 export const appConfig: ApplicationConfig = {
@@ -20,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimations(),
     provideHttpClient(
-      withInterceptors([urlInterceptor]),
+      withInterceptors([urlInterceptor, authInterceptor]),
       withInterceptorsFromDi(),
       withFetch()
     ),

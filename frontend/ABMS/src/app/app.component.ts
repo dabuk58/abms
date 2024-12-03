@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { InteractionStatus } from '@azure/msal-browser';
@@ -9,6 +9,11 @@ import { filter } from 'rxjs';
 import translationsPL from './../assets/i18n/pl.json';
 import { FooterComponent } from './core/components/footer/footer.component';
 import { HeaderComponent } from './core/components/header/header.component';
+import { AuthProvider } from './core/enums/auth-provider.enum';
+import { SessionStorageItem } from './core/enums/session-storage-item.enum';
+import { ToastType } from './core/enums/toast-type.enum';
+import { AuthService } from './core/services/auth.service';
+import { ToastService } from './core/services/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -17,12 +22,14 @@ import { HeaderComponent } from './core/components/header/header.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   constructor(
     private config: PrimeNGConfig,
     private translate: TranslateService,
     private msalAuthService: MsalService,
-    private msalBroadcastService: MsalBroadcastService
+    private msalBroadcastService: MsalBroadcastService,
+    private authService: AuthService,
+    private toastService: ToastService
   ) {
     this.translate.addLangs(['pl']);
     this.translate.setTranslation('pl', translationsPL);
@@ -34,7 +41,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.msalAuthService.handleRedirectObservable().subscribe();
+    this.initializeMicrosoftLogin();
+  }
+
+  ngAfterViewInit(): void {
+    this.checkToastsInStorage();
   }
 
   initializeMicrosoftLogin(): void {
@@ -48,7 +59,7 @@ export class AppComponent implements OnInit {
       .pipe(
         filter((status: InteractionStatus) => status === InteractionStatus.None)
       )
-      .subscribe(() => {
+      .subscribe((x) => {
         this.setActiveAccount();
       });
   }
@@ -57,8 +68,37 @@ export class AppComponent implements OnInit {
     const activeAccount = this.msalAuthService.instance.getActiveAccount();
     const accounts = this.msalAuthService.instance.getAllAccounts();
 
-    if (!activeAccount && accounts.length > 0) {
+    if (
+      !activeAccount &&
+      accounts.length > 0 &&
+      this.authService.currentAuthProvider === AuthProvider.MICROSOFT
+    ) {
       this.msalAuthService.instance.setActiveAccount(accounts[0]);
     }
+  }
+
+  checkToastsInStorage(): void {
+    const toastData = sessionStorage.getItem(SessionStorageItem.ToastMessage);
+
+    if (toastData) {
+      const { title, message, type } = JSON.parse(toastData);
+
+      switch (type) {
+        case ToastType.Success:
+          this.toastService.showSuccess(title, message);
+          break;
+        case ToastType.Error:
+          this.toastService.showError(title, message);
+          break;
+        case ToastType.Info:
+          this.toastService.showInfo(title, message);
+          break;
+        case ToastType.Warn:
+          this.toastService.showWarn(title, message);
+          break;
+      }
+    }
+
+    sessionStorage.removeItem(SessionStorageItem.ToastMessage);
   }
 }
