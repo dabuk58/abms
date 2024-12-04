@@ -237,6 +237,37 @@
         }
       }
     },
+    "/bookings/{id}/cancel": {
+      "post": {
+        "tags": [
+          "bookings"
+        ],
+        "operationId": "cancelBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelBookingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/checkOrAdd": {
       "post": {
         "tags": [
@@ -585,6 +616,19 @@
           "paymentId": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CancelBookingResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
             "nullable": true
           }
         },

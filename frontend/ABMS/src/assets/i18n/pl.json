@@ -194,5 +194,10 @@
   "no_bookings": "Brak rezerwacji",
   "no_favorites": "Brak ulubionych",
   "add_accommodation_to_see_it_here": "Dodaj obiekt do ulubionych, a pojawi się tutaj",
-  "add_booking_to_see_it_here": "Zarezerwuj obiekt, a rezerwacja pojawi się tutaj"
+  "add_booking_to_see_it_here": "Zarezerwuj obiekt, a rezerwacja pojawi się tutaj",
+  "booking_cancelled_successfully": "Pomyślnie anulowano rezerwację",
+  "cancel_booking_confirmation": "Czy na pewno chcesz anulować rezerwację?",
+  "yes": "Tak",
+  "no": "Nie",
+  "confirmation_required": "Wymagane potwierdzenie"
 }

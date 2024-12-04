@@ -8,6 +8,7 @@ export * from './addBookingRequest';
 export * from './addBookingResponse';
 export * from './addFavoriteResponse';
 export * from './bookingDto';
+export * from './cancelBookingResponse';
 export * from './checkOrAddUserCommand';
 export * from './checkOrAddUserResponse';
 export * from './dateRangeDto';

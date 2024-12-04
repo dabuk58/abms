@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { EditUserDto, EditUserResponse, UserApiService } from '../../../api';
+import {
+  BookingsApiService,
+  EditUserDto,
+  EditUserResponse,
+  UserApiService,
+} from '../../../api';
 import { mapBookingDtosToBookings } from '../../features/user-dashboard/mappers/booking.mapper';
 import { mapFavoriteAccommodations } from '../../features/user-dashboard/mappers/favorites.mapper';
 import { removeEmptyParams } from '../../shared/tools/functions';
@@ -14,7 +19,10 @@ import { UserInfo } from '../interfaces/user-info';
 export class UserService {
   private currentUser?: UserInfo;
 
-  constructor(private userApiService: UserApiService) {}
+  constructor(
+    private userApiService: UserApiService,
+    private bookingsApiService: BookingsApiService
+  ) {}
 
   get activeUser(): UserInfo | undefined {
     return this.currentUser;
@@ -54,6 +62,22 @@ export class UserService {
         return response.accommodations
           ? mapFavoriteAccommodations(response.accommodations)
           : [];
+      }),
+      catchError((error) => {
+        console.error('Error fetching favorite accommodations:', error);
+        return throwError(
+          () => new Error('Failed to fetch favorite accommodations.')
+        );
+      })
+    );
+  }
+
+  cancelBooking$(bookingId: number): Observable<void> {
+    return this.bookingsApiService.cancelBooking(bookingId).pipe(
+      map((response) => {
+        if (!response.success) {
+          throw new Error('Error occurred.');
+        }
       }),
       catchError((error) => {
         console.error('Error fetching favorite accommodations:', error);

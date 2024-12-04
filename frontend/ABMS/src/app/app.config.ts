@@ -9,7 +9,7 @@ import {
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { routes } from './app.routes';
 import { msalProviders } from './core/config/msal.config';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
@@ -30,5 +30,6 @@ export const appConfig: ApplicationConfig = {
     }),
     msalProviders,
     MessageService,
+    ConfirmationService,
   ],
 };

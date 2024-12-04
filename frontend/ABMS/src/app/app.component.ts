@@ -3,7 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { InteractionStatus } from '@azure/msal-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { PrimeNGConfig } from 'primeng/api';
+import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { filter } from 'rxjs';
 import translationsPL from './../assets/i18n/pl.json';
@@ -18,7 +19,14 @@ import { ToastService } from './core/services/toast.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, ToastModule, FooterComponent],
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    ToastModule,
+    ConfirmDialogModule,
+    FooterComponent,
+  ],
+  providers: [ConfirmationService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
