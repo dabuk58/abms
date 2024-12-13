@@ -20,18 +20,19 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { StepperModule } from 'primeng/stepper';
-import { finalize, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { finalize, Observable, Subject, takeUntil } from 'rxjs';
 import { AddBookingRequest } from '../../../../../api';
 import { OverlayLoaderComponent } from '../../../../core/components/overlay-loader/overlay-loader.component';
 import { LoaderEnum } from '../../../../core/enums/loader.enum';
 import { Accommodation } from '../../../../core/interfaces/accommodation';
+import { UserInfo } from '../../../../core/interfaces/user-info';
 import { LoaderService } from '../../../../core/services/loader.service';
 import { ToastService } from '../../../../core/services/toast.service';
+import { UserService } from '../../../../core/services/user.service';
 import { ControlErrorWrapperComponent } from '../../../../shared/components/control-error-wrapper/control-error-wrapper.component';
 import {
   addOneDay,
   mapApiDate,
-  mapDottedDateToDashedDate,
   mapFullDateToDashedDate,
   subtractOneDay,
 } from '../../../../shared/tools/functions';
@@ -91,7 +92,8 @@ export class AccommodationBookDialogComponent implements OnInit, OnDestroy {
     protected translation: TranslateService,
     private accommodationsService: AccommodationsService,
     private loaderService: LoaderService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private userService: UserService
   ) {
     this.form = this.fb.group({
       checkInDate: [null, Validators.required],
@@ -116,7 +118,21 @@ export class AccommodationBookDialogComponent implements OnInit, OnDestroy {
       ...this.unavailableCheckOutDates,
     ];
 
+    this.fillFormWithUserData();
+
     this.form.get('checkOutDate')?.disable();
+  }
+
+  fillFormWithUserData(): void {
+    const userData: UserInfo | undefined = this.userService.activeUser;
+
+    if (userData) {
+      this.form.patchValue({
+        name: userData.fullname,
+        email: userData.email,
+        phoneNumber: userData.phoneNumber,
+      });
+    }
   }
 
   onNext(nextCallback: EventEmitter<void>) {

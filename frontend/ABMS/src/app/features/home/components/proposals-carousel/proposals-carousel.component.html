@@ -37,7 +37,10 @@
           <span class="text-sm">{{ "per_night" | translate }}</span>
         </div>
         <span>
-          <p-button icon="pi pi-angle-right" />
+          <p-button
+            icon="pi pi-angle-right"
+            (onClick)="onProposal(proposal.id)"
+          />
         </span>
       </div>
     </div>

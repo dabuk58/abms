@@ -14,6 +14,7 @@ public static class DependencyInjection
         services.AddSingleton(TimeProvider.System);
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         services.AddScoped<EntitySaveChangesInterceptor>();
+        services.AddScoped<IEmailService, EmailService>();
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
             );

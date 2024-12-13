@@ -24,7 +24,8 @@ public record AddBookingCommand(
 public class AddBookingCommandHandler(
     IApplicationDbContext _dbContext,
     IMapper _mapper,
-    IHttpContextAccessor _httpContextAccessor) : IRequestHandler<AddBookingCommand, AddBookingResponse>
+    IHttpContextAccessor _httpContextAccessor,
+    IEmailService _emailService) : IRequestHandler<AddBookingCommand, AddBookingResponse>
 {
     public async Task<AddBookingResponse> Handle(AddBookingCommand command, CancellationToken cancellationToken)
     {
@@ -62,6 +63,12 @@ public class AddBookingCommandHandler(
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             var bookingDto = _mapper.Map<BookingDto>(booking);
+
+            await _emailService.SendEmailAsync(
+                to: command.Email,
+                subject: "Booking Confirmation",
+                body: $"Dear {command.Name}, your booking from {command.CheckInDate} to {command.CheckOutDate} is confirmed."
+            );
 
             return new AddBookingResponse(
                 success: true,
