@@ -1,6 +1,5 @@
 import { AccommodationsParams } from '../../../../api';
 import { AccommodationSort } from '../../../core/enums/accommodation-sort.enum';
-import { mapToApiDate } from '../../../shared/tools/functions';
 import { CombinedFilters } from '../pages/accommodations-search-page/accommodations-search-page.component';
 
 export function mapFiltersToAccommodationsParams(

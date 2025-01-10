@@ -21,10 +21,7 @@
     </ng-template>
     <ng-template pTemplate="content">
       <div class="abms-search-results__result-content gap-3">
-        <img
-          class="border-round w-full"
-          src="https://static.leonardo-hotels.com/image/leonardohotelbucharestcitycenter_room_comfortdouble2_2022_4000x2600_7e18f254bc75491965d36cc312e8111f_1200x780_mobile_3.jpeg"
-        />
+        <img class="border-round w-full" [src]="accommodation.images[0]" />
         <div class="flex flex-column justify-content-between">
           <div class="flex flex-column gap-1">
             <p class="text-lg font-medium">

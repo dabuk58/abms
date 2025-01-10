@@ -17,7 +17,6 @@ import { OverlayLoaderComponent } from '../../../../core/components/overlay-load
 import { LoaderEnum } from '../../../../core/enums/loader.enum';
 import { UserInfo } from '../../../../core/interfaces/user-info';
 import { LoaderService } from '../../../../core/services/loader.service';
-import { ToastService } from '../../../../core/services/toast.service';
 import { UserService } from '../../../../core/services/user.service';
 import { ControlErrorWrapperComponent } from '../../../../shared/components/control-error-wrapper/control-error-wrapper.component';
 import { phoneNumberValidator } from '../../../../shared/tools/validators';
@@ -47,8 +46,7 @@ export class EditProfileDialogComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private loaderService: LoaderService,
     private userService: UserService,
-    public dialogRef: DynamicDialogRef,
-    private toastService: ToastService
+    public dialogRef: DynamicDialogRef
   ) {
     this.form = this.fb.group({
       fullname: '',

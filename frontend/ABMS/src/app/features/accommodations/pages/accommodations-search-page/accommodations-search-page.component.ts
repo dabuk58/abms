@@ -147,7 +147,7 @@ export class AccommodationsSearchPageComponent
     const params = {
       ...mapFiltersToAccommodationsParams(
         filters,
-        this.form.get('sortBy')?.value
+        this.form.get('sortBy')?.value?.value
       ),
       Offset: this.offset,
       RecordNo: this.recordNo,

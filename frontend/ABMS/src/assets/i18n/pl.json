@@ -199,5 +199,6 @@
   "cancel_booking_confirmation": "Czy na pewno chcesz anulować rezerwację?",
   "yes": "Tak",
   "no": "Nie",
-  "confirmation_required": "Wymagane potwierdzenie"
+  "confirmation_required": "Wymagane potwierdzenie",
+  "booking_success": "Rezerwacja dokonana pomyślnie!"
 }

@@ -15,7 +15,7 @@ import {
 } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { CalendarModule } from 'primeng/calendar';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
@@ -93,7 +93,8 @@ export class AccommodationBookDialogComponent implements OnInit, OnDestroy {
     private accommodationsService: AccommodationsService,
     private loaderService: LoaderService,
     private toastService: ToastService,
-    private userService: UserService
+    private userService: UserService,
+    public dialogRef: DynamicDialogRef
   ) {
     this.form = this.fb.group({
       checkInDate: [null, Validators.required],
@@ -266,6 +267,11 @@ export class AccommodationBookDialogComponent implements OnInit, OnDestroy {
           );
         } else {
           this.processPayment();
+          this.toastService.showSuccess(
+            this.translation.instant('success'),
+            this.translation.instant('booking_success')
+          );
+          this.dialogRef.close();
         }
       });
   }
