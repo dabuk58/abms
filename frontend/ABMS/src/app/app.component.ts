@@ -7,6 +7,7 @@ import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { filter } from 'rxjs';
+import translationsEN from './../assets/i18n/en.json';
 import translationsPL from './../assets/i18n/pl.json';
 import { FooterComponent } from './core/components/footer/footer.component';
 import { HeaderComponent } from './core/components/header/header.component';
@@ -39,13 +40,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private toastService: ToastService
   ) {
-    this.translate.addLangs(['pl']);
-    this.translate.setTranslation('pl', translationsPL);
-    this.translate.setDefaultLang('pl');
-    this.translate.use('pl');
-    this.translate
-      .get('primeng')
-      .subscribe((res) => this.config.setTranslation(res));
+    this.setTranslations();
   }
 
   ngOnInit(): void {
@@ -54,6 +49,17 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.checkToastsInStorage();
+  }
+
+  setTranslations(): void {
+    this.translate.addLangs(['pl', 'en']);
+    this.translate.setTranslation('pl', translationsPL);
+    this.translate.setTranslation('en', translationsEN);
+    this.translate.setDefaultLang('pl');
+    this.translate.use('pl');
+    this.translate
+      .get('primeng')
+      .subscribe((res) => this.config.setTranslation(res));
   }
 
   initializeMicrosoftLogin(): void {

@@ -8,8 +8,17 @@
   >
     BedFind
   </p>
-  <div class="flex gap-1"></div>
-  <div class="flex gap-1">
+  <div class="flex gap-1 align-items-center">
+    <div
+      [innerHTML]="flagPL"
+      class="abms-header__flag mr-2"
+      (click)="switchLanguage('pl')"
+    ></div>
+    <div
+      [innerHTML]="flagGB"
+      class="abms-header__flag mr-4"
+      (click)="switchLanguage('en')"
+    ></div>
     <p-button
       [label]="'search' | translate"
       [routerLink]="[ROUTES.ACCOMMODATIONS]"

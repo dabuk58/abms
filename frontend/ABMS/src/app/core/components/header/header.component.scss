@@ -9,4 +9,10 @@
   &--collapsed {
     padding: 6px 48px;
   }
+
+  &__flag {
+    display: flex;
+    height: 0.9rem;
+    cursor: pointer;
+  }
 }
