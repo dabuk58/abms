@@ -10,11 +10,11 @@ public class Accommodation : AuditableEntity
     public required string Street { get; set; }
     public required int StreetNumber { get; set; }
     public required string ZipCode { get; set; }
+    public required decimal PricePerNight { get; set; }
     public required string City { get; set; }
     public required string Region { get; set; }
     public required decimal Latitude { get; set; }
     public required decimal Longitude { get; set; }
-    public required decimal PricePerNight { get; set; }
     public required int MaxGuests { get; set; }
     public virtual ICollection<AccommodationAmenity.AccommodationAmenity>? AccommodationAmenities { get; }
     public virtual ICollection<AccommodationImage.AccommodationImage>? AccommodationImages { get; }
