@@ -1,0 +1,1 @@
+import{a as t}from"./chunk-QMAPNKEB.js";import"./chunk-MG3ERZGY.js";var m=[{path:"",loadComponent:()=>import("./chunk-ULRIJLHE.js").then(o=>o.AccommodationsSearchPageComponent)},{path:":id",loadComponent:()=>import("./chunk-Z7IWVSBR.js").then(o=>o.AccommodationDetailsPageComponent)},{path:"**",redirectTo:t.HOME}];export{m as routes};

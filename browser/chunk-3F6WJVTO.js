@@ -1,0 +1,1 @@
+import{Kb as f,Tb as r,_ as o,sb as n,tb as s}from"./chunk-7ILHC6KT.js";import"./chunk-MG3ERZGY.js";var a=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=o({type:t,selectors:[["app-offers"]],standalone:!0,features:[r],decls:2,vars:0,template:function(e,i){e&1&&(n(0,"p"),f(1,"offers works!"),s())}})};export{a as OffersComponent};
