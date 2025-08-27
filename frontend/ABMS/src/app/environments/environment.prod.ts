@@ -14,7 +14,7 @@ export const environment = {
   },
   apiConfig: {
     scopes: ['user.read'],
-    uri: 'https://localhost:7163',
+    uri: 'https://bedfind-be.onrender.com',
   },
   homePath: 'http://localhost:4200',
 };
