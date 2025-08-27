@@ -43,7 +43,11 @@ export class MapSearchResultsComponent implements AfterViewInit, OnDestroy {
     private router: Router
   ) {}
 
-  ngAfterViewInit(): void {
+  async ngAfterViewInit(): Promise<void> {
+    (window as any).L = L;
+
+    await import('leaflet.markercluster');
+
     this.initMap();
     this.listenToNavigationChanges();
   }
