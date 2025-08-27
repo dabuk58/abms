@@ -1,6 +1,7 @@
 ﻿using Application;
 using Infrastructure;
 using Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
 using QualityManagement.WebApi.Features;
 using Serilog;
 using WebApi.Features;
@@ -16,7 +17,7 @@ builder.Services.AddCors(options =>
         builder =>
             builder
                 .WithOrigins(
-                    "http://localhost::4200",
+                    "http://localhost:4200",
                     "https://dabuk58.github.io",
                     "https://dabuk58.github.io/abms"
                 )
@@ -36,6 +37,14 @@ builder.Host.UseSerilog(
 );
 
 var app = builder.Build();
+
+if (app.Environment.IsProduction())
+{
+    using var scope = app.Services.CreateScope();
+    var db =
+        scope.ServiceProvider.GetRequiredService<Infrastructure.Persistence.ApplicationDbContext>();
+    db.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {
