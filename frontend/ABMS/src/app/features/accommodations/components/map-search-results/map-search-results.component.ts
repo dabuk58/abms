@@ -3,6 +3,7 @@ import { AfterViewInit, Component, inject, OnDestroy } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import * as L from 'leaflet';
+import 'leaflet.markercluster';
 import {
   DialogService,
   DynamicDialogConfig,

@@ -15,6 +15,11 @@
   &__result-content {
     display: grid;
     grid-template-columns: 17fr 18fr auto;
+
+    & img {
+      object-fit: contain;
+      height: 215px;
+    }
   }
   &__price {
     font-size: 1.4rem;
