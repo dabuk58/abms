@@ -69,7 +69,8 @@
               "allowedCommonJsDependencies": [
                 "leaflet",
                 "leaflet.markercluster"
-              ]
+              ],
+              "baseHref": "/abms/"
             },
             "development": {
               "optimization": false,
