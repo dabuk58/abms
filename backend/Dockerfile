@@ -2,8 +2,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY . .
-RUN dotnet restore ./ABMS.sln
-RUN dotnet publish ./src/WebApi/WebApi.csproj -c Release -o /app/out
+RUN dotnet restore ABMS.sln
+RUN dotnet publish WebApi/WebApi.csproj -c Release -o /app/out
 
 # runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
