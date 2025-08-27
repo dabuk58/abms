@@ -44,7 +44,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: frontend/ABMS/dist
+          path: frontend/ABMS/dist/abms/browser
 
   deploy:
     needs: build
