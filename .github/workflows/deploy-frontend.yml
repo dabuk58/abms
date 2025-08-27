@@ -43,7 +43,7 @@ jobs:
           npm run build -- --configuration production --base-href "/${{ env.REPO_NAME }}/" --output-path dist
 
       - name: Add SPA 404 fallback
-        working-directory: ${{ env.FRONTEND_DIR }}/dist
+        working-directory: ${{ env.FRONTEND_DIR }}/dist/abms
         run: cp index.html 404.html
 
       - name: Upload artifact
