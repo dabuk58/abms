@@ -16,5 +16,5 @@ export const environment = {
     scopes: ['user.read'],
     uri: 'https://bedfind-be.onrender.com',
   },
-  homePath: 'http://localhost:4200',
+  homePath: 'https://dabuk58.github.io/abms/home',
 };
