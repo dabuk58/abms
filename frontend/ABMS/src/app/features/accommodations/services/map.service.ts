@@ -13,6 +13,19 @@ export class MapService {
 
   constructor() {}
 
+  markerClusterReady: Promise<void> | null = null;
+
+  async ensureMarkerClusterLoaded(): Promise<void> {
+    if (!this.markerClusterReady) {
+      (window as any).L = L;
+
+      this.markerClusterReady = import(
+        'leaflet.markercluster/dist/leaflet.markercluster.js'
+      ).then(() => void 0);
+    }
+    return this.markerClusterReady;
+  }
+
   createMarkers(accommodations: Accommodation[]): L.MarkerClusterGroup {
     this.markerId = 0;
 
