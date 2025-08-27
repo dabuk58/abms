@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 22.14
           cache: npm
-          cache-dependency-path: frontend/abms/package-lock.json
+          cache-dependency-path: frontend/ABMS/package-lock.json
 
       - name: Install deps
         working-directory: frontend
