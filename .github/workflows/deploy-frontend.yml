@@ -38,7 +38,7 @@ jobs:
           npm run build -- --configuration production --base-href "/abms/"
 
       - name: Add SPA 404 fallback
-        working-directory: frontend/dist/abms/browser
+        working-directory: frontend/ABMS/dist/abms/browser
         run: cp index.html 404.html
 
       - name: Upload artifact
