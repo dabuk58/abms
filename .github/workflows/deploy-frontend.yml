@@ -33,7 +33,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular (prod)
-        working-directory: frontend
+        working-directory: frontend/ABMS
         run: |
           npm run build -- --configuration production --base-href "/abms/"
 
