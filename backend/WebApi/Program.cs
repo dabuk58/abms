@@ -1,5 +1,6 @@
 using Application;
 using Infrastructure;
+using Infrastructure.Services;
 using QualityManagement.WebApi.Features;
 using Serilog;
 using WebApi.Features;
@@ -9,8 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCors(options => options.AddPolicy("AllowAngularApp",
-    builder => builder.WithOrigins("http://localhost::4200")
+builder.Services.AddCors(options => options.AddPolicy("AllowFront",
+    builder => builder.WithOrigins(
+        "http://localhost::4200",
+        "https://dabuk58.github.io",
+        "https://dabuk58.github.io/abms")
     .AllowAnyHeader()
     .AllowAnyOrigin()));
 
@@ -34,7 +38,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowAngularApp");
+app.UseCors("AllowFront");
 
 app.UseSerilogRequestLogging();
 

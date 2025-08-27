@@ -1,6 +1,8 @@
 ﻿using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
+namespace Infrastructure.Services;
+
 public class UserService : IUserService
 {
     private readonly ApplicationDbContext _context;
