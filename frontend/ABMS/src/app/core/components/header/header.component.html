@@ -10,11 +10,13 @@
   </p>
   <div class="flex gap-1 align-items-center">
     <div
+      [ngClass]="{ 'abms-header__flag--invisible': headerCollapsed }"
       [innerHTML]="flagPL"
       class="abms-header__flag mr-2"
       (click)="switchLanguage('pl')"
     ></div>
     <div
+      [ngClass]="{ 'abms-header__flag--invisible': headerCollapsed }"
       [innerHTML]="flagGB"
       class="abms-header__flag mr-4"
       (click)="switchLanguage('en')"
