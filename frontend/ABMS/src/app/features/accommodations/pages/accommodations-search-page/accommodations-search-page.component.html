@@ -8,8 +8,8 @@
     class="abms-search-page__advanced-filters"
   ></app-accommodations-advanced-filters>
   @if(accommodationsResponse$ | async; as data){
-  <div class="flex flex-column gap-3">
-    <div class="flex flex-row justify-content-between">
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-row justify-between">
       <p-button
         class="abms-search-page__map-view-button"
         icon="pi pi-map"
@@ -34,7 +34,7 @@
     </div>
     @if(!data.accommodations.length){
     <div
-      class="abms-search-page__no-results flex flex-column gap-3 align-items-center pt-5"
+      class="abms-search-page__no-results flex flex-col gap-4 items-center pt-5"
     >
       <p class="font-semibold text-xl">
         {{ "no_search_results" | translate }}

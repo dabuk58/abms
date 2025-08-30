@@ -1,8 +1,8 @@
-<div class="abms-search-results flex flex-column gap-3">
+<div class="abms-search-results flex flex-col gap-4">
   @for(accommodation of accommodations; track accommodation){
   <p-panel>
     <ng-template pTemplate="header">
-      <div class="flex align-items-center justify-content-between">
+      <div class="flex items-center justify-between">
         <h2 class="text-lg font-semibold">{{ accommodation.name }}</h2>
         <app-heart-icon
           class="abms-search-results__favorite-icon"
@@ -20,10 +20,10 @@
       </div>
     </ng-template>
     <ng-template pTemplate="content">
-      <div class="abms-search-results__result-content gap-3">
-        <img class="border-round w-full" [src]="accommodation.images[0]" />
-        <div class="flex flex-column justify-content-between">
-          <div class="flex flex-column gap-1">
+      <div class="abms-search-results__result-content gap-4">
+        <img class="rounded-md w-full" [src]="accommodation.images[0]" />
+        <div class="flex flex-col justify-between">
+          <div class="flex flex-col gap-1">
             <p class="text-lg font-medium">
               {{ accommodation.city }}
             </p>
@@ -37,11 +37,11 @@
             <span class="text-base">{{ "per_night" | translate }}</span>
           </div>
         </div>
-        <div class="flex flex-column justify-content-between">
-          <div class="flex flex-column gap-1 align-items-center">
+        <div class="flex flex-col justify-between">
+          <div class="flex flex-col gap-1 items-center">
             @if(accommodation.rating){
             <p>{{ "average_rating" | translate }}</p>
-            <div class="flex gap-2 align-items-center">
+            <div class="flex gap-2 items-center">
               <p>{{ accommodation.rating }} / 10</p>
               <i
                 class="abms-search-results__rating-star text-xl bi bi-star-fill"
@@ -52,7 +52,6 @@
             }
           </div>
           <p-button
-            class="abms-advanced-filters__search-button"
             [label]="translation.instant('details')"
             icon="pi pi-angle-right"
             iconPos="right"

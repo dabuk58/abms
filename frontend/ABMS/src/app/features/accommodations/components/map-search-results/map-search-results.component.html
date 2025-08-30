@@ -1,5 +1,5 @@
 @if({data: accommodationsResponse$ | async}; as result){
-<div id="map" class="abms-map-search-results w-full h-full border-round-lg">
+<div id="map" class="abms-map-search-results w-full h-full rounded-md">
   @if(!result.data){
   <div class="abms-map-search-results__load-overlay"></div>
   <app-loader

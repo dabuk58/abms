@@ -6,10 +6,10 @@
         let-nextCallback="nextCallback"
         let-index="index"
       >
-        <div class="flex flex-column gap-3 pt-3 h-23rem">
+        <div class="flex flex-col gap-4 pt-3 h-23rem">
           <form
             [formGroup]="form"
-            class="abms-accommodation-book__visit-details-form row-gap-5 column-gap-2 align-items-center"
+            class="abms-accommodation-book__visit-details-form row-gap-8 column-gap-2 items-center"
           >
             <label class="abms-accommodation-book__input-label">
               {{ "check_in_date" | translate }}
@@ -29,7 +29,7 @@
                   (onSelect)="onCheckInDateSelect()"
                 ></p-calendar>
                 <i
-                  class="abms-accommodation-book__icon pi pi-calendar-plus absolute top-50"
+                  class="abms-accommodation-book__icon pi pi-calendar-plus absolute top-1/2"
                 ></i>
               </span>
             </app-control-error-wrapper>
@@ -50,7 +50,7 @@
                   [hideOnDateTimeSelect]="false"
                 ></p-calendar>
                 <i
-                  class="abms-accommodation-book__icon pi pi-calendar-minus absolute top-50"
+                  class="abms-accommodation-book__icon pi pi-calendar-minus absolute top-1/2"
                 ></i>
               </span>
             </app-control-error-wrapper>
@@ -69,7 +69,7 @@
                   [max]="maxGuests"
                 ></p-inputNumber>
                 <i
-                  class="abms-accommodation-book__icon pi pi-users absolute top-50"
+                  class="abms-accommodation-book__icon pi pi-users absolute top-1/2"
                 ></i>
               </span>
             </app-control-error-wrapper>
@@ -80,7 +80,7 @@
               <span class="abms-accommodation-book__input-container relative">
                 <input formControlName="name" pInputText />
                 <i
-                  class="abms-accommodation-book__icon pi pi-address-book absolute top-50"
+                  class="abms-accommodation-book__icon pi pi-address-book absolute top-1/2"
                 ></i>
               </span>
             </app-control-error-wrapper>
@@ -93,7 +93,7 @@
               <span class="abms-accommodation-book__input-container relative">
                 <input formControlName="email" pInputText />
                 <i
-                  class="abms-accommodation-book__icon pi pi-at absolute top-50"
+                  class="abms-accommodation-book__icon pi pi-at absolute top-1/2"
                 ></i>
               </span>
             </app-control-error-wrapper>
@@ -106,7 +106,7 @@
               <span class="abms-accommodation-book__input-container relative">
                 <input formControlName="phoneNumber" type="tel" pInputText />
                 <i
-                  class="abms-accommodation-book__icon pi pi-phone absolute top-50"
+                  class="abms-accommodation-book__icon pi pi-phone absolute top-1/2"
                 ></i>
               </span>
             </app-control-error-wrapper>
@@ -175,7 +175,7 @@
             zł
           </div>
         </div>
-        <div class="flex pt-4 justify-content-between">
+        <div class="flex pt-4 justify-between">
           <p-button
             [label]="translation.instant('change_data')"
             icon="pi pi-arrow-left"
@@ -192,5 +192,5 @@
   </p-stepper>
 </div>
 @if(isLoading$ | async){
-  <app-overlay-loader></app-overlay-loader>
+<app-overlay-loader></app-overlay-loader>
 }

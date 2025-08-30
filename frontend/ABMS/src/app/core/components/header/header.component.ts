@@ -11,6 +11,7 @@ import {
   DynamicDialogModule,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
+import { SidebarModule } from 'primeng/sidebar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
 import { Subject } from 'rxjs';
@@ -24,6 +25,7 @@ import { LoginModalComponent } from '../login-modal/login-modal.component';
   selector: 'app-header',
   standalone: true,
   imports: [
+    SidebarModule,
     ButtonModule,
     TranslatePipe,
     RouterLink,
@@ -38,7 +40,7 @@ import { LoginModalComponent } from '../login-modal/login-modal.component';
 })
 export class HeaderComponent implements OnDestroy {
   ROUTES = ROUTES;
-  splitButtonConfig: MenuItem[];
+  splitButtonConfig!: MenuItem[];
   loginDialogRef?: DynamicDialogRef;
   headerCollapsed = false;
   flagPL: SafeHtml;
@@ -57,9 +59,13 @@ export class HeaderComponent implements OnDestroy {
     private translate: TranslateService,
     private sanitizer: DomSanitizer
   ) {
-    this.splitButtonConfig = this.constantsService.headerButtonConfig;
+    this.loadAccountMenu();
     this.flagGB = this.sanitizer.bypassSecurityTrustHtml(GB);
     this.flagPL = this.sanitizer.bypassSecurityTrustHtml(PL);
+  }
+
+  loadAccountMenu(): void {
+    this.splitButtonConfig = this.constantsService.headerButtonConfig;
   }
 
   onLogin(): void {
@@ -106,6 +112,7 @@ export class HeaderComponent implements OnDestroy {
 
   switchLanguage(lang: string): void {
     this.translate.use(lang);
+    this.loadAccountMenu();
   }
 
   ngOnDestroy(): void {

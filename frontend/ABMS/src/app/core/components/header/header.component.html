@@ -1,6 +1,6 @@
 <div
   [ngClass]="{ 'abms-header--collapsed': headerCollapsed }"
-  class="abms-header flex justify-content-between align-items-center"
+  class="abms-header flex justify-between items-center"
 >
   <p
     class="font-semibold cursor-pointer select-none"
@@ -8,7 +8,7 @@
   >
     BedFind
   </p>
-  <div class="flex gap-1 align-items-center">
+  <div class="flex gap-1 items-center invisible sm:visible">
     <div
       [ngClass]="{ 'abms-header__flag--invisible': headerCollapsed }"
       [innerHTML]="flagPL"
@@ -49,4 +49,6 @@
     />
     }
   </div>
+
+  <p-sidebar class="sm:hidden"></p-sidebar>
 </div>

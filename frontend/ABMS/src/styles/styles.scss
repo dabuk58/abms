@@ -1,14 +1,13 @@
-@import "./reset";
+@import "tailwindcss/preflight.css" layer(base);
+@import "primeng/resources/themes/aura-light-noir/theme.css" layer(primeng);
+@import "primeng/resources/primeng.min.css" layer(primeng);
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
 @import "primeicons/primeicons.css";
 @import "./p-overrides-imports";
 @import "./../../node_modules/leaflet/dist/leaflet.css";
 @import "./leaflet_override";
-
-@layer reset, primeng;
-
-@layer reset {
-  @include css-reset;
-}
+@import "bootstrap-icons/font/bootstrap-icons.css";
 
 html {
   overflow-x: hidden;

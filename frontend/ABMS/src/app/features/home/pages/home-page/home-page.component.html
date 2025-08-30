@@ -1,14 +1,14 @@
 <div
-  class="abms-home flex flex-column gap-5 justify-content-center align-items-center gap-5 mb-7"
+  class="abms-home flex flex-col gap-8 justify-center items-center gap-8 mb-7"
 >
-  <h1 class="text-6xl font-bold pt-7">
+  <h1 class="text-5xl font-bold pt-7">
     {{ "your_journey_starts_here" | translate }}
   </h1>
   <h2 class="text-2xl pt-2">
     {{ "start_desired_search" | translate }}
   </h2>
-  <p-panel class="flex flex-column gap-5 p-3">
-    <form [formGroup]="form" class="flex flex-row gap-5 align-items-center">
+  <p-panel class="flex flex-col gap-8 p-3">
+    <form [formGroup]="form" class="flex flex-row gap-8 items-center">
       <span class="relative w-18rem">
         <label class="abms-home__label" for="place">
           {{ "place" | translate }}
@@ -22,7 +22,7 @@
           [placeholder]="currentPlaceholder"
           formControlName="query"
         />
-        <i class="abms-home__icon pi pi-globe absolute top-50 text-lg"></i>
+        <i class="abms-home__icon pi pi-globe absolute top-1/2 text-lg"></i>
       </span>
       <span class="relative w-18rem">
         <label class="abms-home__label" for="dates">
@@ -38,7 +38,7 @@
           [maxDate]="maxDate"
           [placeholder]="translation.instant('choose_dates') + '...'"
         />
-        <i class="abms-home__icon pi pi-calendar absolute top-50"></i>
+        <i class="abms-home__icon pi pi-calendar absolute top-1/2"></i>
       </span>
       <span class="relative w-18rem">
         <label class="abms-home__label" for="people">{{
@@ -53,7 +53,7 @@
           [max]="20"
           [placeholder]="translation.instant('choose_people_amount') + '...'"
         />
-        <i class="abms-home__icon pi pi-users absolute top-50"></i>
+        <i class="abms-home__icon pi pi-users absolute top-1/2"></i>
       </span>
     </form>
     <p-button

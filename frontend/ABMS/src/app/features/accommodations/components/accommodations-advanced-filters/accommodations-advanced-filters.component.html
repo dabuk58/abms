@@ -5,8 +5,8 @@
     </p>
   </ng-template>
   <ng-template pTemplate="content">
-    <form [formGroup]="form" class="flex flex-column gap-4">
-      <div class="flex flex-column gap-3">
+    <form [formGroup]="form" class="flex flex-col gap-6">
+      <div class="flex flex-col gap-4">
         <p class="abms-advanced-filters__single-filter_title">
           {{ "price_per_night" | translate }}
         </p>
@@ -41,7 +41,7 @@
           (onChange)="updatePriceInputs($event)"
         ></p-slider>
       </div>
-      <div class="flex flex-column gap-3">
+      <div class="flex flex-col gap-4">
         <p class="abms-advanced-filters__single-filter_title">
           {{ "minimal_rating" | translate }}
         </p>
@@ -49,10 +49,10 @@
           [stars]="10"
           [cancel]="false"
           formControlName="rating"
-          class="align-self-center"
+          class="self-center"
         ></p-rating>
       </div>
-      <div class="flex flex-column gap-3">
+      <div class="flex flex-col gap-4">
         <p class="abms-advanced-filters__single-filter_title">
           {{ "amenities" | translate }}
         </p>
@@ -64,7 +64,7 @@
         ></p-checkbox>
         }
       </div>
-      <div class="flex justify-content-between">
+      <div class="flex justify-between">
         <p-button
           class="abms-advanced-filters__clear-button"
           [label]="translation.instant('clear')"
