@@ -21,11 +21,19 @@
     transition: max-width 1s ease, opacity 1s ease;
   }
 
+  .p-button .p-button-icon-right {
+    transition: margin-left 1s ease;
+  }
+
   &--collapsed {
     .p-button .p-button-label,
     .p-splitbutton .p-button-label {
       max-width: 0;
       opacity: 0;
+    }
+
+    .p-button .p-button-icon-right {
+      margin-left: 0;
     }
   }
 }

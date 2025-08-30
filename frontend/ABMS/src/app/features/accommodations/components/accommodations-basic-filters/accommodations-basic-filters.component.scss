@@ -1,8 +1,10 @@
+@import "./../../../../../styles/variables.scss";
+
 .abms-basic-filters {
   &__icon {
     transform: translate(0, -50%);
     right: 10px;
-    font-size: 18px;
+    font-size: $font-size-lg;
   }
 
   &__label {

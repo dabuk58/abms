@@ -3,27 +3,27 @@
   @if(control && control.invalid && (control.touched || control.dirty)){
   <div class="abms-control-error-wrapper__errors-container">
     @if(control.hasError('required')){
-    <small class="abms-control-error-wrapper__error">
+    <small class="abms-control-error-wrapper__error text-xs">
       {{ "validation_errors.required" | translate }}</small
     >
     } @if(control.hasError('invalidEmail')){
-    <small class="abms-control-error-wrapper__error">
+    <small class="abms-control-error-wrapper__error text-xs">
       {{ "validation_errors.email" | translate }}
     </small>
     }@if (control.hasError('invalidPhoneNumber')){
     <small
-      class="abms-control-error-wrapper__error flex gap-2 align-items-center"
+      class="abms-control-error-wrapper__error text-xs flex gap-2 align-items-center"
     >
       <p>{{ "validation_errors.phone_number" | translate }}</p>
     </small>
     }@if (control.hasError('missingCountryCode')){
     <small
-      class="abms-control-error-wrapper__error flex gap-2 align-items-center"
+      class="abms-control-error-wrapper__error text-xs flex gap-2 align-items-center"
     >
       <p>{{ "validation_errors.missing_country_code" | translate }}</p>
     </small>
     } @if(control.hasError('min')){
-    <small class="abms-control-error-wrapper__error">
+    <small class="abms-control-error-wrapper__error text-xs">
       {{
         fillString(
           "validation_errors.min" | translate,
@@ -32,7 +32,7 @@
       }}
     </small>
     } @if (control.hasError('max')){
-    <small class="abms-control-error-wrapper__error">
+    <small class="abms-control-error-wrapper__error text-xs">
       {{
         fillString(
           "validation_errors.max" | translate,

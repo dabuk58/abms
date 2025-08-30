@@ -14,7 +14,7 @@
 
   & .p-dialog-title {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: $font-size-base;
     color: $primary;
   }
 }
@@ -75,15 +75,10 @@
 }
 
 .p-datepicker {
-  &-calendar {
-    font-size: 15px;
-  }
-
   &-title {
     .p-datepicker-month,
     .p-datepicker-year {
       font-family: "Poppins", serif;
-      font-size: 15px;
     }
   }
 }
@@ -102,7 +97,7 @@
 }
 
 .p-tooltip .p-tooltip-text {
-  font-size: 14px;
+  font-size: $font-size-sm;
   background-color: $primary;
   text-align: center;
 }

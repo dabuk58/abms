@@ -1,6 +1,8 @@
+@import "./../variables.scss";
+
 .abms-map-popup {
   .p-button-label {
-    font-size: 12px;
+    font-size: $font-size-xs;
   }
   .p-button .p-button-icon-right {
     margin-left: 0.1rem;
