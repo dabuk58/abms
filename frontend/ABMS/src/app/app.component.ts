@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { InteractionStatus } from '@azure/msal-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ToastModule } from 'primeng/toast';
+import { ToastModule, ToastPositionType } from 'primeng/toast';
 import { filter } from 'rxjs';
 import translationsEN from './../assets/i18n/en.json';
 import translationsPL from './../assets/i18n/pl.json';
@@ -32,6 +32,8 @@ import { ToastService } from './core/services/toast.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit, AfterViewInit {
+  toastPos!: ToastPositionType;
+
   constructor(
     private config: PrimeNGConfig,
     private translate: TranslateService,
@@ -41,6 +43,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private toastService: ToastService
   ) {
     this.setTranslations();
+    this.setToastPos();
   }
 
   ngOnInit(): void {
@@ -73,7 +76,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       .pipe(
         filter((status: InteractionStatus) => status === InteractionStatus.None)
       )
-      .subscribe((x) => {
+      .subscribe(() => {
         this.setActiveAccount();
       });
   }
@@ -114,5 +117,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     sessionStorage.removeItem(SessionStorageItem.ToastMessage);
+  }
+
+  @HostListener('window:resize')
+  setToastPos(): void {
+    this.toastPos = window.innerWidth < 576 ? 'top-center' : 'top-right';
   }
 }

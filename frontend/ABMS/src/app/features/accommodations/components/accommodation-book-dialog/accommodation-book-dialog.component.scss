@@ -1,35 +1,6 @@
 @import "./../../../../../styles/variables.scss";
 
 .abms-accommodation-book {
-  &__visit-details-form {
-    display: grid;
-    grid-template-columns: 3fr 5fr;
-  }
-
-  &__icon {
-    transform: translate(0, -50%);
-    right: 10px;
-    font-size: $font-size-lg;
-  }
-
-  &__input-container {
-    width: fit-content;
-  }
-
-  &__input-label {
-    justify-self: end;
-  }
-
-  &__summary {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  &__summary-data-type {
-    justify-self: end;
-  }
-
   &__summary-price-container {
     justify-self: end;
     grid-column: 1 / span 2;

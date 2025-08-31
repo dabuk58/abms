@@ -1,7 +1,7 @@
-<p-panel class="abms-basic-filters">
+<p-panel>
   <form [formGroup]="form" class="flex flex-row gap-10 items-center">
-    <span class="relative w-18rem">
-      <label class="abms-basic-filters__label" for="place">
+    <span class="relative">
+      <label class="absolute font-semibold -top-[22px]" for="place">
         {{ "place" | translate }}
       </label>
       <input
@@ -11,11 +11,14 @@
         (input)="onInput()"
         [placeholder]="translation.instant('type_destination') + '...'"
         formControlName="query"
+        class="w-72"
       />
-      <i class="abms-basic-filters__icon pi pi-globe absolute top-1/2"></i>
+      <i
+        class="pi pi-globe absolute top-1/2 -translate-y-1/2 right-[10px] text-lg"
+      ></i>
     </span>
-    <span class="relative w-18rem">
-      <label class="abms-basic-filters__label" for="dates">
+    <span class="relative">
+      <label class="absolute font-semibold -top-[22px]" for="dates">
         {{ "date" | translate }}
       </label>
       <p-calendar
@@ -27,26 +30,34 @@
         [minDate]="minDate"
         [maxDate]="maxDate"
         [placeholder]="translation.instant('choose_dates') + '...'"
+        inputStyleClass="w-72"
       />
-      <i class="abms-basic-filters__icon pi pi-calendar absolute top-1/2"></i>
+      <i
+        class="pi pi-calendar absolute top-1/2 -translate-y-1/2 right-[10px] text-lg"
+      ></i>
     </span>
     <span class="relative">
-      <label class="abms-basic-filters__label" for="people">
+      <label class="absolute font-semibold -top-[22px]" for="people">
         {{ "amount_of_people" | translate }}
       </label>
       <p-inputNumber
+        inputStyleClass="w-72 rounded-r-[5px]"
+        incrementButtonClass="right-[35px]"
+        decrementButtonClass="right-[35px]"
         inputId="people"
         inputId="integeronly"
         formControlName="guests"
         [showButtons]="true"
         [min]="1"
         [max]="20"
-        [placeholder]="translation.instant('choose_people_amount') + '...'"
+        [placeholder]="translation.instant('enter_people_amount') + '...'"
       />
-      <i class="abms-basic-filters__icon pi pi-users absolute top-1/2"></i>
+      <i
+        class="pi pi-users absolute top-1/2 -translate-y-1/2 right-[10px] text-lg"
+      ></i>
     </span>
     <p-button
-      class="abms-basic-filters__search-button"
+      styleClass="!h-10"
       [label]="translation.instant('search')"
       icon="pi pi-arrow-right"
       iconPos="right"

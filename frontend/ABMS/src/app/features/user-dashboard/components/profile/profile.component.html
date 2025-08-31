@@ -1,4 +1,4 @@
-<p-panel class="abms-profile">
+<p-panel>
   <ng-template pTemplate="header">
     <div class="flex w-full justify-center items-center relative mt-2">
       <h2 class="text-lg font-semibold">{{ "your_data" | translate }}</h2>
@@ -13,12 +13,12 @@
     </div>
   </ng-template>
   <ng-template pTemplate="content">
-    <div class="abms-profile__user-data-container mb-4 mt-3">
-      <p class="abms-profile__label">{{ "email" | translate }}:</p>
+    <div class="grid grid-cols-[1fr_1fr] gap-4 mb-4 mt-3">
+      <p class="justify-self-end">{{ "email" | translate }}:</p>
       <p>{{ userData.email }}</p>
-      <p class="abms-profile__label">{{ "full_name" | translate }}:</p>
+      <p class="justify-self-end">{{ "full_name" | translate }}:</p>
       <p>{{ userData.fullname || "lack_of" | translate }}</p>
-      <p class="abms-profile__label">{{ "phone_number" | translate }}:</p>
+      <p class="justify-self-end">{{ "phone_number" | translate }}:</p>
       <p>{{ userData.phoneNumber || "lack_of" | translate }}</p>
     </div>
   </ng-template>

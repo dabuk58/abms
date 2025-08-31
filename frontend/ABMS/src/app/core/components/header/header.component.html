@@ -1,6 +1,7 @@
 <div
-  [ngClass]="{ 'abms-header--collapsed': headerCollapsed }"
-  class="abms-header flex justify-between items-center"
+  class="abms-header px-12 bg-[var(--primary)] text-[var(--white)] flex justify-between items-center transition-all duration-300 ease-in-out"
+  [class.py-1]="headerCollapsed"
+  [class.py-4]="!headerCollapsed"
 >
   <p
     class="font-semibold cursor-pointer select-none"
@@ -8,17 +9,20 @@
   >
     BedFind
   </p>
-  <div class="flex gap-1 items-center invisible sm:visible">
+  <div
+    [ngClass]="{ 'abms-header--collapsed': headerCollapsed }"
+    class="hidden sm:flex gap-1 items-center"
+  >
     <div
-      [ngClass]="{ 'abms-header__flag--invisible': headerCollapsed }"
+      [ngClass]="{ 'opacity-0 pointer-events-none': headerCollapsed }"
       [innerHTML]="flagPL"
-      class="abms-header__flag mr-2"
+      class="flex transition-opacity duration-500 h-4 cursor-pointer ease mr-2"
       (click)="switchLanguage('pl')"
     ></div>
     <div
-      [ngClass]="{ 'abms-header__flag--invisible': headerCollapsed }"
+      [ngClass]="{ 'opacity-0 pointer-events-none': headerCollapsed }"
       [innerHTML]="flagGB"
-      class="abms-header__flag mr-4"
+      class="flex transition-opacity duration-500 h-4 cursor-pointer mr-4"
       (click)="switchLanguage('en')"
     ></div>
     <p-button
@@ -50,5 +54,22 @@
     }
   </div>
 
-  <p-sidebar class="sm:hidden"></p-sidebar>
+  <div class="flex gap-1 items-center sm:hidden">
+    <p-button
+      [routerLink]="[ROUTES.ACCOMMODATIONS]"
+      icon="pi pi-search"
+    ></p-button>
+    @if(isLoggedIn()){
+    <p-button
+      [routerLink]="[ROUTES.USER, ROUTES.FAVORITES]"
+      icon="pi pi-heart"
+    ></p-button>
+    <p-button
+      [routerLink]="[ROUTES.USER, ROUTES.FAVORITES]"
+      icon="pi pi-user"
+    ></p-button>
+    } @else {
+    <p-button icon="pi pi-sign-in" (onClick)="onLogin()" />
+    }
+  </div>
 </div>

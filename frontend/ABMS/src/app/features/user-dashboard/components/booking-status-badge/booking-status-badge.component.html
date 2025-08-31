@@ -3,25 +3,25 @@
   <p-chip
     [label]="'awaiting_payment' | translate"
     icon="pi pi-wallet"
-    class="abms-booking-status-badge--awaiting-payment"
+    styleClass="text-[var(--amber)] bg-[var(--amber-light)]"
   ></p-chip>
   } @case(BookingStatus.Confirmed){
   <p-chip
     [label]="'confirmed' | translate"
     icon="pi pi-check"
-    class="abms-booking-status-badge--confirmed"
+    styleClass="text-[var(--green)] bg-[var(--green-light)]"
   ></p-chip>
   } @case(BookingStatus.Cancelled){
   <p-chip
     [label]="'cancelled' | translate"
     icon="pi pi-times"
-    class="abms-booking-status-badge--cancelled"
+    styleClass="text-[var(--red)] bg-[var(--red-light)]"
   ></p-chip>
   } @case(BookingStatus.Completed){
   <p-chip
     [label]="'completed_feminine' | translate"
     icon="pi pi-history"
-    class="abms-booking-status-badge--completed"
+    styleClass="text-[var(--black)]"
   ></p-chip>
   } }
 </div>

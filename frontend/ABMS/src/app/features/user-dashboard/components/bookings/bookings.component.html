@@ -1,4 +1,4 @@
-<div class="abms-bookings flex flex-col gap-6">
+<div class="flex flex-col gap-6">
   @if(bookings$ | async; as bookings){ @if(bookings.length){@for(booking of
   bookings; track booking){
   <p-panel>
@@ -12,25 +12,19 @@
     </ng-template>
     <ng-template pTemplate="content">
       <div class="flex flex-col gap-2">
-        <div class="flex gap-2">
+        <div class="flex gap-2 items-center">
           <i class="pi pi-calendar-plus"></i>
-          <p class="abms-bookings__info-label">
-            {{ "check_in_date" | translate }}:
-          </p>
+          <p>{{ "check_in_date" | translate }}:</p>
           <p>{{ booking.startDate }}</p>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 items-center">
           <i class="pi pi-calendar-minus"></i>
-          <p class="abms-bookings__info-label">
-            {{ "check_out_date" | translate }}:
-          </p>
+          <p>{{ "check_out_date" | translate }}:</p>
           <p>{{ booking.endDate }}</p>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 items-center">
           <i class="pi pi-users"></i>
-          <p class="abms-bookings__info-label">
-            {{ "guests_amount" | translate }}:
-          </p>
+          <p>{{ "guests_amount" | translate }}:</p>
           <p>{{ booking.guests }}</p>
         </div>
       </div>

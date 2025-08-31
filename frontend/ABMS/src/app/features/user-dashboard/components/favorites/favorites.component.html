@@ -3,10 +3,10 @@
   @for(accommodation of accommodations; track accommodation){
   <p-panel>
     <ng-template pTemplate="header">
-      <div class="flex items-center justify-between">
+      <div class="flex w-full items-center justify-between">
         <h2 class="text-lg font-semibold">{{ accommodation.name }}</h2>
         <app-heart-icon
-          class="abms-favorites__favorite-icon abms-favorites__favorite-icon--checked"
+          class="cursor-pointer text-[var(--red)]"
           [pTooltip]="'remove_from_favorites' | translate"
           tooltipPosition="top"
           showDelay="150"
@@ -16,7 +16,7 @@
       </div>
     </ng-template>
     <ng-template pTemplate="content">
-      <div class="abms-favorites__result-content gap-6">
+      <div class="grid grid-cols-[17fr_18fr_auto] gap-6">
         <img
           class="rounded-md w-full"
           src="https://static.leonardo-hotels.com/image/leonardohotelbucharestcitycenter_room_comfortdouble2_2022_4000x2600_7e18f254bc75491965d36cc312e8111f_1200x780_mobile_3.jpeg"
@@ -26,7 +26,7 @@
             <p class="text-lg font-medium">
               {{ accommodation.city }}
             </p>
-            <p class="abms-favorites__region text-xs">
+            <p class="text-[var(--gray)] text-xs">
               {{ accommodation.region }}
             </p>
           </div>
@@ -43,7 +43,7 @@
             <div class="flex gap-2 items-center">
               <p>{{ accommodation.rating }} / 10</p>
               <i
-                class="abms-favorites__rating-star text-xl bi bi-star-fill"
+                class="mb-1 text-[var(--rating-star)] text-xl bi bi-star-fill"
               ></i>
             </div>
             } @else {
@@ -51,7 +51,6 @@
             }
           </div>
           <p-button
-            class="abms-advanced-filters__search-button"
             [label]="'details' | translate"
             icon="pi pi-angle-right"
             iconPos="right"

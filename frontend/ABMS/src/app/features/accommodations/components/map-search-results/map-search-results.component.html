@@ -1,10 +1,12 @@
 @if({data: accommodationsResponse$ | async}; as result){
 <div id="map" class="abms-map-search-results w-full h-full rounded-md">
   @if(!result.data){
-  <div class="abms-map-search-results__load-overlay"></div>
+  <div
+    class="absolute top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.4)] z-401"
+  ></div>
   <app-loader
     [white]="true"
-    class="abms-map-search-results__loader"
+    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-402"
   ></app-loader>
   }
 </div>

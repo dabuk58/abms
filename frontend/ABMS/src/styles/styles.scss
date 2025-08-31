@@ -9,6 +9,24 @@
 @import "./leaflet_override";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
+:root {
+  --primary: #020617;
+  --rating-star: #ebdb00;
+  --white: white;
+  --white-alpha-50: rgba(255, 255, 255, 0.5);
+  --red: red;
+  --red-light: rgba(255, 0, 0, 0.1);
+  --green: green;
+  --green-light: rgba(0, 128, 0, 0.1);
+  --yellow: yellow;
+  --yellow-light: rgba(255, 255, 0, 0.1);
+  --amber: #e7ad00;
+  --amber-light: #fff5d7ad;
+  --gray: #494949;
+  --black: black;
+  --border-color: #e2e8f0;
+}
+
 html {
   overflow-x: hidden;
 }

@@ -1,9 +1,9 @@
-<div class="abms-accommodation-details gap-4 pt-4">
+<div class="abms-accommodation-details grid gap-4 pt-4">
   @if(accommodation$ | async; as accommodation){
 
   <p-card>
     <p-galleria
-      class="abms-accommodation-details__gallery"
+      class="justify-self-center"
       [value]="accommodation.images"
       thumbnailsPosition="right"
       [responsiveOptions]="responsiveOptions"
@@ -13,14 +13,18 @@
     >
       <ng-template pTemplate="item" let-item>
         <div class="">
-          <div class="abms-accommodation-details__image-container">
-            <img [src]="item" />
+          <div class="w-[53.125rem] h-[34.125rem] overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmVkJTIwcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
+            />
           </div>
         </div>
       </ng-template>
       <ng-template pTemplate="thumbnail" let-item>
         <div class="grid grid-nogutter justify-center">
-          <img [src]="item" />
+          <img
+            src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmVkJTIwcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
+          />
         </div>
       </ng-template>
       <ng-template pTemplate="previousthumbnailicon">
@@ -39,11 +43,11 @@
           <div>
             <span class="mr-2">{{ rating }} / 10</span>
             <i
-              class="abms-accommodation-details__rating-star ml-1 text-xl bi bi-star-fill"
+              class="mb-1 ml-1 text-xl text-[var(--rating-star)] bi bi-star-fill"
             ></i>
           </div>
         </div>
-        <div class="flex gap-2">
+        <div class="flex items-center gap-2">
           <p>
             {{
               accommodation.isFavorite
@@ -52,13 +56,13 @@
             }}
           </p>
           <app-heart-icon
-            class="abms-accommodation-details__favorite-icon"
+            class="cursor-pointer hover:text-[var(--red)]"
             [pTooltip]="translation.instant('login_to_like')"
             tooltipPosition="top"
             showDelay="150"
             [tooltipDisabled]="isLoggedIn"
             [ngClass]="{
-            'abms-accommodation-details__favorite-icon--checked':
+            'text-[var(--red)]':
             accommodation.isFavorite,
           }"
             tooltipPosition="top"
@@ -69,7 +73,7 @@
         </div>
       </div>
       <div class="flex justify-between items-center">
-        <div class="abms-accommodation-details__price mt-0 font-semibold">
+        <div class="mt-0 font-semibold">
           <span class="text-4xl">{{ accommodation.pricePerNight + "zł" }}</span>
           <span class="text-base"> {{ "per_night" | translate }}</span>
         </div>
@@ -102,7 +106,6 @@
           class=""
         >
           <p-button
-            class="abms-search-page__map-view-button"
             icon="pi pi-arrow-right"
             iconPos="right"
             [disabled]="!isLoggedIn"
@@ -115,7 +118,7 @@
       <div class="flex flex-col gap-2">
         <h2 class="font-semibold text-xl">{{ "description" | translate }}</h2>
         @if(accommodation.description){
-        <p class="abms-accommodation-details__desription">
+        <p class="text-balance">
           {{ accommodation.description }}
         </p>
         } @else {
@@ -124,7 +127,7 @@
       </div>
       <div class="flex flex-col gap-2">
         <h2 class="font-semibold text-xl">{{ "amenities" | translate }}</h2>
-        <div class="abms-accommodation-details__amenities">
+        <div>
           @if(!accommodation.amenities.length){
           <p>{{ "no_amenities" | translate }}</p>
           } @else { @for(amenity of accommodation.amenities; track amenity){
@@ -150,7 +153,6 @@
             {{ accommodation.city }}
           </p>
           <p-button
-            class="abms-search-page__map-view-button"
             icon="pi pi-map"
             iconPos="right"
             size="small"
@@ -160,7 +162,7 @@
           ></p-button>
         </div>
       </div>
-      <div class="abms-accommodation-details__reviews flex flex-col gap-2">
+      <div class="flex flex-col gap-2">
         <div class="flex gap-2 items-center mb-3">
           <h2 class="font-semibold text-xl">
             {{ "reviews" | translate }}
@@ -180,7 +182,7 @@
           <div>
             <span>{{ review.rating }} / 10</span>
             <i
-              class="abms-accommodation-details__rating-star ml-1 text-xl bi bi-star-fill"
+              class="text-[var(--rating-star)] ml-1 text-xl bi bi-star-fill"
             ></i>
           </div>
           <p>{{ review.reviewText }}</p>
@@ -192,9 +194,7 @@
     </div>
   </p-card>
   }@else {
-  <div
-    class="abms-accommodation-details__loader-container w-full flex justify-center"
-  >
+  <div class="w-full flex justify-center mt-40">
     <app-loader></app-loader>
   </div>
   }

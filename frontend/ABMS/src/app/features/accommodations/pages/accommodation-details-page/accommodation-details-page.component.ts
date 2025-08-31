@@ -192,8 +192,8 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
   onBook(accommodation: Accommodation): void {
     this.dialogService.open(AccommodationBookDialogComponent, {
       header: this.translation.instant('booking'),
-      width: '50%',
-      height: '60%',
+      width: '52rem',
+      height: '36rem',
       data: {
         accommodation: accommodation,
       },

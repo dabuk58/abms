@@ -6,18 +6,18 @@
         let-nextCallback="nextCallback"
         let-index="index"
       >
-        <div class="flex flex-col gap-4 pt-3 h-23rem">
+        <div class="flex flex-col gap-4 pt-3 h-92">
           <form
             [formGroup]="form"
-            class="abms-accommodation-book__visit-details-form row-gap-8 column-gap-2 items-center"
+            class="grid grid-cols-[3fr_5fr] gap-y-8 gap-x-2 items-center"
           >
-            <label class="abms-accommodation-book__input-label">
+            <label class="justify-self-end">
               {{ "check_in_date" | translate }}
             </label>
             <app-control-error-wrapper
               [control]="getFormControlByName('checkInDate')"
             >
-              <span class="abms-accommodation-book__input-container relative">
+              <span class="w-fit relative">
                 <p-calendar
                   dateFormat="dd.mm.yy"
                   formControlName="checkInDate"
@@ -29,17 +29,17 @@
                   (onSelect)="onCheckInDateSelect()"
                 ></p-calendar>
                 <i
-                  class="abms-accommodation-book__icon pi pi-calendar-plus absolute top-1/2"
+                  class="pi pi-calendar-plus absolute top-1/2 -translate-y-1/2 right-[10px]"
                 ></i>
               </span>
             </app-control-error-wrapper>
-            <label class="abms-accommodation-book__input-label">
+            <label class="justify-self-end">
               {{ "check_out_date" | translate }}
             </label>
             <app-control-error-wrapper
               [control]="getFormControlByName('checkOutDate')"
             >
-              <span class="abms-accommodation-book__input-container relative">
+              <span class="w-fit relative">
                 <p-calendar
                   dateFormat="dd.mm.yy"
                   formControlName="checkOutDate"
@@ -50,17 +50,17 @@
                   [hideOnDateTimeSelect]="false"
                 ></p-calendar>
                 <i
-                  class="abms-accommodation-book__icon pi pi-calendar-minus absolute top-1/2"
+                  class="pi pi-calendar-minus absolute top-1/2 -translate-y-1/2 right-[10px]"
                 ></i>
               </span>
             </app-control-error-wrapper>
-            <label class="abms-accommodation-book__input-label">
+            <label class="justify-self-end">
               {{ "guests_amount" | translate }}
             </label>
             <app-control-error-wrapper
               [control]="getFormControlByName('guests')"
             >
-              <span class="abms-accommodation-book__input-container relative">
+              <span class="w-fit relative">
                 <p-inputNumber
                   inputId="integeronly"
                   formControlName="guests"
@@ -69,50 +69,50 @@
                   [max]="maxGuests"
                 ></p-inputNumber>
                 <i
-                  class="abms-accommodation-book__icon pi pi-users absolute top-1/2"
+                  class="pi pi-users absolute top-1/2 -translate-y-1/2 right-[10px]"
                 ></i>
               </span>
             </app-control-error-wrapper>
-            <label class="abms-accommodation-book__input-label">
+            <label class="justify-self-end">
               {{ "full_name" | translate }}
             </label>
             <app-control-error-wrapper [control]="getFormControlByName('name')">
-              <span class="abms-accommodation-book__input-container relative">
+              <span class="w-fit relative">
                 <input formControlName="name" pInputText />
                 <i
-                  class="abms-accommodation-book__icon pi pi-address-book absolute top-1/2"
+                  class="pi pi-address-book absolute top-1/2 -translate-y-1/2 right-[10px]"
                 ></i>
               </span>
             </app-control-error-wrapper>
-            <label class="abms-accommodation-book__input-label">
+            <label class="justify-self-end">
               {{ "email" | translate }}
             </label>
             <app-control-error-wrapper
               [control]="getFormControlByName('email')"
             >
-              <span class="abms-accommodation-book__input-container relative">
+              <span class="w-fit relative">
                 <input formControlName="email" pInputText />
                 <i
-                  class="abms-accommodation-book__icon pi pi-at absolute top-1/2"
+                  class="pi pi-at absolute top-1/2 -translate-y-1/2 right-[10px]"
                 ></i>
               </span>
             </app-control-error-wrapper>
-            <label class="abms-accommodation-book__input-label">
+            <label class="justify-self-end">
               {{ "phone_number" | translate }}
             </label>
             <app-control-error-wrapper
               [control]="getFormControlByName('phoneNumber')"
             >
-              <span class="abms-accommodation-book__input-container relative">
+              <span class="w-fit relative">
                 <input formControlName="phoneNumber" type="tel" pInputText />
                 <i
-                  class="abms-accommodation-book__icon pi pi-phone absolute top-1/2"
+                  class="pi pi-phone absolute top-1/2 -translate-y-1/2 right-[10px]"
                 ></i>
               </span>
             </app-control-error-wrapper>
           </form>
         </div>
-        <div class="flex pt-4 justify-content-end">
+        <div class="flex pt-4 justify-self-end">
           <p-button
             [label]="translation.instant('next')"
             icon="pi pi-arrow-right"
@@ -129,49 +129,32 @@
         let-prevCallback="prevCallback"
         let-index="index"
       >
-        <div class="abms-accommodation-book__summary pt-3 h-23rem">
-          <p class="abms-accommodation-book__summary-data-type">
-            {{ "residence" | translate }}:
-          </p>
+        <div class="grid grid-cols-[1fr_1fr] gap-4 pt-3 h-23rem">
+          <p class="justify-self-end">{{ "residence" | translate }}:</p>
           <p>{{ accommodation.name }}</p>
-          <p class="abms-accommodation-book__summary-data-type">
-            {{ "address" | translate }}:
-          </p>
+          <p class="justify-self-end">{{ "address" | translate }}:</p>
           <p>
             {{ "street_shortcut" | translate }} {{ accommodation.street }}
             {{ accommodation.streetNumber }}, {{ accommodation.zipCode }}
             {{ accommodation.city }}
           </p>
-          <p class="abms-accommodation-book__summary-data-type">
-            {{ "check_in_date" | translate }}:
-          </p>
+          <p class="justify-self-end">{{ "check_in_date" | translate }}:</p>
           <p>{{ transformDate(form.get("checkInDate")?.value) }}</p>
-          <p class="abms-accommodation-book__summary-data-type">
-            {{ "check_out_date" | translate }}:
-          </p>
+          <p class="justify-self-end">{{ "check_out_date" | translate }}:</p>
           <p>{{ transformDate(form.get("checkOutDate")?.value) }}</p>
-          <p class="abms-accommodation-book__summary-data-type">
-            {{ "guests_amount" | translate }}:
-          </p>
+          <p class="justify-self-end">{{ "guests_amount" | translate }}:</p>
           <p>{{ form.get("guests")?.value }}</p>
-          <p class="abms-accommodation-book__summary-data-type">
-            {{ "full_name" | translate }}:
-          </p>
+          <p class="justify-self-end">{{ "full_name" | translate }}:</p>
           <p>{{ form.get("name")?.value }}</p>
-          <p class="abms-accommodation-book__summary-data-type">
-            {{ "email" | translate }}:
-          </p>
+          <p class="justify-self-end">{{ "email" | translate }}:</p>
           <p>{{ form.get("email")?.value }}</p>
-          <p class="abms-accommodation-book__summary-data-type">
-            {{ "phone_number" | translate }}:
-          </p>
+          <p class="justify-self-end">{{ "phone_number" | translate }}:</p>
           <p>{{ form.get("phoneNumber")?.value }}</p>
-          <div class="abms-accommodation-book__summary-price-container">
+          <div class="justify-self-end col-start-1 col-end-3">
             {{ "total_to_pay" | translate }}:
-            <span
-              class="abms-accommodation-book__summary-price text-2xl font-semibold"
-              >{{ getTotalPrice() }}</span
-            >
+            <span class="text-[var(--primary)] text-2xl font-semibold">{{
+              getTotalPrice()
+            }}</span>
             zł
           </div>
         </div>

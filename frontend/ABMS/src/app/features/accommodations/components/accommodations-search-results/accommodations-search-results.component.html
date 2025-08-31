@@ -1,13 +1,13 @@
-<div class="abms-search-results flex flex-col gap-4">
+<div class="flex flex-col gap-4">
   @for(accommodation of accommodations; track accommodation){
   <p-panel>
     <ng-template pTemplate="header">
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between w-full">
         <h2 class="text-lg font-semibold">{{ accommodation.name }}</h2>
         <app-heart-icon
-          class="abms-search-results__favorite-icon"
+          class="cursor-pointer hover:text-[var(--red)]"
           [ngClass]="{
-            'abms-search-results__favorite-icon--checked':
+            'text-[var(--red)]':
               accommodation.isFavorite,
           }"
           [pTooltip]="translation.instant('login_to_like')"
@@ -20,19 +20,22 @@
       </div>
     </ng-template>
     <ng-template pTemplate="content">
-      <div class="abms-search-results__result-content gap-4">
-        <img class="rounded-md w-full" [src]="accommodation.images[0]" />
+      <div class="grid grid-cols-[17fr_18fr_auto] gap-4">
+        <img
+          class="rounded-lg w-full object-contain h-[13.43rem]"
+          src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmVkJTIwcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
+        />
         <div class="flex flex-col justify-between">
           <div class="flex flex-col gap-1">
             <p class="text-lg font-medium">
               {{ accommodation.city }}
             </p>
-            <p class="abms-search-results__region text-xs">
+            <p class="text-[var(--gray)] text-xs">
               {{ accommodation.region }}
             </p>
           </div>
           <p>{{ accommodation.description }}</p>
-          <div class="abms-search-results__price mt-0 font-semibold">
+          <div class="text-2xl mt-0 font-semibold">
             {{ accommodation.pricePerNight + "zł" }}
             <span class="text-base">{{ "per_night" | translate }}</span>
           </div>
@@ -44,7 +47,7 @@
             <div class="flex gap-2 items-center">
               <p>{{ accommodation.rating }} / 10</p>
               <i
-                class="abms-search-results__rating-star text-xl bi bi-star-fill"
+                class="bi bi-star-fill mb-1 text-xl text-[var(--rating-star)]"
               ></i>
             </div>
             } @else {
