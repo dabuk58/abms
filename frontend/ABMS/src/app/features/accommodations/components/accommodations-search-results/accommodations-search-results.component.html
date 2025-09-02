@@ -2,7 +2,7 @@
   @for(accommodation of accommodations; track accommodation){
   <p-panel>
     <ng-template pTemplate="header">
-      <div class="flex items-center justify-between w-full">
+      <div class="flex items-center justify-between w-full -mb-3">
         <h2 class="text-lg font-semibold">{{ accommodation.name }}</h2>
         <app-heart-icon
           class="cursor-pointer hover:text-[var(--red)]"
@@ -20,13 +20,14 @@
       </div>
     </ng-template>
     <ng-template pTemplate="content">
-      <div class="grid grid-cols-[17fr_18fr_auto] gap-4">
+      <div class="sm:grid sm:grid-cols-[17fr_18fr_auto] gap-4">
         <img
           class="rounded-lg w-full object-contain h-[13.43rem]"
           src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmVkJTIwcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
+          (click)="onDetails(accommodation.id)"
         />
-        <div class="flex flex-col justify-between">
-          <div class="flex flex-col gap-1">
+        <div class="grid grid-cols-[1fr_1fr] gap-1 mt-1">
+          <div class="flex flex-col sm:gap-1">
             <p class="text-lg font-medium">
               {{ accommodation.city }}
             </p>
@@ -34,16 +35,18 @@
               {{ accommodation.region }}
             </p>
           </div>
-          <p>{{ accommodation.description }}</p>
-          <div class="text-2xl mt-0 font-semibold">
+          <p class="mt-1 sm:mt-0 col-[1_/_span_2] line-clamp-3">
+            {{ accommodation.description }}
+          </p>
+          <div class="text-2xl mt-0 font-semibold self-end">
             {{ accommodation.pricePerNight + "zł" }}
             <span class="text-base">{{ "per_night" | translate }}</span>
           </div>
-        </div>
-        <div class="flex flex-col justify-between">
-          <div class="flex flex-col gap-1 items-center">
+          <div
+            class="flex flex-col gap-1 items-center col-[2] row-[1] justify-self-end"
+          >
             @if(accommodation.rating){
-            <p>{{ "average_rating" | translate }}</p>
+            <p class="hidden sm:block">{{ "average_rating" | translate }}</p>
             <div class="flex gap-2 items-center">
               <p>{{ accommodation.rating }} / 10</p>
               <i
@@ -55,6 +58,7 @@
             }
           </div>
           <p-button
+            class="justify-self-end self-end"
             [label]="translation.instant('details')"
             icon="pi pi-angle-right"
             iconPos="right"

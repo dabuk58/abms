@@ -1,0 +1,9 @@
+<div class="flex flex-col gap-4 w-full">
+  <div class="flex flex-row justify-between gap-1">
+    <p-skeleton class="w-98/100" height="2rem"></p-skeleton>
+    <p-skeleton class="w-98/100" height="2rem"></p-skeleton>
+  </div>
+  @for(_ of [].constructor(skeletonsAmount); let i = $index; track i){
+  <p-skeleton width="full" [height]="getSkeletonHeight()"></p-skeleton>
+  }
+</div>

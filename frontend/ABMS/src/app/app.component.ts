@@ -121,6 +121,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:resize')
   setToastPos(): void {
-    this.toastPos = window.innerWidth < 576 ? 'top-center' : 'top-right';
+    this.toastPos = window.innerWidth < 640 ? 'top-center' : 'top-right';
   }
 }

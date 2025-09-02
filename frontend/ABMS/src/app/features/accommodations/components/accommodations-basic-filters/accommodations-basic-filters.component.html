@@ -1,69 +1,80 @@
-<p-panel>
-  <form [formGroup]="form" class="flex flex-row gap-10 items-center">
-    <span class="relative">
-      <label class="absolute font-semibold -top-[22px]" for="place">
-        {{ "place" | translate }}
-      </label>
-      <input
-        id="place"
-        type="text"
-        pInputText
-        (input)="onInput()"
-        [placeholder]="translation.instant('type_destination') + '...'"
-        formControlName="query"
-        class="w-72"
+<div class="flex flex-col items-center">
+  <p-panel class="w-full">
+    <form
+      [formGroup]="form"
+      class="flex flex-col lg:flex-row gap-7 items-center w-full"
+    >
+      <div class="flex flex-col md:flex-row gap-8 justify-between w-full">
+        <span class="relative w-full lg:max-w-72">
+          <label class="absolute font-semibold -top-[22px]" for="place">
+            {{ "place" | translate }}
+          </label>
+          <input
+            class="w-full lg:max-w-72"
+            id="place"
+            type="text"
+            pInputText
+            (input)="onInput()"
+            [placeholder]="translation.instant('type_destination') + '...'"
+            formControlName="query"
+          />
+          <i
+            class="pi pi-globe absolute top-1/2 -translate-y-1/2 right-[10px] text-lg"
+          ></i>
+        </span>
+        <span class="relative w-full lg:max-w-72">
+          <label class="absolute font-semibold -top-[22px]" for="dates">
+            {{ "date" | translate }}
+          </label>
+          <p-calendar
+            styleClass="w-full lg:max-w-72"
+            inputStyleClass="w-full lg:max-w-72"
+            inputId="dates"
+            formControlName="calendarControl"
+            selectionMode="range"
+            dateFormat="dd.mm.yy"
+            [readonlyInput]="true"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            [placeholder]="translation.instant('choose_dates') + '...'"
+          />
+          <i
+            class="pi pi-calendar absolute top-1/2 -translate-y-1/2 right-[10px] text-lg"
+          ></i>
+        </span>
+        <span class="relative w-full lg:max-w-72">
+          <label class="absolute font-semibold -top-[22px]" for="people">
+            {{ "amount_of_people" | translate }}
+          </label>
+          <p-inputNumber
+            class="w-full lg:max-w-72"
+            styleClass="w-full lg:max-w-72"
+            inputStyleClass="w-full lg:max-w-72 rounded-r-[5px] placeholder:max-w-[calc(100%-65px)] placeholder:truncate"
+            incrementButtonClass="right-[35px]"
+            decrementButtonClass="right-[35px]"
+            inputId="people"
+            inputId="integeronly"
+            formControlName="guests"
+            [showButtons]="true"
+            [min]="1"
+            [max]="20"
+            [placeholder]="translation.instant('enter_people_amount') + '...'"
+          />
+          <i
+            class="pi pi-users absolute top-1/2 -translate-y-1/2 right-[10px] text-lg"
+          ></i>
+        </span>
+      </div>
+      <p-button
+        class="w-full lg:w-36"
+        styleClass="!h-10 w-full md:max-w-56 justify-self-center"
+        [label]="translation.instant('search')"
+        icon="pi pi-arrow-right"
+        iconPos="right"
+        type="submit"
+        [raised]="true"
+        (onClick)="onSearch()"
       />
-      <i
-        class="pi pi-globe absolute top-1/2 -translate-y-1/2 right-[10px] text-lg"
-      ></i>
-    </span>
-    <span class="relative">
-      <label class="absolute font-semibold -top-[22px]" for="dates">
-        {{ "date" | translate }}
-      </label>
-      <p-calendar
-        inputId="dates"
-        formControlName="calendarControl"
-        selectionMode="range"
-        dateFormat="dd.mm.yy"
-        [readonlyInput]="true"
-        [minDate]="minDate"
-        [maxDate]="maxDate"
-        [placeholder]="translation.instant('choose_dates') + '...'"
-        inputStyleClass="w-72"
-      />
-      <i
-        class="pi pi-calendar absolute top-1/2 -translate-y-1/2 right-[10px] text-lg"
-      ></i>
-    </span>
-    <span class="relative">
-      <label class="absolute font-semibold -top-[22px]" for="people">
-        {{ "amount_of_people" | translate }}
-      </label>
-      <p-inputNumber
-        inputStyleClass="w-72 rounded-r-[5px]"
-        incrementButtonClass="right-[35px]"
-        decrementButtonClass="right-[35px]"
-        inputId="people"
-        inputId="integeronly"
-        formControlName="guests"
-        [showButtons]="true"
-        [min]="1"
-        [max]="20"
-        [placeholder]="translation.instant('enter_people_amount') + '...'"
-      />
-      <i
-        class="pi pi-users absolute top-1/2 -translate-y-1/2 right-[10px] text-lg"
-      ></i>
-    </span>
-    <p-button
-      styleClass="!h-10"
-      [label]="translation.instant('search')"
-      icon="pi pi-arrow-right"
-      iconPos="right"
-      type="submit"
-      [raised]="true"
-      (onClick)="onSearch()"
-    />
-  </form>
-</p-panel>
+    </form>
+  </p-panel>
+</div>

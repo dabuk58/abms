@@ -1,12 +1,26 @@
-<p-panel>
+<p-panel
+  [styleClass]="isModal ? 'border-0 abms-advanced-filters__no-p-header' : ''"
+>
   <ng-template pTemplate="header">
+    @if(!isModal){
     <p class="font-bold">
       {{ "filters" | translate }}
     </p>
+    }
   </ng-template>
   <ng-template pTemplate="content">
     <form [formGroup]="form" class="flex flex-col gap-6">
       <div class="flex flex-col gap-4">
+        @if(isModal){
+        <p-dropdown
+          styleClass="h-8 w-full"
+          optionLabel="label"
+          formControlName="sortBy"
+          [showClear]="true"
+          [options]="sortOptions"
+          [placeholder]="translation.instant('sort_by') + '...'"
+        ></p-dropdown>
+        }
         <p>
           {{ "price_per_night" | translate }}
         </p>

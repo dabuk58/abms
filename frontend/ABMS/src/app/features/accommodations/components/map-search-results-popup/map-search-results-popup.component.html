@@ -1,41 +1,45 @@
-<div class="grid gap-2 p-1 pt-0 w-lg">
-  <div class="flex items-center justify-between">
-    <div class="flex flex-col">
-      <h2 class="text-lg font-semibold">{{ accommodation.name }}</h2>
-      <p class="text-[var(--gray)] text-xs">
-        {{ accommodation.city }}, {{ accommodation.region }}
-      </p>
-    </div>
-    <app-heart-icon
-      class="cursor-pointer hover:text-[var(--red)]"
-      [ngClass]="{
+<div
+  class="flex flex-col md:flex-row gap-2 p-1 pt-0 w-[65vw] max-w-80 md:max-w-[none] md:w-lg"
+>
+  <img
+    class="rounded-md w-full cursor-pointer md:max-h-34"
+    [src]="accommodation.images[0]"
+    (click)="onDetails(accommodation.id)"
+  />
+  <div>
+    <div class="flex items-center justify-between">
+      <div class="flex flex-col">
+        <h2 class="text-lg font-semibold">{{ accommodation.name }}</h2>
+        <p class="text-[var(--gray)] text-xs">
+          {{ accommodation.city }}, {{ accommodation.region }}
+        </p>
+      </div>
+      <app-heart-icon
+        class="cursor-pointer hover:text-[var(--red)]"
+        [ngClass]="{
                 'text-[var(--red)]':
                   accommodation.isFavorite,
               }"
-      [pTooltip]="translation.instant('login_to_like')"
-      tooltipPosition="top"
-      showDelay="150"
-      [tooltipDisabled]="isLoggedIn"
-      [filled]="accommodation.isFavorite"
-      (click)="onFavorite(accommodation)"
-    ></app-heart-icon>
-  </div>
-  <div class="grid grid-cols-[13fr_11fr_auto] gap-4">
-    <img class="rounded-md w-full" [src]="accommodation.images[0]" />
-    <div class="flex flex-col justify-between">
+        [pTooltip]="translation.instant('login_to_like')"
+        tooltipPosition="top"
+        showDelay="150"
+        [tooltipDisabled]="isLoggedIn"
+        [filled]="accommodation.isFavorite"
+        (click)="onFavorite(accommodation)"
+      ></app-heart-icon>
+    </div>
+    <div class="grid grid-cols-[1fr_1fr] gap-4 md:mt-2">
       <p class="line-clamp-3">
         {{ accommodation.description }}
       </p>
-      <div class="text-2xl mt-0 font-semibold">
+      <div class="text-2xl mt-0 font-semibold md:self-end">
         {{ accommodation.pricePerNight + "zł" }}
         <span class="text-base">{{ "per_night" | translate }}</span>
       </div>
-    </div>
-    <div class="flex flex-col justify-between">
-      <div class="flex flex-col gap-1 items-center">
+      <div class="flex flex-col gap-1 items-end col-[2] row-[1]">
         @if(accommodation.rating){
-        <p>{{ "average_rating" | translate }}</p>
-        <div class="flex gap-2 items-center">
+        <p class="hidden lg:block">{{ "average_rating" | translate }}</p>
+        <div class="flex flex-col gap-2 items-center">
           <p>{{ accommodation.rating }} / 10</p>
           <i class="mb-1 text-[var(--rating-star)] text-xl bi bi-star-fill"></i>
         </div>
@@ -44,6 +48,7 @@
         }
       </div>
       <p-button
+        class="justify-self-end"
         [label]="translation.instant('details')"
         icon="pi pi-angle-right"
         iconPos="right"

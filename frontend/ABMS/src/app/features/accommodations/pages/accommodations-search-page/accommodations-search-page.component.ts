@@ -2,6 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import {
   AfterViewInit,
   Component,
+  HostListener,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -21,7 +22,7 @@ import { SelectOption } from '../../../../core/interfaces/select-option';
 import { ConstantsService } from '../../../../core/services/constants.service';
 import { AccommodationsAdvancedFiltersComponent } from '../../components/accommodations-advanced-filters/accommodations-advanced-filters.component';
 import { AccommodationsBasicFiltersComponent } from '../../components/accommodations-basic-filters/accommodations-basic-filters.component';
-import { AccommodationsSearchPageLoaderComponent } from '../../components/accommodations-search-page-loader/accommodations-search-page-loader.component';
+import { AccommodationsSearchPageSkeletonLoaderComponent } from '../../components/accommodations-search-page-skeleton-loader/accommodations-search-page-skeleton-loader.component';
 import { AccommodationsSearchResultsComponent } from '../../components/accommodations-search-results/accommodations-search-results.component';
 import { MapSearchResultsComponent } from '../../components/map-search-results/map-search-results.component';
 import { mapFiltersToAccommodationsParams } from '../../mappers/accommodations-params-mapper';
@@ -39,7 +40,7 @@ export type CombinedFilters = BasicFilters & AdvancedFilters;
     TranslatePipe,
     PaginatorModule,
     ButtonModule,
-    AccommodationsSearchPageLoaderComponent,
+    AccommodationsSearchPageSkeletonLoaderComponent,
     AsyncPipe,
     ReactiveFormsModule,
   ],
@@ -54,6 +55,8 @@ export class AccommodationsSearchPageComponent
   basicFiltersComponent!: AccommodationsBasicFiltersComponent;
   @ViewChild(AccommodationsAdvancedFiltersComponent)
   advancedFiltersComponent!: AccommodationsAdvancedFiltersComponent;
+  rowsPerPageOptions!: undefined | any[];
+  isMobileView!: boolean;
 
   lastUsedParams: AccommodationsParams = {};
 
@@ -76,10 +79,10 @@ export class AccommodationsSearchPageComponent
     private constantsService: ConstantsService
   ) {
     this.sortOptions = this.constantsService.getAccommodationsSortOptions();
-
     this.form = this.fb.group({
       sortBy: [null],
     });
+    this.handleWindowResize();
   }
 
   ngOnInit(): void {
@@ -128,19 +131,13 @@ export class AccommodationsSearchPageComponent
       };
     }
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({
+      top: this.isMobileView && paginationSearch ? 420 : 0,
+      behavior: 'smooth',
+    });
 
-    this.accommodationsResponse$ = this.accommodationsService
-      .getAccommodations$(params)
-      .pipe(
-        tap((data) => {
-          if (!data.accommodations.length) {
-            this.form.get('sortBy')?.disable();
-          } else {
-            this.form.get('sortBy')?.enable();
-          }
-        })
-      );
+    this.accommodationsResponse$ =
+      this.accommodationsService.getAccommodations$(params);
   }
 
   getParams(filters: CombinedFilters): AccommodationsParams {
@@ -177,8 +174,8 @@ export class AccommodationsSearchPageComponent
   onMapView(): void {
     this.dialogService.open(MapSearchResultsComponent, {
       header: `${this.translation.instant('found_accommodations')}:`,
-      width: '90%',
-      height: '90%',
+      width: this.isMobileView ? '100%' : '90%',
+      height: '100%',
       focusOnShow: false,
       data: {
         searchParams: {
@@ -188,6 +185,41 @@ export class AccommodationsSearchPageComponent
         },
       },
     });
+  }
+
+  onFilters(): void {
+    const ref = this.dialogService.open(
+      AccommodationsAdvancedFiltersComponent,
+      {
+        header: this.translation.instant('filters'),
+        width: '95%',
+        focusOnShow: true,
+        contentStyle: { overflow: 'scroll' },
+        data: {
+          isModal: true,
+          sortControl: this.form.get('sortBy'),
+          sortOptions: this.sortOptions,
+        },
+        styleClass: 'max-w-100',
+      }
+    );
+
+    ref.onClose
+      .pipe(takeUntil(this._destroying$))
+      .subscribe((filters: AdvancedFilters | undefined) => {
+        if (filters) {
+          this.advancedFiltersComponent.form.patchValue(filters);
+          this.search();
+        }
+      });
+  }
+
+  @HostListener('window:resize')
+  handleWindowResize(): void {
+    const mdBreakpoint = 768;
+    this.rowsPerPageOptions =
+      window.innerWidth < mdBreakpoint ? undefined : [10, 25, 50];
+    this.isMobileView = window.innerWidth < mdBreakpoint;
   }
 
   ngOnDestroy(): void {

@@ -3,6 +3,7 @@ import {
   EventEmitter,
   OnDestroy,
   OnInit,
+  Optional,
   Output,
 } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -11,6 +12,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
@@ -48,6 +50,7 @@ export class AccommodationsAdvancedFiltersComponent
   amenitiesOptions: string[] = [];
   sortOptions: SelectOption[] = [];
   selectedAmenities: string[] = [];
+  isModal: boolean;
 
   private readonly _destroying$ = new Subject<void>();
 
@@ -55,22 +58,32 @@ export class AccommodationsAdvancedFiltersComponent
     private fb: FormBuilder,
     private constantsService: ConstantsService,
     protected translation: TranslateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    @Optional() private config: DynamicDialogConfig,
+    @Optional() private ref: DynamicDialogRef
   ) {
     this.form = this.fb.group({
       minPrice: [0],
       maxPrice: [5000],
       priceRange: [[0, 5000]],
-      amenities: [null],
+      amenities: [[]],
       rating: [null],
-      sortBy: [null],
     });
     this.sortOptions = this.constantsService.getAccommodationsSortOptions();
     this.amenitiesOptions = this.constantsService.getAmenitiesOptions();
+    this.isModal = this.config?.data.isModal;
+    this.handleSortControl();
   }
 
   ngOnInit(): void {
     this.patchFilters();
+  }
+
+  handleSortControl(): void {
+    if (this.config?.data.sortControl) {
+      this.form.addControl('sortBy', this.config.data.sortControl);
+      this.sortOptions = this.config.data.sortOptions;
+    }
   }
 
   patchFilters(): void {
@@ -83,11 +96,6 @@ export class AccommodationsAdvancedFiltersComponent
           priceRange: [params['minPrice'] || 0, params['maxPrice'] || 5000],
           amenities: params['amenities'] ? params['amenities'].split(',') : [],
           rating: params['rating'] || null,
-          sortBy: params['sortBy']
-            ? this.sortOptions.find(
-                (option) => option.value == params['sortBy']
-              ) || null
-            : null,
         });
       });
   }
@@ -121,7 +129,16 @@ export class AccommodationsAdvancedFiltersComponent
   }
 
   onSearch(): void {
-    this.onFilter.emit();
+    if (this.isModal) {
+      const filters = this.getFilters();
+      let filtersModified = {
+        ...filters,
+        amenities: filters.amenities ? filters.amenities?.split(',') : null,
+      };
+      this.ref.close(filtersModified);
+    } else {
+      this.onFilter.emit();
+    }
   }
 
   getFilters(): AdvancedFilters {
@@ -134,7 +151,7 @@ export class AccommodationsAdvancedFiltersComponent
         this.form.get('maxPrice')?.value !== 5000
           ? this.form.get('maxPrice')?.value
           : null,
-      amenities: this.form.get('amenities')?.value.length
+      amenities: this.form.get('amenities')?.value?.length
         ? this.form.get('amenities')?.value.join(',')
         : null,
       rating: this.form.get('rating')?.value,

@@ -1,38 +1,57 @@
-<div class="abms-search-page grid grid-cols-[1fr_3fr] gap-4">
+<div
+  class="abms-search-page flex flex-col items-center md:grid md:grid-cols-[1fr_3fr] gap-4 lg:max-w-7xl justify-self-center w-full md:w-9/10"
+>
   <app-accommodations-basic-filters
     (onFilter)="search()"
-    class="col-start-1 col-end-3 pt-3"
+    class="md:col-start-1 md:col-end-3 md:justify-self-center pt-3 w-9/10 md:w-full"
   ></app-accommodations-basic-filters>
   <app-accommodations-advanced-filters
+    class="hidden md:block self-start"
     (onFilter)="search()"
   ></app-accommodations-advanced-filters>
   @if(accommodationsResponse$ | async; as data){
-  <div class="flex flex-col gap-4">
-    <div class="flex flex-row justify-between">
-      <p-button
-        styleClass="!h-8"
-        icon="pi pi-map"
-        iconPos="right"
-        size="small"
-        [outlined]="true"
-        [label]="translation.instant('see_on_map')"
-        [disabled]="!data.accommodations.length"
-        (onClick)="onMapView()"
-      ></p-button>
-      <form [formGroup]="form">
+  <div class="flex flex-col gap-4 w-9/10 md:w-full">
+    <div class="md:flex md:gap-5 md:justify-between">
+      <div class="flex flex-row justify-between md:w-full">
+        <p-button
+          class="w-full"
+          styleClass="!h-8 w-98/100 md:max-w-60"
+          icon="pi pi-map"
+          iconPos="right"
+          size="small"
+          [outlined]="true"
+          [label]="translation.instant('map_view')"
+          [disabled]="!data.accommodations.length"
+          (onClick)="onMapView()"
+        ></p-button>
+        <p-button
+          class="md:hidden w-full"
+          styleClass="!h-8 w-98/100 ml-auto"
+          icon="pi pi-filter"
+          iconPos="right"
+          size="small"
+          [outlined]="true"
+          [label]="translation.instant('filters')"
+          (onClick)="onFilters()"
+        ></p-button>
+      </div>
+      <form [formGroup]="form" class="w-1/2 self-center md:w-full">
         <p-dropdown
+          class="hidden md:flex md:w-full"
+          styleClass="h-8 w-full md:max-w-60 md:ml-auto"
           optionLabel="label"
           formControlName="sortBy"
           [showClear]="true"
           [options]="sortOptions"
           [placeholder]="translation.instant('sort_by') + '...'"
           (onChange)="onSortChange()"
-          styleClass="h-8"
         ></p-dropdown>
       </form>
     </div>
     @if(!data.accommodations.length){
-    <div class="flex flex-col gap-4 items-center justify-self-center pt-5">
+    <div
+      class="flex flex-col gap-4 items-center justify-self-center pt-5 mb-16"
+    >
       <p class="font-semibold text-xl">
         {{ "no_search_results" | translate }}
       </p>
@@ -44,18 +63,21 @@
     <app-accommodations-search-results [accommodations]="data.accommodations">
     </app-accommodations-search-results>
     <p-paginator
+      styleClass="justify-between md:justify-center text-center"
       (onPageChange)="onPageChange($event)"
       [first]="offset"
       [rows]="recordNo"
       [totalRecords]="data.totalRecords"
-      [rowsPerPageOptions]="[10, 25, 50]"
-      styleClass="text-center"
+      [rowsPerPageOptions]="rowsPerPageOptions"
+      [showFirstLastIcon]="!isMobileView"
+      [showPageLinks]="!isMobileView"
     ></p-paginator>
     }
   </div>
   } @else{
-  <app-accommodations-search-page-loader
+  <app-accommodations-search-page-skeleton-loader
+    class="w-9/10 md:w-full"
     [skeletonsAmount]="recordNo"
-  ></app-accommodations-search-page-loader>
+  ></app-accommodations-search-page-skeleton-loader>
   }
 </div>
