@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-site-info-modal',
@@ -8,6 +8,4 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
   templateUrl: './site-info-modal.component.html',
   styleUrl: './site-info-modal.component.scss',
 })
-export class SiteInfoModalComponent {
-  constructor(private translateService: TranslateService) {}
-}
+export class SiteInfoModalComponent {}

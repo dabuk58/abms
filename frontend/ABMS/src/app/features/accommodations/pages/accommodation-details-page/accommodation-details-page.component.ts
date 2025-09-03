@@ -181,6 +181,8 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
         .addRemoveFavorite$(accommodation.id)
         .pipe(takeUntil(this._destroying$))
         .subscribe();
+    } else {
+      this.showTooltip(2);
     }
   }
 
@@ -203,15 +205,20 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
   }
 
   onBook(accommodation: Accommodation): void {
-    this.dialogService.open(AccommodationBookDialogComponent, {
-      header: this.translation.instant('booking'),
-      width: this.isMobileView ? '100%' : '52rem',
-      height: this.isMobileView ? '100%' : '36rem',
-      contentStyle: { overflow: 'scroll' },
-      data: {
-        accommodation: accommodation,
-      },
-    });
+    console.log(this.tooltips);
+    if (!this.isLoggedIn) {
+      this.showTooltip(3);
+    } else {
+      this.dialogService.open(AccommodationBookDialogComponent, {
+        header: this.translation.instant('booking'),
+        width: this.isMobileView ? '100%' : '52rem',
+        height: this.isMobileView ? '100%' : '36rem',
+        contentStyle: { overflow: 'scroll' },
+        data: {
+          accommodation: accommodation,
+        },
+      });
+    }
   }
 
   openGallery(): void {

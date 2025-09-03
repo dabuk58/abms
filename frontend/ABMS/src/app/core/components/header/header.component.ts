@@ -153,6 +153,13 @@ export class HeaderComponent implements OnDestroy {
     }
   }
 
+  onGit(): void {
+    window.open('https://github.com/dabuk58/abms', '_blank');
+  }
+  onLinkedin(): void {
+    window.open('https://www.linkedin.com/in/j-deska', '_blank');
+  }
+
   ngOnDestroy(): void {
     this._destroying$.next(undefined);
     this._destroying$.complete();

@@ -73,10 +73,7 @@
           showDelay="150"
         ></i>
       </div>
-      <div
-        class="flex items-center gap-2 col-[4] sm:row-[1] justify-self-end"
-        (click)="showTooltip(2)"
-      >
+      <div class="flex items-center gap-2 col-[4] sm:row-[1] justify-self-end">
         <p class="hidden lg:block">
           {{
             accommodation.isFavorite
@@ -100,7 +97,6 @@
           (click)="onFavorite(accommodation)"
         ></app-heart-icon>
       </div>
-
       <div
         class="mt-0 font-semibold col-[1/span_2] sm:col-[1] sm:row-[2] justify-self-start"
       >
@@ -112,12 +108,10 @@
         class="col-[3/span_2] sm:col-[4] justify-self-end"
         [pTooltip]="translation.instant('login_to_book')"
         tooltipPosition="top"
-        [tooltipDisabled]="isLoggedIn"
       >
         <p-button
           icon="pi pi-arrow-right"
           iconPos="right"
-          [disabled]="!isLoggedIn"
           size="small"
           [label]="translation.instant('book')"
           (onClick)="onBook(accommodation)"

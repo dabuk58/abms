@@ -19,6 +19,18 @@
       icon="pi pi-info-circle"
       (onClick)="onInfo()"
     ></p-button>
+    <p-button
+      class="hidden md:block transition-opacity duration-500 cursor-pointer ease mr-2"
+      [ngClass]="{ 'opacity-0 pointer-events-none': headerCollapsed }"
+      icon="pi pi-github"
+      (onClick)="onGit()"
+    ></p-button>
+    <p-button
+      class="hidden md:block transition-opacity duration-500 cursor-pointer ease mr-2"
+      [ngClass]="{ 'opacity-0 pointer-events-none': headerCollapsed }"
+      icon="pi pi-linkedin"
+      (onClick)="onLinkedin()"
+    ></p-button>
     <div
       [ngClass]="{ 'opacity-0 pointer-events-none': headerCollapsed }"
       [innerHTML]="flagPL"

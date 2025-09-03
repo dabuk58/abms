@@ -19,7 +19,8 @@
           <img
             [src]="proposal.images[0]"
             [alt]="proposal.name"
-            class="object-contain w-full h-44 rounded-md"
+            class="object-contain w-full h-44 rounded-md cursor-pointer"
+            (click)="onProposal(proposal.id)"
           />
         </div>
       </div>
