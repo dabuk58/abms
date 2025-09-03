@@ -30,7 +30,7 @@ jobs:
 
       - name: Install deps
         working-directory: frontend/ABMS
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Build Angular (prod)
         working-directory: frontend/ABMS
