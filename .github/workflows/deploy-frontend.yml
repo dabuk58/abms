@@ -30,7 +30,7 @@ jobs:
 
       - name: Install deps
         working-directory: frontend/ABMS
-        run: npm ci
+        run: npm install
 
       - name: Build Angular (prod)
         working-directory: frontend/ABMS
