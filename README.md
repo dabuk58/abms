@@ -37,5 +37,5 @@ Aplikacja Github Pages (front) + Render.com (backend)
 
 ## 👤 Autor
 
-Jakub Deska - **[Linkedin](linkedin.com/in/j-deska) [GitHub](https://github.com/dabuk58)**
+Jakub Deska - **[Linkedin](https://www.linkedin.com/in/j-deska) [GitHub](https://github.com/dabuk58)**
 
