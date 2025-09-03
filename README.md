@@ -33,7 +33,7 @@ Projekt powstał jako **praca inżynierska** i jest dalej rozwijany jako **proje
 ## 🌐 Demo online
 
 Aplikacja Github Pages (front) + Render.com (backend)
-👉 **[BedFind](dabuk58.github.io/abms)**
+👉 **[BedFind](https://dabuk58.github.io/abms)**
 
 ## 👤 Autor
 
