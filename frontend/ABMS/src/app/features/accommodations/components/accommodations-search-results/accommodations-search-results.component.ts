@@ -1,5 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component, Input, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
@@ -40,7 +41,8 @@ export class AccommodationsSearchResultsComponent implements OnDestroy {
   constructor(
     private authService: AuthService,
     private accommodationsService: AccommodationsService,
-    protected translation: TranslateService
+    protected translation: TranslateService,
+    private router: Router
   ) {
     this.isLoggedIn = this.authService.isLoggedIn;
   }
@@ -56,8 +58,13 @@ export class AccommodationsSearchResultsComponent implements OnDestroy {
   }
 
   onDetails(id: number): void {
-    const url = `${ROUTES.ACCOMMODATIONS}/${id}`;
-    window.open(url, '_blank');
+    const bpLarge = 1024;
+    if (window.innerWidth < bpLarge) {
+      this.router.navigate([ROUTES.ACCOMMODATIONS, id]);
+    } else {
+      const url = `${ROUTES.ACCOMMODATIONS}/${id}`;
+      window.open(url, '_blank');
+    }
   }
 
   ngOnDestroy(): void {

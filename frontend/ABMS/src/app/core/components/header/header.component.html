@@ -1,5 +1,5 @@
 <div
-  class="abms-header px-12 bg-[var(--primary)] text-[var(--white)] flex justify-between items-center transition-all duration-300 ease-in-out"
+  class="abms-header px-6 sm:px-12 bg-[var(--primary)] text-[var(--white)] flex justify-between items-center transition-all duration-300 ease-in-out"
   [class.py-1]="headerCollapsed"
   [class.py-4]="!headerCollapsed"
 >
@@ -13,6 +13,12 @@
     [ngClass]="{ 'abms-header--collapsed': headerCollapsed }"
     class="hidden sm:flex lg:gap-1 items-center"
   >
+    <p-button
+      class="transition-opacity duration-500 cursor-pointer ease mr-2"
+      [ngClass]="{ 'opacity-0 pointer-events-none': headerCollapsed }"
+      icon="pi pi-info-circle"
+      (onClick)="onInfo()"
+    ></p-button>
     <div
       [ngClass]="{ 'opacity-0 pointer-events-none': headerCollapsed }"
       [innerHTML]="flagPL"
@@ -53,8 +59,14 @@
     />
     }
   </div>
-
   <div class="flex gap-1 items-center sm:hidden">
+    <p-button
+      class="transition-opacity duration-500 cursor-pointer ease"
+      [ngClass]="{ 'opacity-0 pointer-events-none': headerCollapsed }"
+      icon="pi pi-info-circle"
+      (onClick)="onInfo()"
+    ></p-button>
+    <p-button icon="pi pi-globe" (onClick)="onLanguageChoose()"></p-button>
     <p-button
       [routerLink]="[ROUTES.ACCOMMODATIONS]"
       icon="pi pi-search"

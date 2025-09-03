@@ -1,4 +1,4 @@
-<div class="abms-accommodation-book">
+<div>
   <p-stepper [linear]="true">
     <p-stepperPanel [header]="translation.instant('visit_details')">
       <ng-template
@@ -6,114 +6,123 @@
         let-nextCallback="nextCallback"
         let-index="index"
       >
-        <div class="flex flex-col gap-4 pt-3 h-92">
+        <div class="flex flex-col gap-4 pt-3">
           <form
             [formGroup]="form"
-            class="grid grid-cols-[3fr_5fr] gap-y-8 gap-x-2 items-center"
+            class="grid sm:grid-cols-[3fr_5fr] gap-y-5 gap-x-2 items-center"
           >
-            <label class="justify-self-end">
+            <label class="max-sm:-mb-3 sm:justify-self-end">
               {{ "check_in_date" | translate }}
             </label>
             <app-control-error-wrapper
+              class="sm:max-w-72"
               [control]="getFormControlByName('checkInDate')"
             >
-              <span class="w-fit relative">
-                <p-calendar
-                  dateFormat="dd.mm.yy"
-                  formControlName="checkInDate"
-                  [readonlyInput]="true"
-                  [disabledDates]="unavailableCheckInDates"
-                  [minDate]="minDate"
-                  [maxDate]="maxDate"
-                  [hideOnDateTimeSelect]="false"
-                  (onSelect)="onCheckInDateSelect()"
-                ></p-calendar>
-                <i
-                  class="pi pi-calendar-plus absolute top-1/2 -translate-y-1/2 right-[10px]"
-                ></i>
-              </span>
+              <p-calendar
+                class="w-full"
+                styleClass="w-full"
+                dateFormat="dd.mm.yy"
+                formControlName="checkInDate"
+                [readonlyInput]="true"
+                [disabledDates]="unavailableCheckInDates"
+                [minDate]="minDate"
+                [maxDate]="maxDate"
+                [hideOnDateTimeSelect]="false"
+                (onSelect)="onCheckInDateSelect()"
+              ></p-calendar>
+              <i
+                class="pi pi-calendar-plus absolute top-1/2 -translate-y-1/2 right-[10px]"
+              ></i>
             </app-control-error-wrapper>
-            <label class="justify-self-end">
+            <label class="max-sm:-mb-3 sm:justify-self-end">
               {{ "check_out_date" | translate }}
             </label>
             <app-control-error-wrapper
+              class="sm:max-w-72"
               [control]="getFormControlByName('checkOutDate')"
             >
-              <span class="w-fit relative">
-                <p-calendar
-                  dateFormat="dd.mm.yy"
-                  formControlName="checkOutDate"
-                  [readonlyInput]="true"
-                  [disabledDates]="unavailableCheckOutDates"
-                  [minDate]="minCheckOutDate"
-                  [maxDate]="maxCheckOutDate"
-                  [hideOnDateTimeSelect]="false"
-                ></p-calendar>
-                <i
-                  class="pi pi-calendar-minus absolute top-1/2 -translate-y-1/2 right-[10px]"
-                ></i>
-              </span>
+              <p-calendar
+                class="w-full"
+                styleClass="w-full"
+                dateFormat="dd.mm.yy"
+                formControlName="checkOutDate"
+                [readonlyInput]="true"
+                [disabledDates]="unavailableCheckOutDates"
+                [minDate]="minCheckOutDate"
+                [maxDate]="maxCheckOutDate"
+                [hideOnDateTimeSelect]="false"
+              ></p-calendar>
+              <i
+                class="pi pi-calendar-minus absolute top-1/2 -translate-y-1/2 right-[10px]"
+              ></i>
             </app-control-error-wrapper>
-            <label class="justify-self-end">
+            <label class="max-sm:-mb-3 sm:justify-self-end">
               {{ "guests_amount" | translate }}
             </label>
             <app-control-error-wrapper
+              class="sm:max-w-72"
               [control]="getFormControlByName('guests')"
             >
-              <span class="w-fit relative">
-                <p-inputNumber
-                  inputId="integeronly"
-                  formControlName="guests"
-                  [showButtons]="true"
-                  [min]="1"
-                  [max]="maxGuests"
-                ></p-inputNumber>
-                <i
-                  class="pi pi-users absolute top-1/2 -translate-y-1/2 right-[10px]"
-                ></i>
-              </span>
+              <p-inputNumber
+                class="w-full"
+                styleClass="w-full"
+                incrementButtonClass="right-[25px]"
+                decrementButtonClass="right-[25px]"
+                inputId="integeronly"
+                formControlName="guests"
+                [showButtons]="true"
+                [min]="1"
+                [max]="maxGuests"
+              ></p-inputNumber>
+              <i
+                class="pi pi-users absolute top-1/2 -translate-y-1/2 right-[10px]"
+              ></i>
             </app-control-error-wrapper>
-            <label class="justify-self-end">
+            <label class="max-sm:-mb-3 sm:justify-self-end">
               {{ "full_name" | translate }}
             </label>
-            <app-control-error-wrapper [control]="getFormControlByName('name')">
-              <span class="w-fit relative">
-                <input formControlName="name" pInputText />
-                <i
-                  class="pi pi-address-book absolute top-1/2 -translate-y-1/2 right-[10px]"
-                ></i>
-              </span>
+            <app-control-error-wrapper
+              class="sm:max-w-72"
+              [control]="getFormControlByName('name')"
+            >
+              <input class="w-full" formControlName="name" pInputText />
+              <i
+                class="pi pi-address-book absolute top-1/2 -translate-y-1/2 right-[10px]"
+              ></i>
             </app-control-error-wrapper>
-            <label class="justify-self-end">
+            <label class="max-sm:-mb-3 sm:justify-self-end">
               {{ "email" | translate }}
             </label>
             <app-control-error-wrapper
+              class="sm:max-w-72"
               [control]="getFormControlByName('email')"
             >
-              <span class="w-fit relative">
-                <input formControlName="email" pInputText />
-                <i
-                  class="pi pi-at absolute top-1/2 -translate-y-1/2 right-[10px]"
-                ></i>
-              </span>
+              <input class="w-full" formControlName="email" pInputText />
+              <i
+                class="pi pi-at absolute top-1/2 -translate-y-1/2 right-[10px]"
+              ></i>
             </app-control-error-wrapper>
-            <label class="justify-self-end">
+            <label class="max-sm:-mb-3 sm:justify-self-end">
               {{ "phone_number" | translate }}
             </label>
             <app-control-error-wrapper
+              class="sm:max-w-72"
               [control]="getFormControlByName('phoneNumber')"
             >
-              <span class="w-fit relative">
-                <input formControlName="phoneNumber" type="tel" pInputText />
-                <i
-                  class="pi pi-phone absolute top-1/2 -translate-y-1/2 right-[10px]"
-                ></i>
-              </span>
+              <input
+                class="w-full"
+                formControlName="phoneNumber"
+                type="tel"
+                pInputText
+              />
+              <i
+                class="pi pi-phone absolute top-1/2 -translate-y-1/2 right-[10px]"
+              ></i>
             </app-control-error-wrapper>
           </form>
-        </div>
-        <div class="flex pt-4 justify-self-end">
           <p-button
+            class="w-full"
+            styleClass="w-full sm:w-30 !h-[2.4rem] mt-5 justify-self-end"
             [label]="translation.instant('next')"
             icon="pi pi-arrow-right"
             iconPos="right"
@@ -129,28 +138,44 @@
         let-prevCallback="prevCallback"
         let-index="index"
       >
-        <div class="grid grid-cols-[1fr_1fr] gap-4 pt-3 h-23rem">
-          <p class="justify-self-end">{{ "residence" | translate }}:</p>
-          <p>{{ accommodation.name }}</p>
-          <p class="justify-self-end">{{ "address" | translate }}:</p>
-          <p>
+        <div class="grid sm:grid-cols-[1fr_1fr] gap-3 sm:gap-4 pt-3">
+          <p class="sm:justify-self-end -mb-2">
+            {{ "residence" | translate }}:
+          </p>
+          <p class="font-semibold">{{ accommodation.name }}</p>
+          <p class="sm:justify-self-end -mb-2">{{ "address" | translate }}:</p>
+          <p class="font-semibold">
             {{ "street_shortcut" | translate }} {{ accommodation.street }}
             {{ accommodation.streetNumber }}, {{ accommodation.zipCode }}
             {{ accommodation.city }}
           </p>
-          <p class="justify-self-end">{{ "check_in_date" | translate }}:</p>
-          <p>{{ transformDate(form.get("checkInDate")?.value) }}</p>
-          <p class="justify-self-end">{{ "check_out_date" | translate }}:</p>
-          <p>{{ transformDate(form.get("checkOutDate")?.value) }}</p>
-          <p class="justify-self-end">{{ "guests_amount" | translate }}:</p>
-          <p>{{ form.get("guests")?.value }}</p>
-          <p class="justify-self-end">{{ "full_name" | translate }}:</p>
-          <p>{{ form.get("name")?.value }}</p>
-          <p class="justify-self-end">{{ "email" | translate }}:</p>
-          <p>{{ form.get("email")?.value }}</p>
-          <p class="justify-self-end">{{ "phone_number" | translate }}:</p>
-          <p>{{ form.get("phoneNumber")?.value }}</p>
-          <div class="justify-self-end col-start-1 col-end-3">
+          <p class="sm:justify-self-end -mb-2">
+            {{ "check_in_date" | translate }}:
+          </p>
+          <p class="font-semibold">
+            {{ transformDate(form.get("checkInDate")?.value) }}
+          </p>
+          <p class="sm:justify-self-end -mb-2">
+            {{ "check_out_date" | translate }}:
+          </p>
+          <p class="font-semibold">
+            {{ transformDate(form.get("checkOutDate")?.value) }}
+          </p>
+          <p class="sm:justify-self-end -mb-2">
+            {{ "guests_amount" | translate }}:
+          </p>
+          <p class="font-semibold">{{ form.get("guests")?.value }}</p>
+          <p class="sm:justify-self-end -mb-2">
+            {{ "full_name" | translate }}:
+          </p>
+          <p class="font-semibold">{{ form.get("name")?.value }}</p>
+          <p class="sm:justify-self-end -mb-2">{{ "email" | translate }}:</p>
+          <p class="font-semibold">{{ form.get("email")?.value }}</p>
+          <p class="sm:justify-self-end -mb-2">
+            {{ "phone_number" | translate }}:
+          </p>
+          <p class="font-semibold">{{ form.get("phoneNumber")?.value }}</p>
+          <div class="justify-self-end sm:col-start-1 sm:col-end-3">
             {{ "total_to_pay" | translate }}:
             <span class="text-[var(--primary)] text-2xl font-semibold">{{
               getTotalPrice()
@@ -158,13 +183,16 @@
             zł
           </div>
         </div>
-        <div class="flex pt-4 justify-between">
+        <div class="grid gap-4 pt-4">
           <p-button
+            styleClass="w-full"
             [label]="translation.instant('change_data')"
+            [outlined]="true"
             icon="pi pi-arrow-left"
             (onClick)="prevCallback.emit()"
           />
           <p-button
+            styleClass="w-full"
             [label]="translation.instant('confirm_with_payment_duty')"
             icon="pi pi-check"
             (onClick)="confirmBooking()"

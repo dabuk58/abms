@@ -1,5 +1,12 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -9,7 +16,7 @@ import { ChipModule } from 'primeng/chip';
 import { DividerModule } from 'primeng/divider';
 import { DialogService } from 'primeng/dynamicdialog';
 import { GalleriaModule } from 'primeng/galleria';
-import { TooltipModule } from 'primeng/tooltip';
+import { Tooltip, TooltipModule } from 'primeng/tooltip';
 import { catchError, Observable, of, Subject, takeUntil, tap } from 'rxjs';
 import { LoaderComponent } from '../../../../core/components/loader/loader.component';
 import { Amenity } from '../../../../core/enums/amenity.enum';
@@ -44,12 +51,16 @@ import { AccommodationsService } from '../../services/accommodations.service';
   styleUrl: './accommodation-details-page.component.scss',
 })
 export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
+  @ViewChildren(Tooltip) tooltips!: QueryList<Tooltip>;
+
   accommodationId!: number;
   responsiveOptions: any[] | undefined;
   isLoggedIn: boolean;
   rating!: number | null;
   amenityIconMap: Record<Amenity, string>;
   firstAvailableDate: string | null = null;
+  isFullscreenGalleryVisible: boolean = false;
+  isMobileView!: boolean;
 
   accommodation$!: Observable<Accommodation>;
 
@@ -67,6 +78,7 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
     private contantsService: ConstantsService
   ) {
     this.setAccommodationId();
+    this.handleResize();
     this.responsiveOptions = [
       {
         breakpoint: '1024px',
@@ -177,10 +189,11 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
   }
 
   onMapPreview(accommodation: Accommodation): void {
+    const mdBreakpoint = 768;
     this.dialogService.open(MapAccommodationPreviewComponent, {
       header: accommodation.name,
-      width: '70%',
-      height: '70%',
+      width: window.innerWidth < mdBreakpoint ? '100%' : '90%',
+      height: '100%',
       focusOnShow: false,
       data: {
         lat: accommodation.latitude,
@@ -192,12 +205,33 @@ export class AccommodationDetailsPageComponent implements OnInit, OnDestroy {
   onBook(accommodation: Accommodation): void {
     this.dialogService.open(AccommodationBookDialogComponent, {
       header: this.translation.instant('booking'),
-      width: '52rem',
-      height: '36rem',
+      width: this.isMobileView ? '100%' : '52rem',
+      height: this.isMobileView ? '100%' : '36rem',
+      contentStyle: { overflow: 'scroll' },
       data: {
         accommodation: accommodation,
       },
     });
+  }
+
+  openGallery(): void {
+    this.isFullscreenGalleryVisible = true;
+  }
+
+  showTooltip(index: number): void {
+    const tooltip = this.tooltips.toArray()[index];
+    tooltip.show();
+  }
+
+  @HostListener('document:scroll')
+  hideAllTooltips() {
+    this.tooltips.forEach((t) => t.hide());
+  }
+
+  @HostListener('window:resize')
+  handleResize(): void {
+    const bpMedium = 768;
+    this.isMobileView = window.innerWidth < bpMedium;
   }
 
   ngOnDestroy(): void {

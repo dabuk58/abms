@@ -16,10 +16,13 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
 import { Subject } from 'rxjs';
 import { ROUTES } from '../../constants/routes-constants';
+import { SessionStorageItem } from '../../enums/session-storage-item.enum';
 import { AuthService } from '../../services/auth.service';
 import { ConstantsService } from '../../services/constants.service';
 import { ToastService } from '../../services/toast.service';
+import { LanguageChooseModalComponent } from '../language-choose-modal/language-choose-modal.component';
 import { LoginModalComponent } from '../login-modal/login-modal.component';
+import { SiteInfoModalComponent } from '../site-info-modal/site-info-modal.component';
 
 @Component({
   selector: 'app-header',
@@ -45,6 +48,7 @@ export class HeaderComponent implements OnDestroy {
   headerCollapsed = false;
   flagPL: SafeHtml;
   flagGB: SafeHtml;
+  isMobileView!: boolean;
   private previousScrollTop = 0;
 
   private readonly _destroying$ = new Subject<void>();
@@ -60,8 +64,10 @@ export class HeaderComponent implements OnDestroy {
     private sanitizer: DomSanitizer
   ) {
     this.loadAccountMenu();
+    this.handleResize();
     this.flagGB = this.sanitizer.bypassSecurityTrustHtml(GB);
     this.flagPL = this.sanitizer.bypassSecurityTrustHtml(PL);
+    this.checkInfoModal();
   }
 
   loadAccountMenu(): void {
@@ -113,6 +119,38 @@ export class HeaderComponent implements OnDestroy {
   switchLanguage(lang: string): void {
     this.translate.use(lang);
     this.loadAccountMenu();
+  }
+
+  onLanguageChoose(): void {
+    this.dialogService.open(LanguageChooseModalComponent, {
+      width: '70%',
+      height: '10rem',
+      showHeader: false,
+      contentStyle: { 'border-radius': '0.75rem' },
+    });
+  }
+
+  onInfo(): void {
+    this.dialogService.open(SiteInfoModalComponent, {
+      header: this.translateService.instant('welcome_to_bedfind'),
+      width: this.isMobileView ? '100%' : '56rem',
+      height: this.isMobileView ? 'fit-content' : '27rem',
+    });
+  }
+
+  @HostListener('window:resize')
+  handleResize(): void {
+    const bpMedium = 768;
+    this.isMobileView = window.innerWidth < bpMedium;
+  }
+
+  checkInfoModal(): void {
+    const wasShown = sessionStorage.getItem(SessionStorageItem.WelcomePopup);
+
+    if (wasShown == null) {
+      this.onInfo();
+      sessionStorage.setItem(SessionStorageItem.WelcomePopup, '1');
+    }
   }
 
   ngOnDestroy(): void {

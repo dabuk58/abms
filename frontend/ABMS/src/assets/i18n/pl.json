@@ -129,6 +129,7 @@
   "popularity": "Popularność",
   "sort_by": "Sortuj według",
   "choose_an_option": "Wybierz opcję",
+  "choose": "Wybierz",
   "see_on_map": "Zobacz na mapie",
   "map_view": "Widok mapy",
   "found_accommodations": "Znalezionych obiektów",
@@ -201,5 +202,21 @@
   "yes": "Tak",
   "no": "Nie",
   "confirmation_required": "Wymagane potwierdzenie",
-  "booking_success": "Rezerwacja dokonana pomyślnie!"
+  "booking_success": "Rezerwacja dokonana pomyślnie!",
+  "welcome_to_bedfind": "Witaj w BedFind! 🚀",
+  "info_message": {
+    "introduction": "BedFind to aplikacja demonstracyjna – system do zarządzania rezerwacjami noclegów inspirowany portalami Airbnb i Booking.com.",
+    "about": "Projekt powstał w ramach mojej pracy inżynierskiej i jest rozwijany jako projekt do portfolio (Angular + .NET).",
+    "important_functions": "👉 Najważniejsze funkcje",
+    "functions": {
+      "browsing": "Wyszukiwanie, przeglądanie i filtrowanie ofert noclegowych",
+      "favorites": "Dodawanie ofert do ulubionych",
+      "authentication": "Uwierzytelnianie za pomocą Azure Entra ID oraz Google Sign In",
+      "reservation": "Dokonywanie rezerwacji obiektów",
+      "languages": "Interfejs dostepny w wielu językach",
+      "responsiveness": "Pełna responsywność",
+      "mail_dispatch": "Automatyczna wysyłka maila z potwierdzeniem rezerwacji"
+    },
+    "development": "ℹ️ Projekt jest stale rozwijany – część funkcjonalności jest jeszcze w trakcie implementacji."
+  }
 }

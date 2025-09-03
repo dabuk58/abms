@@ -1,121 +1,129 @@
-<div class="abms-accommodation-details grid gap-4 pt-4">
+<div class="abms-accommodation-details grid gap-4 pt-4 mb-10">
   @if(accommodation$ | async; as accommodation){
-
-  <p-card>
+  <p-card
+    class="w-full justify-self-center md:w-9/10 lg:max-w-7xl"
+    styleClass="max-md:shadow-none"
+  >
     <p-galleria
-      class="justify-self-center"
+      class="max-w-[50rem] justify-self-center"
+      containerClass="w-full max-w-[50rem] justify-self-center"
       [value]="accommodation.images"
-      thumbnailsPosition="right"
       [responsiveOptions]="responsiveOptions"
-      [containerStyle]="{ 'max-width': '1141px' }"
-      [numVisible]="3"
       [showItemNavigators]="true"
+      [showThumbnails]="false"
+      [circular]="true"
     >
       <ng-template pTemplate="item" let-item>
-        <div class="">
-          <div class="w-[53.125rem] h-[34.125rem] overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmVkJTIwcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
-            />
-          </div>
-        </div>
-      </ng-template>
-      <ng-template pTemplate="thumbnail" let-item>
-        <div class="grid grid-nogutter justify-center">
-          <img
-            src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmVkJTIwcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
-          />
-        </div>
-      </ng-template>
-      <ng-template pTemplate="previousthumbnailicon">
-        <i class="pi pi-angle-up"></i>
-      </ng-template>
-      <ng-template pTemplate="nextthumbnailicon">
-        <i class="pi pi-angle-down"></i>
+        <img
+          [src]="item"
+          class="w-full object-cover rounded-md cursor-pointer"
+          (click)="openGallery()"
+        />
       </ng-template>
     </p-galleria>
-    <div class="flex flex-col gap-12">
-      <div class="flex justify-between items-center mt-5">
-        <div class="flex gap-4 items-center">
-          <h1 class="text-3xl font-semibold">
-            {{ accommodation.name }}
-          </h1>
-          <div>
-            <span class="mr-2">{{ rating }} / 10</span>
-            <i
-              class="mb-1 ml-1 text-xl text-[var(--rating-star)] bi bi-star-fill"
-            ></i>
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <p>
-            {{
-              accommodation.isFavorite
-                ? ("remove_from_favorites" | translate)
-                : ("add_to_favorites" | translate)
-            }}
-          </p>
-          <app-heart-icon
-            class="cursor-pointer hover:text-[var(--red)]"
-            [pTooltip]="translation.instant('login_to_like')"
-            tooltipPosition="top"
-            showDelay="150"
-            [tooltipDisabled]="isLoggedIn"
-            [ngClass]="{
+    <p-galleria
+      [(visible)]="isFullscreenGalleryVisible"
+      [value]="accommodation.images"
+      [showItemNavigators]="true"
+      [showThumbnailNavigators]="false"
+      [fullScreen]="true"
+      [circular]="true"
+    >
+      <ng-template pTemplate="item" let-item>
+        <img [src]="item" class="w-full h-auto object-contain" />
+      </ng-template>
+    </p-galleria>
+    <div
+      class="grid grid-cols-[repeat(4,1fr)] gap-y-8 justify-items-center items-center mt-4"
+    >
+      <h1 class="text-3xl font-semibold col-[1/span_2] justify-self-start">
+        {{ accommodation.name }}
+      </h1>
+      <div class="col-[4] sm:col-[3]">
+        <span class="mr-2">{{ rating }} / 10</span>
+        <i
+          class="mb-1 ml-1 text-xl text-[var(--rating-star)] bi bi-star-fill"
+        ></i>
+      </div>
+      <div
+        class="flex items-center gap-1 col-[1] sm:col-[2]"
+        (click)="showTooltip(0)"
+      >
+        <span>{{ accommodation.maxGuests }}</span>
+        <i
+          [pTooltip]="translation.instant('max_guests')"
+          tooltipPosition="top"
+          showDelay="150"
+          class="bi bi-people-fill text-xl"
+        ></i>
+      </div>
+      <div
+        class="flex items-center gap-2 col-[2/span_2] sm:col-[3]"
+        (click)="showTooltip(1)"
+      >
+        <span>
+          {{
+            firstAvailableDate ? firstAvailableDate : ("no_dates" | translate)
+          }}
+        </span>
+        <i
+          class="bi bi-calendar-check text-xl"
+          [pTooltip]="translation.instant('first_available_date')"
+          tooltipPosition="top"
+          showDelay="150"
+        ></i>
+      </div>
+      <div
+        class="flex items-center gap-2 col-[4] sm:row-[1] justify-self-end"
+        (click)="showTooltip(2)"
+      >
+        <p class="hidden lg:block">
+          {{
+            accommodation.isFavorite
+              ? ("remove_from_favorites" | translate)
+              : ("add_to_favorites" | translate)
+          }}
+        </p>
+        <app-heart-icon
+          class="cursor-pointer hover:text-[var(--red)]"
+          [pTooltip]="translation.instant('login_to_like')"
+          tooltipPosition="top"
+          showDelay="150"
+          [tooltipDisabled]="isLoggedIn"
+          [ngClass]="{
             'text-[var(--red)]':
             accommodation.isFavorite,
           }"
-            tooltipPosition="top"
-            showDelay="150"
-            [filled]="accommodation.isFavorite"
-            (click)="onFavorite(accommodation)"
-          ></app-heart-icon>
-        </div>
-      </div>
-      <div class="flex justify-between items-center">
-        <div class="mt-0 font-semibold">
-          <span class="text-4xl">{{ accommodation.pricePerNight + "zł" }}</span>
-          <span class="text-base"> {{ "per_night" | translate }}</span>
-        </div>
-        <div class="flex items-center gap-1">
-          <span>{{ accommodation.maxGuests }}</span>
-          <i
-            [pTooltip]="translation.instant('max_guests')"
-            tooltipPosition="top"
-            showDelay="150"
-            class="bi bi-people-fill text-xl"
-          ></i>
-        </div>
-        <div class="flex items-center gap-2">
-          <span>
-            {{
-              firstAvailableDate ? firstAvailableDate : ("no_dates" | translate)
-            }}
-          </span>
-          <i
-            [pTooltip]="translation.instant('first_available_date')"
-            tooltipPosition="top"
-            showDelay="150"
-            class="bi bi-calendar-check text-xl"
-          ></i>
-        </div>
-        <div
-          [pTooltip]="translation.instant('login_to_book')"
           tooltipPosition="top"
-          [tooltipDisabled]="isLoggedIn"
-          class=""
-        >
-          <p-button
-            icon="pi pi-arrow-right"
-            iconPos="right"
-            [disabled]="!isLoggedIn"
-            size="small"
-            [label]="translation.instant('book')"
-            (onClick)="onBook(accommodation)"
-          ></p-button>
-        </div>
+          showDelay="150"
+          [filled]="accommodation.isFavorite"
+          (click)="onFavorite(accommodation)"
+        ></app-heart-icon>
       </div>
-      <div class="flex flex-col gap-2">
+
+      <div
+        class="mt-0 font-semibold col-[1/span_2] sm:col-[1] sm:row-[2] justify-self-start"
+      >
+        <span class="text-4xl">{{ accommodation.pricePerNight + "zł" }}</span>
+        <span class="text-base"> {{ "per_night" | translate }}</span>
+      </div>
+
+      <div
+        class="col-[3/span_2] sm:col-[4] justify-self-end"
+        [pTooltip]="translation.instant('login_to_book')"
+        tooltipPosition="top"
+        [tooltipDisabled]="isLoggedIn"
+      >
+        <p-button
+          icon="pi pi-arrow-right"
+          iconPos="right"
+          [disabled]="!isLoggedIn"
+          size="small"
+          [label]="translation.instant('book')"
+          (onClick)="onBook(accommodation)"
+        ></p-button>
+      </div>
+      <div class="flex flex-col gap-2 col-span-full w-full">
         <h2 class="font-semibold text-xl">{{ "description" | translate }}</h2>
         @if(accommodation.description){
         <p class="text-balance">
@@ -125,7 +133,7 @@
         <p>{{ "no_description" | translate }}</p>
         }
       </div>
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 col-span-full w-full">
         <h2 class="font-semibold text-xl">{{ "amenities" | translate }}</h2>
         <div>
           @if(!accommodation.amenities.length){
@@ -144,15 +152,16 @@
           } }
         </div>
       </div>
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 col-span-full w-full">
         <h2 class="font-semibold text-xl">{{ "address" | translate }}</h2>
-        <div class="flex gap-4 items-center justify-between">
+        <div class="flex flex-col sm:flex-row gap-4 justify-between">
           <p class="text-base">
             {{ "street_shortcut" | translate }} {{ accommodation.street }}
             {{ accommodation.streetNumber }}, {{ accommodation.zipCode }}
             {{ accommodation.city }}
           </p>
           <p-button
+            class="self-center"
             icon="pi pi-map"
             iconPos="right"
             size="small"
@@ -162,7 +171,7 @@
           ></p-button>
         </div>
       </div>
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 col-span-full w-full">
         <div class="flex gap-2 items-center mb-3">
           <h2 class="font-semibold text-xl">
             {{ "reviews" | translate }}

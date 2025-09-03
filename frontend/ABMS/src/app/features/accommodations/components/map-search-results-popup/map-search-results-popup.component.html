@@ -1,8 +1,8 @@
 <div
-  class="flex flex-col md:flex-row gap-2 p-1 pt-0 w-[65vw] max-w-80 md:max-w-[none] md:w-lg"
+  class="flex flex-col md:flex-row gap-2 md:gap-3 p-1 pt-0 w-[65vw] max-w-80 md:w-xl md:max-w-[none] lg:w-150"
 >
   <img
-    class="rounded-md w-full cursor-pointer md:max-h-34"
+    class="rounded-md w-full cursor-pointer md:max-h-34 md:self-center md:basis-4/10"
     [src]="accommodation.images[0]"
     (click)="onDetails(accommodation.id)"
   />
@@ -29,7 +29,7 @@
       ></app-heart-icon>
     </div>
     <div class="grid grid-cols-[1fr_1fr] gap-4 md:mt-2">
-      <p class="line-clamp-3">
+      <p class="line-clamp-3 self-center">
         {{ accommodation.description }}
       </p>
       <div class="text-2xl mt-0 font-semibold md:self-end">
@@ -38,7 +38,6 @@
       </div>
       <div class="flex flex-col gap-1 items-end col-[2] row-[1]">
         @if(accommodation.rating){
-        <p class="hidden lg:block">{{ "average_rating" | translate }}</p>
         <div class="flex flex-col gap-2 items-center">
           <p>{{ accommodation.rating }} / 10</p>
           <i class="mb-1 text-[var(--rating-star)] text-xl bi bi-star-fill"></i>
@@ -48,7 +47,7 @@
         }
       </div>
       <p-button
-        class="justify-self-end"
+        class="justify-self-end self-end"
         [label]="translation.instant('details')"
         icon="pi pi-angle-right"
         iconPos="right"

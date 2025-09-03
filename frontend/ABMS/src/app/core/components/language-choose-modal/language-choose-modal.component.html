@@ -1,0 +1,14 @@
+<div class="py-4 px-2 text-xl font-medium flex justify-between items-center">
+  {{ "choose" | translate }}
+  <button type="button" class="pi pi-times" (click)="close()"></button>
+</div>
+<div class="flex flex-col gap-5 ml-2">
+  <div class="flex gap-3" (click)="switchLanguage('pl')">
+    <div class="w-9 h-fit border border-solid" [innerHTML]="flagPL"></div>
+    <p class="text-xl font-medium">Polski</p>
+  </div>
+  <div class="flex gap-3" (click)="switchLanguage('en')">
+    <div class="w-9 h-fit border border-solid" [innerHTML]="flagGB"></div>
+    <p class="text-xl font-medium">English</p>
+  </div>
+</div>
