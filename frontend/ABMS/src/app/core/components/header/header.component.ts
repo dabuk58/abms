@@ -131,10 +131,12 @@ export class HeaderComponent implements OnDestroy {
   }
 
   onInfo(): void {
+    const contentOverflow = this.isMobileView ? 'scroll' : 'hidden';
     this.dialogService.open(SiteInfoModalComponent, {
       header: this.translateService.instant('welcome_to_bedfind'),
       width: this.isMobileView ? '100%' : '56rem',
-      height: this.isMobileView ? 'fit-content' : '27rem',
+      height: 'fit-content',
+      contentStyle: { overflow: contentOverflow },
     });
   }
 
